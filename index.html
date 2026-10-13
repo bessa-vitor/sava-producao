@@ -194,6 +194,9 @@ input:disabled,select:disabled,textarea:disabled{background:var(--sunk);color:va
 @media (max-width:760px){.uform{grid-template-columns:1fr 1fr}}
 details.obsel summary{cursor:pointer;color:var(--navy);font-weight:600;font-size:13px}
 details.obsel label{display:flex;gap:6px;align-items:center;font-size:13px;padding:2px 0}
+.drop{display:flex;flex-direction:column;align-items:center;gap:4px;border:2px dashed var(--line);border-radius:8px;padding:26px 16px;text-align:center;cursor:pointer;margin:10px 0;background:var(--sunk)}
+.drop.on,.drop:hover{border-color:var(--navy);background:var(--navy-soft)}
+.drop b{font-family:var(--cond);font-size:19px}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:6px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
 .toast.on{opacity:1}
 @media (prefers-reduced-motion:reduce){.toast{transition:none}}
@@ -231,6 +234,7 @@ window.SAVA_EMPRESA = {
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 (function(){
 'use strict';
@@ -826,7 +830,7 @@ function vEquipe(o){
 }
 
 function vImportar(o){
-  return `<div class="grid2"><div class="card"><h3>Colar composições do Sienge ou do Excel</h3>
+  return vSienge(o)+`<div class="grid2"><div class="card"><h3>Colar manualmente do Excel</h3>
     <p class="small muted">Copie as colunas do Excel nesta ordem e cole abaixo. Material e % oficial são opcionais.</p>
     <ol class="howto small"><li>Código · Serviço · Unidade · Quantidade · MO unitária (com encargos) · Material unitário · % oficial</li>
     <li>Serviços repetidos em vários pavimentos são somados em uma linha só quando o código (ou o nome e a unidade) é igual.</li>
@@ -843,12 +847,12 @@ function vImportar(o){
 /* ---------- permissões na tela ---------- */
 const ACT_PERM={novaObra:'obras',dupObra:'obras',delObra:'obras',restaurar:'obras',addRapido:'base',delServ:'base',addFn:'base',delFn:'base',addFu:'base',delFu:'base',importar:'base',
   novaMed:'medir',addLinha:'medir',delLinha:'medir',delMed:'medir',fecharMed:'fechar',novaMeta:'metas',addMetaLinha:'metas',delMetaLinha:'metas',delMeta:'metas',encMeta:'fechar',
-  addUser:'usuarios',delUser:'usuarios'};
-const CAMPO_PERM=[['p','base'],['s','base'],['fn','base'],['fu','base'],['pe','base'],['m','medir'],['ml','medir'],['md','medir'],['mt','metas'],['mtl','metas'],['mte','metas'],['mtd','metas'],['mtc','metas'],['us','usuarios'],['uo','usuarios']];
+  addUser:'usuarios',delUser:'usuarios',impAplicar:'base'};
+const CAMPO_PERM=[['p','base'],['s','base'],['fn','base'],['fu','base'],['pe','base'],['m','medir'],['ml','medir'],['md','medir'],['mt','metas'],['mtl','metas'],['mte','metas'],['mtd','metas'],['mtc','metas'],['us','usuarios'],['uo','usuarios'],['imp','base']];
 function aplicaPermissoes(){
   const app=document.getElementById('app'); if(!app||!PERFIL)return;
   CAMPO_PERM.forEach(([k,p])=>{if(!can(p))app.querySelectorAll(`[data-${k}]`).forEach(e=>e.disabled=true)});
-  if(!can('base'))app.querySelectorAll('#qNome,#qUn,#qQtd,#qMo,#txtImp').forEach(e=>e.disabled=true);
+  if(!can('base'))app.querySelectorAll('#qNome,#qUn,#qQtd,#qMo,#txtImp,#impFiles').forEach(e=>e.disabled=true);
   Object.entries(ACT_PERM).forEach(([a,p])=>{if(!can(p))app.querySelectorAll(`[data-act="${a}"]`).forEach(e=>e.style.display='none')});
   if(!can('base'))app.querySelectorAll('.quick').forEach(e=>e.style.display='none');
 }
@@ -991,6 +995,217 @@ function reciboMeta(o,mt){
   doc.save(nomeArq(`Recibo_meta_${mt.nome}`)+'.pdf');
 }
 
+/* ---------- leitura dos relatórios do Sienge (.xlsx) ---------- */
+const SG={};
+SG.norm=t=>String(t??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
+SG.key=(desc,un)=>SG.norm(String(desc||'').replace(/^\s*\d+\s*-\s*/,'')).replace(/[.;,\s]+$/,'')+'|'+SG.norm(un);
+SG.isNum=v=>typeof v==='number'&&isFinite(v);
+SG.num=v=>SG.isNum(v)?v:(typeof v==='string'&&/\d/.test(v)?num(v):0);
+SG.texto=rows=>rows.slice(0,14).map(r=>(r||[]).filter(v=>v!=null).join(' ')).join(' \n ');
+SG.header=(rows,need)=>{
+  for(let i=0;i<Math.min(rows.length,60);i++){const r=rows[i]||[];const cols={};
+    r.forEach((v,j)=>{if(v!=null)cols[SG.norm(v)]=j});
+    if(need.every(n=>cols[n]!=null)){
+      const starts=Object.values(cols).sort((a,b)=>a-b);
+      const fim=c=>{const n=starts.find(s=>s>c);return n==null?c+12:n};
+      const sub=rows[i+1]||[]; const unit={};
+      sub.forEach((v,j)=>{if(SG.norm(v)==='unitario'){const nome=Object.keys(cols).filter(k=>cols[k]<=j).sort((a,b)=>cols[b]-cols[a])[0];if(nome&&unit[nome]==null)unit[nome]=j}});
+      return {idx:i,cols,fim,unit,temSub:Object.keys(unit).length>0};
+    }}
+  return null;
+};
+SG.val=(row,h,nome)=>{const c=h.cols[nome];if(c==null)return null;
+  if(h.unit[nome]!=null){const v=row[h.unit[nome]];return SG.isNum(v)?v:null}
+  const e=h.fim(c);for(let j=c;j<e;j++){if(SG.isNum(row[j]))return row[j]}return null};
+SG.txt=(row,h,nome)=>{const c=h.cols[nome];if(c==null)return '';const e=h.fim(c);for(let j=c;j<e;j++){if(row[j]!=null&&String(row[j]).trim()!=='')return String(row[j]).trim()}return ''};
+SG.encargos=rows=>{
+  for(const r of rows.slice(0,16)){const rr=r||[];const i=rr.findIndex(v=>SG.norm(v)==='encargos sociais');
+    if(i>=0){const v=rr.slice(i+1).find(x=>x!=null&&String(x).trim()!=='');const t=SG.norm(v);
+      if(/nao aplic/.test(t))return {cru:true,pct:null};
+      const n=num(String(v));return {cru:false,pct:isFinite(n)&&n>0?(n<=3?n*100:n):null};}}
+  return {cru:null,pct:null};
+};
+SG.tipo=rows=>{const t=SG.norm(SG.texto(rows));
+  if(t.includes('composicoes de servicos'))return 'comp';
+  if(t.includes('curva abc de insumos'))return 'insumos';
+  if(SG.header(rows,['codigo','descricao','quantidade orcada','mao de obra']))return 'analitico';
+  if(SG.header(rows,['codigo','descricao','quantidade orcada']))return 'sintetico';
+  if(SG.header(rows,['codigo','descricao','unidade','mao de obra','materiais']))return 'servicos';
+  return null;
+};
+SG.parse=rows=>{
+  const tipo=SG.tipo(rows), enc=SG.encargos(rows), out={tipo,enc,obra:''};
+  const ob=rows.slice(0,10).find(r=>r&&SG.norm(r.find(v=>v!=null))==='obra');
+  if(ob)out.obra=String(ob.filter(v=>v!=null)[1]||'');
+  if(tipo==='analitico'||tipo==='sintetico'){
+    const h=tipo==='analitico'?SG.header(rows,['codigo','descricao','quantidade orcada','mao de obra']):SG.header(rows,['codigo','descricao','quantidade orcada']);
+    const unCol=h.cols['unidade']!=null?'unidade':'un.';
+    out.itens=[];let grupo='';
+    for(let i=h.idx+1;i<rows.length;i++){const r=rows[i]||[];
+      const cod=String(r[h.cols['codigo']]??'').trim(), desc=SG.txt(r,h,'descricao'), un=SG.txt(r,h,unCol), q=SG.val(r,h,'quantidade orcada');
+      if(/^total/i.test(cod))break;
+      if(!desc)continue;
+      if(!un||q==null){grupo=desc;continue}
+      const it={eap:cod,grupo,desc,un,qtd:q};
+      if(tipo==='analitico'){it.mo=SG.val(r,h,'mao de obra')||0;it.mat=(SG.val(r,h,'materiais')||0)+(SG.val(r,h,'equipamentos de obra')||0)+(SG.val(r,h,'verbas')||0)}
+      else it.pu=SG.val(r,h,'preco unitario')||0;
+      out.itens.push(it);
+    }
+  }else if(tipo==='comp'){
+    out.servicos={};let cur=null,h=null;
+    for(const r0 of rows){const r=r0||[];const v=r.filter(x=>x!=null&&String(x).trim()!=='');if(!v.length)continue;
+      const c0=SG.norm(v[0]);
+      if(c0==='servico'){const nome=String(v[1]||'');const iu=v.findIndex(x=>SG.norm(x)==='unidade');const un=iu>=0?String(v[iu+1]||''):'';
+        const m=nome.match(/^\s*(\d+)\s*-\s*(.*)$/);cur={cod:m?m[1]:'',desc:m?m[2]:nome,un,mo:[],tot:null};out.servicos[SG.key(cur.desc,un)]=cur;continue}
+      if(c0==='tipo'){h=SG.header([r],['tipo','codigo','descricao','quantidade','mao de obra']);continue}
+      if(!cur||!h)continue;
+      if(c0==='total do servico'){cur.tot={mo:SG.val(r,h,'mao de obra')||0,mat:SG.val(r,h,'materiais')||0,eq:SG.val(r,h,'equipamentos de obra')||0,ver:SG.val(r,h,'verbas')||0};continue}
+      if(SG.norm(r[h.cols['tipo']])==='mo'){cur.mo.push({cod:String(r[h.cols['codigo']]??''),nome:SG.txt(r,h,'descricao'),un:SG.txt(r,h,'unidade'),qtd:SG.val(r,h,'quantidade')||0,preco:SG.val(r,h,'preco unitario')||0,valor:SG.val(r,h,'mao de obra')||0})}
+    }
+  }else if(tipo==='servicos'){
+    const h=SG.header(rows,['codigo','descricao','unidade','mao de obra','materiais']);out.itens=[];
+    for(let i=h.idx+1;i<rows.length;i++){const r=rows[i]||[];const cod=r[h.cols['codigo']];if(cod==null||!/^\d+$/.test(String(cod).trim()))continue;
+      out.itens.push({cod:String(cod).trim(),desc:SG.txt(r,h,'descricao'),un:SG.txt(r,h,'unidade'),mo:SG.val(r,h,'mao de obra')||0,mat:(SG.val(r,h,'materiais')||0)+(SG.val(r,h,'equipamentos de obra')||0)+(SG.val(r,h,'verbas')||0)})}
+  }else if(tipo==='insumos'){
+    const h=SG.header(rows,['codigo','descricao','quantidade','preco unitario']);out.itens=[];
+    const unCol=h.cols['un.']!=null?'un.':'unidade';
+    for(let i=h.idx+1;i<rows.length;i++){const r=rows[i]||[];const cod=r[h.cols['codigo']];if(cod==null||!/^\d+$/.test(String(cod).trim()))continue;
+      out.itens.push({cod:String(cod).trim(),desc:SG.txt(r,h,'descricao'),un:SG.txt(r,h,unCol),qtd:SG.val(r,h,'quantidade')||0,preco:SG.val(r,h,'preco unitario')||0})}
+  }
+  return out;
+};
+SG.ehAjudante=n=>/servente|ajudante|auxiliar|operador|vigia|apontador/i.test(n);
+/* monta a lista de serviços a importar */
+SG.montar=(relatorios,o)=>{
+  const R={}; relatorios.forEach(x=>{if(x.tipo&&!R[x.tipo])R[x.tipo]=x});
+  const fator=1+o.enc/100, avisos=[];
+  const cru=Object.values(R).some(x=>x.enc.cru===true);
+  const pctRel=Object.values(R).map(x=>x.enc.pct).find(p=>p);
+  const comp=R.comp?R.comp.servicos:{};
+  const svc={};(R.servicos?R.servicos.itens:[]).forEach(s=>svc[SG.key(s.desc,s.un)]=s);
+  const base=R.analitico?R.analitico.itens:R.sintetico?R.sintetico.itens:null;
+  if(!base){
+    if(R.comp||R.servicos)avisos.push('Sem o Orçamento analítico ou sintético, os serviços entram sem quantidade. Envie também o Orçamento para preencher as quantidades.');
+  }
+  const grupos=new Map();
+  const lista=base||Object.values(comp).map(c=>({desc:c.desc,un:c.un,qtd:0}));
+  lista.forEach(it=>{const k=SG.key(it.desc,it.un);
+    if(!grupos.has(k))grupos.set(k,{k,desc:it.desc,un:it.un,qtd:0,linhas:0,moU:it.mo,matU:it.mat,pu:it.pu,etapas:new Set()});
+    const g=grupos.get(k);g.qtd+=it.qtd||0;g.linhas++;if(it.grupo)g.etapas.add(it.grupo)});
+  const funcs={};
+  const res=[...grupos.values()].map(g=>{
+    const c=comp[g.k], s=svc[g.k];
+    let moCru=null, mat=0, of=null, aj=null, pct=null, origem='';
+    if(c&&c.tot){
+      const h=c.mo.filter(m=>SG.norm(m.un)==='h'), outros=c.mo.filter(m=>SG.norm(m.un)!=='h');
+      const vh=h.reduce((a,m)=>a+m.valor,0), vo=outros.reduce((a,m)=>a+m.valor,0);
+      g.mo=cru?vh*fator+vo:c.tot.mo; mat=c.tot.mat+c.tot.eq+c.tot.ver; origem='composição';
+      h.forEach(m=>{const n=m.nome.trim();if(!funcs[n])funcs[n]={nome:n,hora:cru?m.preco*fator:m.preco}});
+      const porF={};h.forEach(m=>porF[m.nome.trim()]=(porF[m.nome.trim()]||0)+m.valor);
+      const ofs=Object.entries(porF).filter(([n])=>!SG.ehAjudante(n)).sort((a,b)=>b[1]-a[1]);
+      const ajs=Object.entries(porF).filter(([n])=>SG.ehAjudante(n)).sort((a,b)=>b[1]-a[1]);
+      const tot=vh+vo;
+      if(ofs.length){of=ofs[0][0];aj=ajs.length?ajs[0][0]:null;pct=tot>0?(ofs.reduce((a,x)=>a+x[1],0)+vo)/tot*100:100}
+      else if(ajs.length){of=ajs[0][0];aj=null;pct=100}
+      else if(vo>0){pct=100}
+      g.cod=c.cod;
+    }else if(s){g.mo=cru?s.mo*fator:s.mo;mat=s.mat;g.cod=s.cod;origem='curva ABC de serviços'}
+    else if(g.moU!=null){g.mo=cru?g.moU*fator:g.moU;mat=g.matU||0;origem='orçamento analítico'}
+    else {g.mo=0;mat=g.pu||0;origem='só orçamento sintético';}
+    if(!g.cod&&s)g.cod=s.cod;
+    const flags=[];
+    if(g.mo<=0)flags.push('sem MO');
+    if(!g.qtd)flags.push('sem quantidade');
+    if(!c)flags.push('sem composição');
+    return {sel:!(g.mo<=0&&mat<=0),cod:g.cod||'',nome:g.desc.trim(),un:g.un,qtd:Math.round(g.qtd*10000)/10000,mo:Math.round(g.mo*10000)/10000,mat:Math.round(mat*10000)/10000,ofNome:of,ajNome:aj,pct:pct==null?null:Math.round(pct*10)/10,linhas:g.linhas,etapas:[...g.etapas],origem,flags};
+  });
+  const porGrupo={};lista.forEach(it=>{if(it.grupo)(porGrupo[it.grupo]=porGrupo[it.grupo]||[]).push(it)});
+  Object.entries(porGrupo).forEach(([gr,arr])=>{for(let i=0;i<arr.length;i++)for(let j=0;j<arr.length;j++){const A=arr[i],B=arr[j];
+    if(i===j||SG.norm(A.un)!==SG.norm(B.un)||!(B.qtd>0))continue;const r=A.qtd/B.qtd;
+    if([10,100,1000].some(f=>Math.abs(r-f)/f<0.002)){const it=res.find(x=>SG.key(x.nome,x.un)===SG.key(A.desc,A.un));if(it&&!it.flags.includes('conferir quantidade'))it.flags.push('conferir quantidade');
+      avisos.push(`Etapa "${gr.trim()}": "${A.desc.trim().slice(0,60)}" tem ${F2.format(A.qtd)} ${A.un}, exatamente ${Math.round(r)} vezes "${B.desc.trim().slice(0,60)}" (${F2.format(B.qtd)} ${B.un}). Pode ser vírgula no lugar errado no orçamento.`)}}});
+  res.forEach(x=>{if(SG.norm(x.un)==='vb'){x.sel=false;x.flags.push('verba (não é produção)')}});
+  if(cru)avisos.push(`Os relatórios vieram sem encargos sociais. A mão de obra horária foi convertida com os ${F1.format(o.enc)}% de encargos desta obra, para o teto sair certo.`);
+  if(!R.comp&&base)avisos.push('Sem o relatório de Composições, a função de quem executa e a divisão oficial/ajudante são estimadas pelo nome do serviço.');
+  return {itens:res,funcs:Object.values(funcs),avisos,cru,pctRel,tipos:Object.keys(R),obra:(Object.values(R)[0]||{}).obra||''};
+};
+
+let IMP=null;
+async function lerArquivos(files){
+  files=[...files].filter(f=>/\.xlsx?$/i.test(f.name));
+  if(!files.length){toast('Envie arquivos .xlsx exportados do Sienge');return}
+  if(!window.XLSX){toast('O leitor de Excel não carregou. Verifique a internet.');return}
+  const rels=[],ignorados=[];
+  for(const f of files){
+    try{const wb=XLSX.read(await f.arrayBuffer(),{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];
+      const ref=XLSX.utils.decode_range(ws['!ref']||'A1');
+      let rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:null,raw:true,blankrows:true});
+      if(ref.s.c>0)rows=rows.map(r=>Array(ref.s.c).fill(null).concat(r));
+      if(ref.s.r>0)rows=Array.from({length:ref.s.r},()=>[]).concat(rows);
+      const p=SG.parse(rows);if(p.tipo){p.arquivo=f.name;rels.push(p)}else ignorados.push(f.name);
+    }catch(e){ignorados.push(f.name)}
+  }
+  if(!rels.length){toast('Não reconheci esses arquivos como relatórios do Sienge');return}
+  IMP=SG.montar(rels,O());IMP.arquivos=rels.map(r=>[r.arquivo,r.tipo]);IMP.ignorados=ignorados;render();
+}
+const NOME_REL={analitico:'Orçamento analítico',sintetico:'Orçamento sintético',comp:'Composições de custo',servicos:'Curva ABC de serviços',insumos:'Curva ABC de insumos'};
+function vSienge(o){
+  if(!IMP)return `<div class="card" style="margin-bottom:22px"><h3>Importar relatórios do Sienge</h3>
+    <p class="small muted">Exporte do Sienge em Excel e solte os arquivos aqui, todos de uma vez. O app cruza os relatórios, soma os pavimentos e monta a tabela de preços.</p>
+    <label class="drop" id="dropSienge"><input type="file" id="impFiles" accept=".xlsx,.xls" multiple hidden>
+      <b>Solte os arquivos .xlsx aqui</b><span class="small muted">ou clique para escolher</span></label>
+    <ol class="howto small"><li><b>Orçamento analítico</b> (essencial): quantidades, mão de obra e material de cada item.</li>
+      <li><b>Composições de custo</b> (recomendado): mostra quem executa cada serviço e a divisão entre oficial e ajudante.</li>
+      <li>Curva ABC de serviços e de insumos (opcionais): usadas para conferir e completar códigos.</li></ol>
+    <p class="small muted">Pode exportar com ou sem encargos sociais: o app reconhece pelo cabeçalho e ajusta. Use sempre <b>BDI não aplicado</b>.</p></div>`;
+  const sel=IMP.itens.filter(x=>x.sel).length, F=o.funcoes;
+  const fnOk=n=>!n||F.some(f=>SG.norm(f.nome)===SG.norm(n));
+  let h=`<div class="card" style="margin-bottom:22px"><div class="section-head" style="margin-bottom:6px"><div><h3>Conferir importação do Sienge</h3>
+    <p class="small muted">${IMP.obra?esc(IMP.obra)+' · ':''}${IMP.arquivos.map(([n,t])=>`<span class="chip ok" title="${esc(n)}">${NOME_REL[t]}</span>`).join(' ')}${IMP.ignorados.length?` <span class="chip warn">${IMP.ignorados.length} arquivo(s) não reconhecido(s)</span>`:''}</p></div>
+    <div class="tools"><button class="ghost" data-act="impCancelar">Cancelar</button></div></div>
+    ${IMP.avisos.map(a=>`<div class="note${/vírgula/.test(a)?' bad':''}">${esc(a)}</div>`).join('')}
+    <div class="tools" style="margin:12px 0 8px;align-items:center"><button class="link" data-act="impTodos">Marcar todos</button> · <button class="link" data-act="impNenhum">Desmarcar todos</button>
+      <span class="small muted">${sel} de ${IMP.itens.length} serviço(s) marcados. Itens sem mão de obra e verbas vêm desmarcados.</span></div>
+    <div class="scroll"><table><thead><tr><th></th><th class="stick">Serviço</th><th>Un</th><th class="num">Qtd total</th><th class="num">MO R$/un<span class="sub">com encargos</span></th><th class="num">Material R$/un</th><th>Quem executa</th><th>Avisos</th></tr></thead><tbody>
+    ${IMP.itens.map((x,i)=>`<tr${x.flags.includes('conferir quantidade')?' class="over"':''}><td><input type="checkbox" data-imp="${i}" ${x.sel?'checked':''} aria-label="Importar ${esc(x.nome)}"></td>
+      <td class="svc stick">${esc(x.nome)}<span class="sub">${x.cod?'cód. '+esc(x.cod)+' · ':''}${x.linhas>1?x.linhas+' linhas somadas':'1 linha'}</span></td><td>${esc(x.un)}</td>
+      <td class="num">${m2(x.qtd)}</td><td class="num calc">${m4(x.mo)}</td><td class="num">${m4(x.mat)}</td>
+      <td class="small">${x.ofNome?esc(x.ofNome)+(x.ajNome?' + '+esc(x.ajNome):'')+(x.pct!=null?`<span class="sub">oficial ${F1.format(x.pct)}%</span>`:''):'<span class="muted">pelo nome do serviço</span>'}</td>
+      <td>${x.flags.map(f=>`<span class="chip ${/sem MO|conferir/.test(f)?'bad':'warn'}">${esc(f)}</span>`).join(' ')}</td></tr>`).join('')}
+    </tbody></table></div>
+    <div class="tools" style="margin-top:12px;align-items:flex-end">
+      <label class="small muted" style="display:flex;flex-direction:column;gap:3px;font-weight:600">O que fazer com a tabela atual<select id="impModo"><option value="att">Atualizar os que já existem e acrescentar os novos</option><option value="sub">Substituir a tabela inteira</option></select></label>
+      ${IMP.funcs.length?`<label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="impFn" checked> Atualizar o custo-hora das ${IMP.funcs.length} funções com os valores do Sienge</label>`:''}
+      <button class="pri" data-act="impAplicar">Importar ${sel} serviço(s)</button></div>
+    ${IMP.funcs.some(f=>!fnOk(f.nome))?`<p class="small muted" style="margin-top:8px">Funções novas que serão criadas: ${IMP.funcs.filter(f=>!fnOk(f.nome)).map(f=>esc(f.nome)).join(', ')}.</p>`:''}
+  </div>`;
+  return h;
+}
+function aplicarImport(){
+  const o=O(), I=IMP; if(!o||!I)return;
+  const modo=document.getElementById('impModo').value, fnBox=document.getElementById('impFn'), attFn=fnBox?fnBox.checked:false;
+  if(modo==='sub'&&o.medicoes.length&&!confirm('Substituir a tabela desliga as medições já lançadas dos serviços antigos. Continuar?'))return;
+  const r4=v=>Math.round(v*10000)/10000;
+  I.funcs.forEach(f=>{const ex=o.funcoes.find(x=>SG.norm(x.nome)===SG.norm(f.nome));if(ex){if(attFn)ex.hora=r4(f.hora)}else o.funcoes.push({id:uid(),nome:f.nome,hora:r4(f.hora)})});
+  const fid=n=>{if(!n)return '';const f=o.funcoes.find(x=>SG.norm(x.nome)===SG.norm(n));return f?f.id:''};
+  if(modo==='sub')o.servicos=[];
+  let novos=0,atu=0;
+  I.itens.filter(x=>x.sel).forEach(x=>{
+    const g=adivinhaFn(o,x.nome);
+    const of=fid(x.ofNome)||g.of, aj=x.ofNome?fid(x.ajNome):(x.pct===100?'':g.aj);
+    const ex=o.servicos.find(s=>(x.cod&&s.cod&&String(s.cod)===String(x.cod)&&SG.norm(s.un)===SG.norm(x.un))||SG.key(s.nome,s.un)===SG.key(x.nome,x.un));
+    if(ex){ex.qtd=x.qtd;ex.mo=x.mo;ex.mat=x.mat;if(!ex.cod)ex.cod=x.cod;atu++}
+    else{o.servicos.push({id:uid(),cod:x.cod,nome:x.nome,un:x.un,qtd:x.qtd,mo:x.mo,mat:x.mat,of,aj,pct:x.pct,auto:false});novos++}
+  });
+  if(I.pctRel&&Math.abs(I.pctRel-o.enc)>0.01)o.enc=I.pctRel;
+  if(/^nova obra$/i.test(o.nome.trim())&&I.obra)o.nome=I.obra;
+  IMP=null;persist(o.id);tab='precos';render();
+  toast(`${novos} serviço(s) novo(s) e ${atu} atualizado(s)`);
+}
+document.addEventListener('dragover',e=>{const d=e.target.closest&&e.target.closest('#dropSienge');if(d){e.preventDefault();d.classList.add('on')}});
+document.addEventListener('dragleave',e=>{const d=e.target.closest&&e.target.closest('#dropSienge');if(d)d.classList.remove('on')});
+document.addEventListener('drop',e=>{const d=e.target.closest&&e.target.closest('#dropSienge');if(d){e.preventDefault();d.classList.remove('on');lerArquivos(e.dataTransfer.files)}});
+
 /* ---------- ações ---------- */
 function copiar(txt,okMsg){
   const fallback=()=>{const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}t.remove();toast(ok?okMsg:'Não foi possível copiar automaticamente')};
@@ -1045,6 +1260,9 @@ document.addEventListener('click',e=>{
   if(a==='reciboMed'){const m=o&&o.medicoes.find(x=>x.id===medSel);if(m)reciboMed(o,m,b.dataset.fid||null);return}
   if(a==='reciboMeta'){const mt=o&&o.metas.find(x=>x.id===b.dataset.id);if(mt)reciboMeta(o,mt);return}
   if(a==='tab'){tab=b.dataset.v;render();return}
+  if(a==='impCancelar'){IMP=null;render();return}
+  if(a==='impTodos'||a==='impNenhum'){if(IMP)IMP.itens.forEach(x=>x.sel=a==='impTodos');render();return}
+  if(a==='impAplicar'){aplicarImport();return}
   if(a==='tema'){const ord=['auto','light','dark'],n=ord[(ord.indexOf(temaAtual())+1)%3];try{localStorage.setItem(TKEY,n)}catch(e){}aplicaTema();render();toast('Tema: '+TEMAS[n][0]);return}
   if(a==='limparFiltro'){FL.q='';FL.cls='';FL.fn='';FL.sit='';render();return}
   const mtx=b.dataset.id&&O()&&(O().metas||[]).find(x=>x.id===b.dataset.id);
@@ -1084,6 +1302,8 @@ document.addEventListener('click',e=>{
 
 document.addEventListener('change',e=>{
   const t=e.target, d=t.dataset, o=O();
+  if(t.id==='impFiles'){lerArquivos(t.files);return}
+  if(d.imp!==undefined&&IMP){IMP.itens[+d.imp].sel=t.checked;render();return}
   const neg=CAMPO_PERM.find(([k,p])=>d[k]!==undefined&&!can(p));if(neg){toast('Seu perfil não tem permissão para isso');render();return}
   if(d.us){const v=d.k==='ativo'?t.checked:t.value;fs.collection(USUARIOS).doc(d.us).set({[d.k]:v},{merge:true}).catch(err=>toast('Erro: '+err.code));return}
   if(d.uo){const [em,oid]=d.uo.split('|');const u=USERS.find(x=>x.email===em);const sel=new Set((u&&u.obras)||[]);t.checked?sel.add(oid):sel.delete(oid);
