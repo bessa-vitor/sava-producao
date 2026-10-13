@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Produção de Obra — SAVA Construtora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDEFEC; --surface:#FFFFFF; --sunk:#F5F6F4; --ink:#18202B; --muted:#5B6573; --line:#D3D8D2;
+  --navy:#1E3F8F; --navy-soft:#E3E9F6; --amber:#9A6A06; --amber-soft:#FBF0D6;
+  --green:#2D7A4C; --green-soft:#E1F1E7; --red:#B3261E; --red-soft:#F8E1DF;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --cond:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  box-sizing:border-box;color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12161C; --surface:#1A2028; --sunk:#151A21; --ink:#E6E9ED; --muted:#98A2AF; --line:#2C3440;
+  --navy:#8FAEF2; --navy-soft:#1F2B44; --amber:#E8B44A; --amber-soft:#3A2F14;
+  --green:#6BC28F; --green-soft:#16301F; --red:#EF7A72; --red-soft:#3A1A18;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161C; --surface:#1A2028; --sunk:#151A21; --ink:#E6E9ED; --muted:#98A2AF; --line:#2C3440;
+  --navy:#8FAEF2; --navy-soft:#1F2B44; --amber:#E8B44A; --amber-soft:#3A2F14;
+  --green:#6BC28F; --green-soft:#16301F; --red:#EF7A72; --red-soft:#3A1A18;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 var(--body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1280px;margin:0 auto;padding:16px 16px 48px}
+h1,h2,h3{font-family:var(--cond);font-weight:700;letter-spacing:.01em;margin:0}
+h1{font-size:28px;line-height:1.1}
+h2{font-size:22px;margin-bottom:4px}
+h3{font-size:18px}
+p{margin:0}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+input,select,textarea,button{font:inherit;color:inherit}
+input,select,textarea{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-width:0}
+textarea{width:100%;font-size:13px;font-family:ui-monospace,Consolas,monospace}
+input[type=number]{text-align:right}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--navy);outline-offset:1px}
+button{cursor:pointer;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:7px 12px;font-weight:600}
+button.pri{background:var(--navy);border-color:var(--navy);color:#fff}
+:root[data-theme="dark"] button.pri{color:#0E1420}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button.pri{color:#0E1420}}
+button.ghost{background:transparent;border-color:transparent;color:var(--muted);padding:4px 8px}
+button.ghost:hover{color:var(--red)}
+button.link{background:none;border:none;color:var(--navy);padding:0;font-weight:600}
+
+/* topo */
+.top{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:flex-end;justify-content:space-between;padding-bottom:14px;border-bottom:3px solid var(--ink)}
+.top .id p{font-size:14px;margin-top:2px}
+.obrabar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.obrabar select{font-weight:600;max-width:320px}
+.status{font-size:12px;color:var(--muted);min-height:16px;margin-top:6px;text-align:right}
+
+/* parâmetros */
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px 14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.params label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);font-weight:600}
+.params input,.params select{font-size:15px;color:var(--ink)}
+.params .wide{grid-column:span 2}
+@media (max-width:520px){.params .wide{grid-column:span 1}}
+
+/* abas */
+nav.tabs{display:flex;gap:2px;overflow-x:auto;margin:16px 0 18px;border-bottom:1px solid var(--line)}
+nav.tabs button{border:none;border-bottom:3px solid transparent;border-radius:0;background:none;padding:9px 14px;color:var(--muted);white-space:nowrap;font-family:var(--cond);font-size:17px;font-weight:600}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--navy)}
+
+.section-head{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:flex-end;margin-bottom:12px}
+.section-head p{max-width:72ch}
+.tools{display:flex;flex-wrap:wrap;gap:8px}
+
+/* tabelas */
+.scroll{overflow:auto;max-height:calc(100vh - 120px);background:var(--surface);border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-weight:600;color:var(--muted);font-size:12px;text-align:left;background:var(--sunk);position:sticky;top:0;z-index:2;white-space:nowrap;box-shadow:inset 0 -1px 0 var(--line)}
+th.num{text-align:right}
+tbody tr:hover td{background:var(--sunk)}
+td input{width:100%}
+td input.n{width:92px}
+td input.n-s{width:66px}
+td select{max-width:150px}
+td.svc{min-width:300px}
+td.svc input{font-weight:600}
+td.calc{font-weight:600}
+td.key{background:var(--navy-soft);font-weight:700;color:var(--navy)}
+tbody tr:hover td.key{background:var(--navy-soft)}
+tfoot td{font-weight:700;background:var(--sunk);border-bottom:none;position:sticky;bottom:0;z-index:2;box-shadow:inset 0 1px 0 var(--line)}
+.stick{position:sticky;left:0;z-index:1;background:var(--surface)}
+th.stick{z-index:3;background:var(--sunk)}
+tbody tr:hover td.stick{background:var(--sunk)}
+.over td.stick{background:var(--red-soft)}
+.filtros{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:flex-end;margin-bottom:10px}
+.filtros label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);font-weight:600}
+.filtros .busca{flex:1 1 240px}.filtros .busca input{width:100%}
+.filtros .cont{font-size:13px;color:var(--muted);padding-bottom:7px}
+.sub{display:block;font-size:11px;color:var(--muted);font-weight:500}
+
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.chip.ok{background:var(--green-soft);color:var(--green)}
+.chip.warn{background:var(--amber-soft);color:var(--amber)}
+.chip.bad{background:var(--red-soft);color:var(--red)}
+.chip.A{background:var(--red-soft);color:var(--red)}
+.chip.B{background:var(--amber-soft);color:var(--amber)}
+.chip.C{background:var(--green-soft);color:var(--green)}
+
+.empty{padding:28px;text-align:center;background:var(--surface);border:1px dashed var(--line);border-radius:8px}
+.empty p{margin-bottom:12px}
+
+/* medição — o "holerite" */
+.medbar{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:14px}
+.medbar label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);font-weight:600}
+.ledger{display:grid;grid-template-columns:1fr;gap:18px;margin-top:18px}
+@media (min-width:980px){.ledger{grid-template-columns:1.35fr 1fr}}
+.gauge{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.gauge .big{font-family:var(--cond);font-weight:700;font-size:52px;line-height:1;font-variant-numeric:tabular-nums}
+.gauge .row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.gauge .row:last-child{border-bottom:none}
+.bar{height:12px;background:var(--sunk);border-radius:6px;overflow:hidden;margin:12px 0 4px;position:relative;border:1px solid var(--line)}
+.bar i{display:block;height:100%}
+.bar .mark{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.slips{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.slip{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--navy);border-radius:6px;padding:12px 14px}
+.slip.low{border-left-color:var(--amber)}
+.slip h3{font-size:19px}
+.slip .fn{font-size:13px;color:var(--muted);margin-bottom:8px}
+.slip .l{display:flex;justify-content:space-between;gap:8px;font-size:14px;padding:2px 0;font-variant-numeric:tabular-nums}
+.slip .pay{font-family:var(--cond);font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:6px;color:var(--navy)}
+.slip input{width:70px;padding:2px 6px}
+.note{font-size:13px;background:var(--amber-soft);color:var(--ink);border-radius:6px;padding:8px 10px;margin-top:10px}
+.note.bad{background:var(--red-soft)}
+.over td{background:var(--red-soft)!important}
+
+.grid2{display:grid;grid-template-columns:1fr;gap:22px}
+@media (min-width:900px){.grid2{grid-template-columns:1fr 1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.card h3{margin-bottom:6px}
+.card p{margin-bottom:10px}
+.abc-bar{height:8px;background:var(--navy);border-radius:4px;min-width:2px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0}
+.legend div{font-variant-numeric:tabular-nums}
+.legend b{font-family:var(--cond);font-size:22px;display:block}
+ol.howto{padding-left:20px;margin:6px 0 0}
+ol.howto li{margin-bottom:4px}
+.quick{display:grid;grid-template-columns:2.4fr .6fr 1fr 1fr auto;gap:8px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:12px}
+.quick label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);font-weight:600}
+@media (max-width:700px){.quick{grid-template-columns:1fr 1fr}.quick label:first-child{grid-column:span 2}}
+.obras{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.obra{background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--navy);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.obra.sel{border-top-color:var(--green)}
+.obra h3{font-size:21px}
+.obra .l{display:flex;justify-content:space-between;gap:8px;font-size:14px;font-variant-numeric:tabular-nums;border-bottom:1px solid var(--line);padding:3px 0}
+.obra .pct{font-family:var(--cond);font-size:34px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.hint{font-size:12px;color:var(--muted);font-weight:400}
+.metas{display:flex;flex-direction:column;gap:16px}
+.meta{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--navy);border-radius:6px;padding:14px 16px}
+.meta.late{border-left-color:var(--red)}.meta.done{border-left-color:var(--green)}.meta.eval{border-left-color:var(--amber)}
+.meta-head{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end;margin-bottom:12px}
+.meta-head label,.crit label,.pesos label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);font-weight:600}
+.meta-head .nm{flex:1 1 260px}.meta-head .nm input{font-weight:700;font-size:17px;width:100%}
+.meta-grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:980px){.meta-grid{grid-template-columns:1.3fr 1fr}}
+.meta h4{font-family:var(--cond);font-size:16px;margin:0 0 6px}
+.team{display:flex;flex-direction:column;gap:4px}
+.team .p{display:flex;align-items:center;gap:8px;justify-content:space-between;font-size:14px;padding:3px 0;border-bottom:1px solid var(--line)}
+.team .p label{display:flex;align-items:center;gap:8px;flex-direction:row;color:var(--ink);font-size:14px;font-weight:500}
+.team input[type=text]{width:60px;padding:2px 6px}
+.crit{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.crit .c{display:flex;flex-direction:row;gap:8px;align-items:center;font-size:14px;color:var(--ink);font-weight:500}
+.prize{font-family:var(--cond);font-size:38px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;color:var(--navy)}
+.pesos{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.pesos input{width:80px}
+.mode{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:14px}
+.mode>div{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font-size:14px}
+.mode>div.on{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.mode b{font-family:var(--cond);font-size:17px;display:block}
+.tema{display:inline-flex;align-items:center;gap:6px}
+.tema svg{width:16px;height:16px}
+input:disabled,select:disabled,textarea:disabled{background:var(--sunk);color:var(--muted);cursor:not-allowed;opacity:.85}
+.login{max-width:400px;margin:8vh auto 0;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--navy);border-radius:8px;padding:26px 24px}
+.login h1{margin-bottom:4px}.login p{margin-bottom:16px}
+.login label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-weight:600;margin-bottom:12px}
+.login input{font-size:16px;padding:9px 10px}
+.login .erro{background:var(--red-soft);color:var(--red);border-radius:6px;padding:8px 10px;font-size:14px;margin-bottom:12px}
+.user{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
+.user .chip{background:var(--navy-soft);color:var(--navy)}
+.uform{display:grid;grid-template-columns:1.6fr 1.2fr 1fr 1fr auto;gap:8px;align-items:end;margin-bottom:12px}
+.uform label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);font-weight:600}
+@media (max-width:760px){.uform{grid-template-columns:1fr 1fr}}
+details.obsel summary{cursor:pointer;color:var(--navy);font-weight:600;font-size:13px}
+details.obsel label{display:flex;gap:6px;align-items:center;font-size:13px;padding:2px 0}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:6px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+/* =====================================================================
+   CONFIGURAÇÃO — preencha uma única vez
+   1) Firebase da SAVA: Console do Firebase › Configurações do projeto ›
+      Seus apps › App da Web › "Configuração do SDK" (copie os valores).
+   2) SAVA_ADMINS: e-mails que entram sempre como Administrador.
+   3) SAVA_EMPRESA: dados que saem no cabeçalho dos recibos em PDF.
+   ===================================================================== */
+window.SAVA_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyABhnt4qZhpZT7Jge9LkZ4eXOWsDy81E64",
+  authDomain: "sava-gerencial.firebaseapp.com",
+  projectId: "sava-gerencial",
+  storageBucket: "sava-gerencial.firebasestorage.app",
+  messagingSenderId: "85969861440",
+  appId: "1:85969861440:web:ff59db2f30d0f6fc0598a5"
+};
+window.SAVA_ADMINS = ["vitorbessa@savaconstrutora.com.br"];
+window.SAVA_EMPRESA = {
+  nome: "SAVA CONSTRUTORA LTDA",
+  cnpj: "",
+  endereco: "",
+  cidade: "Aracaju/SE"
+};
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script>
+(function(){
+'use strict';
+const KEY='calcProducaoObra_v1', TKEY='calcProducaoTema';
+const TEMAS={auto:['Automático','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>'],
+  light:['Claro','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'],
+  dark:['Escuro','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>']};
+function temaAtual(){try{return localStorage.getItem(TKEY)||'auto'}catch(e){return 'auto'}}
+function aplicaTema(){const t=temaAtual();if(t==='auto')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=t}
+aplicaTema();
+const DEF_FUNCOES=[
+  ['Pedreiro',18.3274],['Servente',13.5044],['Carpinteiro',19.5104],['Armador',19.5104],
+  ['Ajudante',13.4862],['Pintor',19.4922],['Encanador',19.9836],['Operador de betoneira',13.9594]
+];
+let S={obras:{},atual:null};
+let detalhes=false; const FL={q:'',cls:'',fn:'',sit:''}; let db=null, tab='obras', medSel=null, abcBase='total', firstSnap=true;
+const dirty={}, timers={}, inflight={}, again={};
+
+/* ---------- utilidades ---------- */
+const uid=()=>Math.random().toString(36).slice(2,10);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nf=(d)=>new Intl.NumberFormat('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const F2=nf(2),F4=nf(4),F1=nf(1),F0=nf(0);
+const m2=n=>F2.format(n||0), m4=n=>F4.format(n||0);
+const brl=n=>'R$ '+m2(n);
+function num(v){
+  if(typeof v==='number')return v;
+  let s=String(v??'').replace(/R\$|\s|%/g,'');
+  if(!s)return 0;
+  if(s.includes(','))s=s.replace(/\./g,'').replace(',','.');
+  const n=parseFloat(s);return isFinite(n)?n:0;
+}
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2200)}
+function setStatus(t){const e=document.getElementById('status');if(e)e.textContent=t;setStatus.last=t}
+
+function novaObra(nome){
+  const funcoes=DEF_FUNCOES.map(([n,h])=>({id:uid(),nome:n,hora:h}));
+  return {id:uid(),nome:nome||'Nova obra',regime:'clt',enc:82,imp:6,margem:15,ret:10,horasDia:8.8,diasPadrao:11,modelo:'misto',premioPct:10,pesos:{prazo:50,qual:30,org:20},metas:[],
+    funcoes,servicos:[],funcionarios:[],medicoes:[],atualizado:Date.now()};
+}
+const O=()=>S.obras[S.atual]||null;
+function normaliza(o){
+  if(!o)return o;
+  if(o.diasPadrao==null)o.diasPadrao=o.horas&&o.horasDia?Math.round(o.horas/o.horasDia):11;
+  if(o.horasDia==null)o.horasDia=8.8;
+  if(!o.modelo)o.modelo='producao';
+  if(o.premioPct==null)o.premioPct=10;
+  if(!o.pesos)o.pesos={prazo:50,qual:30,org:20};
+  if(!o.metas)o.metas=[];
+  (o.medicoes||[]).forEach(m=>{if(m.diasPadrao==null)m.diasPadrao=o.diasPadrao;m.dias=m.dias||{}});
+  return o;
+}
+const REGRAS=[[/pintur|emassa|massa corrida|manta l|asf[aá]lt|selador|textura/i,'Pintor',''],
+  [/forma|escoramento|madeira/i,'Carpinteiro','Ajudante'],[/a[cç]o ca|armadur|ferrag|tela/i,'Armador','Servente'],
+  [/vaso|lou[cç]a|tubula|hidr[aá]ul|esgoto|registro|caixa d|lavat|mict|ralo/i,'Encanador','Servente'],
+  [/entulho|limpeza|apiloa|escava|reaterro|carga/i,'Servente','']];
+function adivinhaFn(o,nome){
+  const r=REGRAS.find(([re])=>re.test(nome||''))||[null,'Pedreiro','Servente'];
+  const of=o.funcoes.find(f=>f.nome.toLowerCase()===r[1].toLowerCase())||o.funcoes[0];
+  const aj=r[2]?o.funcoes.find(f=>f.nome.toLowerCase()===r[2].toLowerCase()):null;
+  return {of:of?of.id:'',aj:aj?aj.id:''};
+}
+
+/* ---------- Firebase: login, perfis e dados ---------- */
+const CFG=window.SAVA_FIREBASE_CONFIG||{};
+const OBRAS='producao_obras', USUARIOS='producao_usuarios';
+let fs=null, auth=null, USER=null, PERFIL=null, authPronto=false, loginErro='', USERS=[];
+const saved={}, subs={}; let unsubObras=[], unsubPerfil=null, unsubUsers=null;
+const PERMS={admin:['obras','base','medir','fechar','metas','usuarios'],engenheiro:['obras','base','medir','fechar','metas'],encarregado:['medir','metas'],visualizacao:[]};
+const PERFIS={admin:'Administrador',engenheiro:'Engenheiro',encarregado:'Encarregado / Mestre',visualizacao:'Visualização'};
+const emailDe=u=>String(u&&u.email||'').trim().toLowerCase();
+const adminFixo=e=>(window.SAVA_ADMINS||[]).map(x=>x.toLowerCase()).includes(e);
+const can=p=>!!PERFIL&&PERFIL.ativo!==false&&(PERMS[PERFIL.perfil]||[]).includes(p);
+function stable(v){if(Array.isArray(v))return '['+v.map(stable).join(',')+']';if(v&&typeof v==='object')return '{'+Object.keys(v).filter(k=>v[k]!==undefined).sort().map(k=>JSON.stringify(k)+':'+stable(v[k])).join(',')+'}';return JSON.stringify(v===undefined?null:v)}
+const limpo=v=>JSON.parse(JSON.stringify(v));
+function partes(o){const {medicoes,metas,...base}=o;return {base,medicoes:medicoes||[],metas:metas||[]}}
+const svDe=id=>saved[id]||(saved[id]={base:null,med:{},meta:{}});
+
+function persist(id){
+  dirty[id]=true; clearTimeout(timers[id]);
+  timers[id]=setTimeout(()=>flush(id),600);
+  setStatus('Salvando…');
+}
+async function flush(id){
+  if(!fs)return;
+  if(inflight[id]){again[id]=true;return}
+  inflight[id]=true;
+  const o=S.obras[id], sv=svDe(id), ref=fs.collection(OBRAS).doc(id);
+  try{
+    if(!o){
+      const b=fs.batch();
+      Object.keys(sv.med).forEach(k=>b.delete(ref.collection('medicoes').doc(k)));
+      Object.keys(sv.meta).forEach(k=>b.delete(ref.collection('metas').doc(k)));
+      b.delete(ref); await b.commit();
+      (subs[id]||[]).forEach(f=>f()); delete subs[id]; delete saved[id];
+    }else{
+      const p=partes(o), b=fs.batch(), depois=[]; let n=0;
+      const bj=stable(p.base);
+      if(bj!==sv.base&&can('base')){b.set(ref,limpo(p.base));depois.push(()=>sv.base=bj);n++}
+      [['medicoes',p.medicoes,sv.med],['metas',p.metas,sv.meta]].forEach(([col,arr,map])=>{
+        const ids=new Set();
+        arr.forEach(x=>{ids.add(x.id);const j=stable(x);if(map[x.id]!==j){b.set(ref.collection(col).doc(x.id),limpo(x));depois.push(()=>map[x.id]=j);n++}});
+        Object.keys(map).forEach(k=>{if(!ids.has(k)){b.delete(ref.collection(col).doc(k));depois.push(()=>delete map[k]);n++}});
+      });
+      if(n){await b.commit();depois.forEach(f=>f())}
+      if(!subs[id])assinarSub(id);
+    }
+    setStatus('Salvo às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}));
+  }catch(e){
+    setStatus('Não foi possível salvar ('+(e.code||e.message)+')');
+    if(e.code==='permission-denied')toast('Seu perfil não tem permissão para essa alteração');
+  }
+  inflight[id]=false;
+  if(again[id]){again[id]=false;flush(id)}else dirty[id]=false;
+}
+function recebeBase(id,data){
+  const sv=svDe(id), cur=S.obras[id];
+  const nova=normaliza({...limpo(data),medicoes:cur?cur.medicoes:[],metas:cur?cur.metas:[]});
+  const remoto=stable(partes(nova).base);
+  if(cur&&(dirty[id]||inflight[id])&&stable(partes(cur).base)!==sv.base){sv.base=remoto;return}
+  sv.base=remoto;
+  S.obras[id]=nova;
+  if(!subs[id])assinarSub(id);
+  if(!S.atual||!S.obras[S.atual])S.atual=id;
+  agendaRender();
+}
+function removeLocal(id){(subs[id]||[]).forEach(f=>f());delete subs[id];delete saved[id];delete S.obras[id];if(S.atual===id)S.atual=Object.keys(S.obras)[0]||null;agendaRender()}
+function assinarSub(id){
+  const ref=fs.collection(OBRAS).doc(id);
+  subs[id]=['medicoes','metas'].map(col=>ref.collection(col).onSnapshot(snap=>{
+    const o=S.obras[id]; if(!o)return;
+    const map=col==='medicoes'?svDe(id).med:svDe(id).meta;
+    const local=Object.fromEntries((o[col]||[]).map(x=>[x.id,x]));
+    const novo=[], ids=new Set();
+    snap.docs.forEach(d=>{const data=d.data(), l=local[d.id];ids.add(d.id);
+      if(col==='medicoes'){if(data.diasPadrao==null)data.diasPadrao=o.diasPadrao;data.dias=data.dias||{};if(!data.linhas)data.linhas=[]}
+      if(col==='metas'){data.linhas=data.linhas||[];data.equipe=data.equipe||{};data.crit=data.crit||{}}
+      if(l&&stable(l)!==map[d.id]&&(dirty[id]||inflight[id]))novo.push(l);else novo.push(data);
+      map[d.id]=stable(data)});
+    (o[col]||[]).forEach(x=>{if(!ids.has(x.id)&&map[x.id]===undefined)novo.push(x)});
+    Object.keys(map).forEach(k=>{if(!ids.has(k))delete map[k]});
+    novo.sort((a,b)=>(a.criado||0)-(b.criado||0));
+    o[col]=novo;
+    agendaRender();
+  },e=>setStatus('Erro ao ler '+col+' ('+e.code+')')));
+}
+function limparAssinaturas(){
+  unsubObras.forEach(f=>f());unsubObras=[];
+  Object.keys(subs).forEach(id=>subs[id].forEach(f=>f()));
+  Object.keys(subs).forEach(k=>delete subs[k]);Object.keys(saved).forEach(k=>delete saved[k]);
+  if(unsubUsers){unsubUsers();unsubUsers=null}
+  S={obras:{},atual:null};
+}
+function assinarObras(){
+  limparAssinaturas();
+  try{S.atual=localStorage.getItem('calcProducaoAtual')||null}catch(e){}
+  const lista=(PERFIL.obras||[]).filter(Boolean);
+  const erro=e=>setStatus('Sem acesso às obras ('+e.code+')');
+  if(PERFIL.perfil==='admin'||!lista.length){
+    unsubObras.push(fs.collection(OBRAS).onSnapshot(snap=>{
+      const ids=new Set();snap.docs.forEach(d=>{ids.add(d.id);recebeBase(d.id,d.data())});
+      Object.keys(S.obras).forEach(id=>{if(!ids.has(id)&&!dirty[id]&&!inflight[id]&&saved[id]&&saved[id].base!==null)removeLocal(id)});
+      setStatus('Sincronizado');agendaRender();
+    },erro));
+  }else{
+    lista.forEach(id=>unsubObras.push(fs.collection(OBRAS).doc(id).onSnapshot(d=>{if(d.exists)recebeBase(id,d.data());else if(S.obras[id]&&saved[id])removeLocal(id);setStatus('Sincronizado');agendaRender()},erro)));
+  }
+  if(can('usuarios'))unsubUsers=fs.collection(USUARIOS).onSnapshot(snap=>{USERS=snap.docs.map(d=>({...d.data(),email:d.id})).sort((a,b)=>(a.nome||a.email).localeCompare(b.nome||b.email));agendaRender()},()=>{});
+}
+let rT=null, rPend=false;
+const editando=()=>{const a=document.activeElement;return a&&a.closest&&a.closest('#app')&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)&&a.id!=='fBusca'&&a.type!=='checkbox'};
+function agendaRender(){clearTimeout(rT);rT=setTimeout(()=>{if(editando()){rPend=true;return}render()},80)}
+document.addEventListener('focusout',()=>{if(rPend)setTimeout(()=>{if(!editando()){rPend=false;render()}},60)});
+
+function iniciar(){
+  if(!window.firebase||!CFG.apiKey||/COLE/.test(CFG.apiKey)){authPronto=true;render();return}
+  firebase.initializeApp(CFG); auth=firebase.auth(); fs=firebase.firestore();
+  fs.enablePersistence({synchronizeTabs:true}).catch(()=>{});
+  auth.onAuthStateChanged(u=>{
+    USER=u; PERFIL=null; if(unsubPerfil){unsubPerfil();unsubPerfil=null} limparAssinaturas();
+    if(!u){authPronto=true;render();return}
+    const em=emailDe(u);
+    unsubPerfil=fs.collection(USUARIOS).doc(em).onSnapshot(d=>{
+      let p=d.exists?d.data():null;
+      if(adminFixo(em))p={...(p||{}),nome:(p&&p.nome)||u.displayName||em,perfil:'admin',ativo:true,obras:[]};
+      const antes=stable(PERFIL); PERFIL=p; authPronto=true;
+      if(stable(p)!==antes){if(p&&p.ativo!==false)assinarObras();else limparAssinaturas()}
+      render();
+    },e=>{authPronto=true;loginErro='Não foi possível ler seu perfil ('+e.code+'). Verifique as regras do Firestore.';render()});
+  });
+}
+const ERROS_AUTH={'auth/invalid-credential':'E-mail ou senha incorretos.','auth/wrong-password':'E-mail ou senha incorretos.','auth/user-not-found':'E-mail não cadastrado.','auth/invalid-email':'E-mail inválido.','auth/too-many-requests':'Muitas tentativas. Aguarde alguns minutos.','auth/network-request-failed':'Sem conexão com a internet.','auth/email-already-in-use':'Esse e-mail já tem login.','auth/weak-password':'A senha precisa ter pelo menos 6 caracteres.'};
+const msgAuth=e=>ERROS_AUTH[e.code]||('Erro: '+(e.code||e.message));
+function vLogin(){
+  if(!window.firebase||!CFG.apiKey||/COLE/.test(CFG.apiKey))return `<div class="login"><h1>Configuração pendente</h1><p class="muted">Abra este arquivo num editor de texto e preencha o bloco <b>SAVA_FIREBASE_CONFIG</b> no topo com os dados do Firebase da SAVA.</p></div>`;
+  return `<div class="login"><h1>Produção de obra</h1><p class="muted">${esc((window.SAVA_EMPRESA||{}).nome||'')} · entre com o mesmo e-mail e senha dos outros sistemas.</p>
+    ${loginErro?`<div class="erro" role="alert">${esc(loginErro)}</div>`:''}
+    <label>E-mail<input id="lEmail" type="email" autocomplete="username" inputmode="email"></label>
+    <label>Senha<input id="lSenha" type="password" autocomplete="current-password"></label>
+    <div class="tools" style="justify-content:space-between;align-items:center"><button class="pri" data-act="entrar">Entrar</button><button class="link" data-act="resetSenha">Esqueci minha senha</button></div></div>`;
+}
+/* ---------- cálculos ---------- */
+const fnById=(o,id)=>o.funcoes.find(f=>f.id===id);
+const pessoa=(o,id)=>o.funcionarios.find(f=>f.id===id);
+const horaSem=(o,f)=>f?num(f.hora)/(1+o.enc/100):0;
+function calc(o,s){
+  const mo=num(s.mo);
+  const teto=o.regime==='clt'?mo/(1+o.enc/100):mo*(1-o.imp/100);
+  const md=o.modelo||'producao', pp=md==='producao'?0:Math.max(0,num(o.premioPct))/100;
+  const preco=md==='meta'?0:Math.max(0,teto*(1-o.margem/100-pp));
+  const premioU=teto*pp;
+  const of=fnById(o,s.of), aj=fnById(o,s.aj);
+  const auto=s.pct==null||s.pct==='';
+  const hO=horaSem(o,of), hA=aj?horaSem(o,aj):0;
+  const pct=auto?(hA>0?hO/(hO+hA)*100:100):Math.min(100,Math.max(0,num(s.pct)));
+  const pOf=preco*pct/100, pAj=preco-pOf;
+  const dia=o.horasDia*(horaSem(o,of)+(pct<100?horaSem(o,aj):0));
+  return {teto,preco,premioU,pOf,pAj,pct,auto,eq:preco>0?dia/preco:null,verba:teto*num(s.qtd),
+    moTot:mo*num(s.qtd),matTot:num(s.mat)*num(s.qtd)};
+}
+function medidoAcum(o,sid,exceptMed){
+  let q=0;
+  if(o.modelo==='meta'){(o.metas||[]).forEach(mt=>{if(mt.encerrada)mt.linhas.forEach(l=>{if(l.sid===sid)q+=num(l.qtd)})});return q}
+  o.medicoes.forEach(m=>{if(m.id===exceptMed)return;m.linhas.forEach(l=>{if(l.sid===sid)q+=num(l.qtd)})});return q;
+}
+const hoje=()=>new Date().toISOString().slice(0,10);
+const diasEntre=(a,b)=>Math.round((new Date(b+'T12:00')-new Date(a+'T12:00'))/864e5);
+function calcMeta(o,mt){
+  let verba=0,sug=0;
+  const linhas=mt.linhas.map(l=>{const s=o.servicos.find(x=>x.id===l.sid);if(!s)return {l,s:null,v:0,p:0};const c=calc(o,s),q=num(l.qtd);verba+=q*c.teto;sug+=q*c.premioU;return {l,s,c,q,v:q*c.teto,p:q*c.premioU}});
+  const manual=mt.premio!=null&&mt.premio!=='';
+  const premio=manual?num(mt.premio):sug;
+  const atraso=mt.entrega&&mt.prazo?diasEntre(mt.prazo,mt.entrega):null;
+  const crit=mt.crit||{};
+  const prazoOk=crit.prazo!=null?crit.prazo:(atraso!=null?atraso<=0:false);
+  const P=o.pesos, tot=num(P.prazo)+num(P.qual)+num(P.org)||1;
+  const pct=((prazoOk?num(P.prazo):0)+(crit.qual?num(P.qual):0)+(crit.org?num(P.org):0))/tot*100;
+  const ganho=mt.entrega?premio*pct/100:0;
+  const eq=Object.entries(mt.equipe||{}).map(([fid,d])=>{const pe=pessoa(o,fid),f=pe?fnById(o,pe.funcao):null;return {fid,nome:pe?pe.nome:'(removido)',funcao:f?f.nome:'—',dias:num(d),w:num(d)*(horaSem(o,f)||1)}});
+  const W=eq.reduce((a,x)=>a+x.w,0)||1; eq.forEach(x=>x.valor=ganho*x.w/W);
+  let st='and',stTxt='Em andamento';
+  if(mt.encerrada){st='done';stTxt='Encerrada e paga'}
+  else if(mt.entrega){st='eval';stTxt='Entregue: avaliar e encerrar'}
+  else if(mt.prazo&&hoje()>mt.prazo){st='late';stTxt=`Atrasada ${diasEntre(mt.prazo,hoje())} dia(s)`}
+  return {linhas,verba,sug,premio,manual,atraso,prazoOk,pct,ganho,eq,st,stTxt,acima:premio>sug+0.005};
+}
+function premiosPagos(o){return (o.metas||[]).filter(m=>m.encerrada).reduce((a,m)=>a+calcMeta(o,m).ganho,0)}
+function calcMed(o,m){
+  const pes={}; let naoDist=0, moOrc=0, prodTot=0; const alertas=[];
+  const add=(fid,v,s)=>{if(!fid){naoDist+=v;return}(pes[fid]=pes[fid]||{prod:0,itens:[]}).prod+=v;pes[fid].itens.push(s)};
+  const linhas=m.linhas.map(l=>{
+    const s=o.servicos.find(x=>x.id===l.sid); if(!s)return {l,s:null,valor:0};
+    const c=calc(o,s), q=num(l.qtd), valor=q*c.preco;
+    moOrc+=q*num(s.mo); prodTot+=valor;
+    add(l.of,q*c.pOf,{nome:s.nome,un:s.un,q,unit:c.pOf,papel:'Oficial'}); if(c.pAj>0)add(l.aj,q*c.pAj,{nome:s.nome,un:s.un,q,unit:c.pAj,papel:'Ajudante'});
+    const outras=medidoAcum(o,s.id,m.id), over=outras+q>num(s.qtd)+1e-9;
+    if(over)alertas.push(`${s.nome}: medido acumulado (${m2(outras+q)} ${s.un}) passa do orçado (${m2(num(s.qtd))} ${s.un}).`);
+    if(c.teto<=0)alertas.push(`${s.nome}: não tem mão de obra no orçamento. Não há verba para pagar produção.`);
+    return {l,s,c,q,valor,over,saldo:num(s.qtd)-outras};
+  });
+  let custo=0;
+  const lista=Object.entries(pes).map(([fid,p])=>{
+    const pe=pessoa(o,fid), f=pe?fnById(o,pe.funcao):null;
+    const dias=m.dias&&m.dias[fid]!=null?num(m.dias[fid]):num(m.diasPadrao??o.diasPadrao);
+    const horas=dias*o.horasDia;
+    const sal=o.regime==='clt'?horaSem(o,f)*horas:0;
+    const bonif=Math.max(0,p.prod-sal), ret=bonif*o.ret/100, pagar=bonif-ret;
+    custo+=o.regime==='clt'?Math.max(sal,p.prod)*(1+o.enc/100):p.prod/(1-o.imp/100);
+    return {fid,itens:p.itens,cpf:pe?pe.cpf:'',nome:pe?pe.nome:'(removido)',funcao:f?f.nome:'—',dias,horas,sal,prod:p.prod,bonif,ret,pagar,low:o.regime==='clt'&&p.prod<sal};
+  }).sort((a,b)=>a.nome.localeCompare(b.nome));
+  return {linhas,lista,naoDist,moOrc,custo,prodTot,alertas,ratio:moOrc>0?custo/moOrc:0};
+}
+
+/* ---------- render ---------- */
+function render(){
+  const app=document.getElementById('app');
+  if(!authPronto){app.innerHTML='<div class="empty" style="margin-top:12vh"><p class="muted">Carregando…</p></div>';return}
+  if(!USER){app.innerHTML=vLogin();const e=document.getElementById('lEmail');if(e)e.focus();return}
+  if(!PERFIL||PERFIL.ativo===false){app.innerHTML=`<div class="login"><h1>Sem acesso</h1><p class="muted">Você entrou como <b>${esc(USER.email)}</b>, mas ainda não tem perfil liberado na Produção de obra. Peça ao administrador para cadastrar seu e-mail na aba Usuários.</p><button data-act="sair">Sair</button></div>`;return}
+  const o=O();
+  const obras=Object.values(S.obras).sort((a,b)=>a.nome.localeCompare(b.nome));
+  let h=`<header class="top"><div class="id"><h1>Produção de obra</h1>
+    <p class="muted">Tabela de preços por serviço, medição da quinzena e bonificação por funcionário, com teto tirado da mão de obra orçada.</p></div>
+    <div><div class="obrabar">
+      ${obras.length?`<label class="small muted" for="selObra">Obra</label><select id="selObra" data-act="obra">${obras.map(x=>`<option value="${x.id}" ${x.id===S.atual?'selected':''}>${esc(x.nome)}</option>`).join('')}</select>`:''}
+      <button class="tema" data-act="tema" title="Trocar tema: automático, claro ou escuro" aria-label="Tema: ${TEMAS[temaAtual()][0]}. Clique para trocar">${TEMAS[temaAtual()][1]}${TEMAS[temaAtual()][0]}</button>
+      ${can('obras')?`<button class="pri" data-act="novaObra">Nova obra</button>`:''}
+      ${o&&can('obras')?`<button data-act="dupObra">Duplicar</button><button class="ghost" data-act="delObra">Excluir obra</button>`:''}
+    </div><div class="status"><span class="user">${esc(PERFIL.nome||USER.email)} <span class="chip">${PERFIS[PERFIL.perfil]||''}</span></span> · <button class="link" data-act="sair">Sair</button> · <span id="status">${esc(setStatus.last||'')}</span></div></div></header>`;
+  if(!o){
+    if(tab==='usuarios'&&can('usuarios')){app.innerHTML=h+'<main style="margin-top:18px">'+vUsuarios()+'</main>';return}
+    app.innerHTML=h+`<div class="empty" style="margin-top:24px">${can('obras')?`<p>Nenhuma obra cadastrada ainda. Crie uma obra e depois cole as composições do Sienge na aba Importar.</p><button class="pri" data-act="novaObra">Criar primeira obra</button>`:`<p>Nenhuma obra liberada para o seu perfil. Fale com o administrador.</p>`}
+    ${can('usuarios')?`<p style="margin-top:12px"><button data-act="tab" data-v="usuarios">Cadastrar usuários</button></p>`:''}</div>`;return}
+  if(tab!=='obras'&&tab!=='usuarios')h+=`<section class="params" aria-label="Parâmetros da obra">
+    <label class="wide">Nome da obra<input data-p="nome" value="${esc(o.nome)}"></label>
+    <label>Regime de pagamento<select data-p="regime"><option value="clt" ${o.regime==='clt'?'selected':''}>CLT (produção + salário)</option><option value="emp" ${o.regime==='emp'?'selected':''}>Empreiteiro com nota</option></select></label>
+    ${o.regime==='clt'?`<label>Encargos sociais (%)<input type="number" step="0.01" data-p="enc" value="${o.enc}"></label>`:`<label>Impostos da nota (%)<input type="number" step="0.01" data-p="imp" value="${o.imp}"></label>`}
+    <label>Como a equipe ganha<select data-p="modelo"><option value="producao" ${o.modelo==='producao'?'selected':''}>Só por produção</option><option value="misto" ${o.modelo==='misto'?'selected':''}>Produção + prêmio por meta</option><option value="meta" ${o.modelo==='meta'?'selected':''}>Só prêmio fixo por meta</option></select></label>
+    ${o.modelo!=='meta'?`<label>Margem de segurança (%)<input type="number" step="0.5" data-p="margem" value="${o.margem}"></label>`:''}
+    ${o.modelo!=='producao'?`<label>Fundo de prêmios (% do teto)<input type="number" step="0.5" data-p="premioPct" value="${o.premioPct}"></label>`:''}
+    <label>Retenção até a entrega (%)<input type="number" step="0.5" data-p="ret" value="${o.ret}"></label>
+    ${o.regime==='clt'?`<label>Dias úteis da quinzena<input type="number" step="1" data-p="diasPadrao" value="${o.diasPadrao}"><span class="hint">padrão das novas medições</span></label>`:''}
+    <label>Jornada diária (h)<input type="number" step="0.1" data-p="horasDia" value="${o.horasDia}"><span class="hint">44h ÷ 5 dias = 8,8</span></label>
+  </section>`;
+  const tabs=[['obras','Minhas obras'],['precos','Tabela de preços'],...(o.modelo!=='meta'?[['medicao','Medição e bonificação']]:[]),...(o.modelo!=='producao'?[['metas','Metas por setor']]:[]),...(can('usuarios')?[['usuarios','Usuários']]:[]),['saldo','Saldo da obra'],['abc','Curva ABC'],['equipe','Equipe e funções'],['importar','Importar e backup']];
+  h+=`<nav class="tabs" role="tablist">${tabs.map(([k,t])=>`<button role="tab" aria-selected="${tab===k}" data-act="tab" data-v="${k}">${t}</button>`).join('')}</nav><main>`;
+  if(!tabs.some(([k])=>k===tab))tab='precos';
+  h+=({usuarios:vUsuarios,metas:vMetas,obras:vObras,precos:vPrecos,medicao:vMedicao,saldo:vSaldo,abc:vABC,equipe:vEquipe,importar:vImportar}[tab])(o);
+  app.innerHTML=h+'</main>';
+  aplicaPermissoes();
+}
+const optsFn=(o,sel,blank)=>(blank?`<option value="">${blank}</option>`:'')+o.funcoes.map(f=>`<option value="${f.id}" ${f.id===sel?'selected':''}>${esc(f.nome)}</option>`).join('');
+const optsPe=(o,sel,blank)=>`<option value="">${blank||'—'}</option>`+o.funcionarios.map(p=>`<option value="${p.id}" ${p.id===sel?'selected':''}>${esc(p.nome)}</option>`).join('');
+
+function abcMap(o){
+  const rows=o.servicos.map(s=>{const c=calc(o,s);return {id:s.id,v:c.moTot+c.matTot}}).sort((a,b)=>b.v-a.v);
+  const tot=rows.reduce((a,r)=>a+r.v,0)||1; let acc=0; const m={};
+  rows.forEach(r=>{const antes=acc/tot*100;acc+=r.v;m[r.id]=r.v<=0?'C':antes<80?'A':antes<95?'B':'C'});return m;
+}
+const semAcento=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+function passa(o,s,abc){
+  if(FL.q){const termos=semAcento(FL.q).split(/\s+/).filter(Boolean);const alvo=semAcento((s.cod||'')+' '+s.nome+' '+s.un);if(!termos.every(t=>alvo.includes(t)))return false}
+  if(FL.cls&&abc[s.id]!==FL.cls)return false;
+  if(FL.fn&&s.of!==FL.fn&&s.aj!==FL.fn)return false;
+  if(FL.sit){const c=calc(o,s),med=medidoAcum(o,s.id,null),q=num(s.qtd);
+    if(FL.sit==='semverba'&&c.teto>0)return false;
+    if(FL.sit==='naoini'&&med>0)return false;
+    if(FL.sit==='andamento'&&!(med>0&&med<q))return false;
+    if(FL.sit==='concl'&&!(q>0&&med>=q))return false;
+    if(FL.sit==='acima'&&!(med>q+1e-9))return false;}
+  return true;
+}
+const filtroAtivo=()=>!!(FL.q||FL.cls||FL.fn||FL.sit);
+function filtroBar(o,mostrados){
+  return `<div class="filtros" role="search">
+    <label class="busca">Buscar serviço<input type="search" id="fBusca" data-flt="q" value="${esc(FL.q)}" placeholder="Nome, código ou unidade. Ex.: reboco, 7273, m3" autocomplete="off"></label>
+    <label>Curva ABC<select data-flt="cls"><option value="">Todas</option>${['A','B','C'].map(k=>`<option ${FL.cls===k?'selected':''}>${k}</option>`).join('')}</select></label>
+    <label>Função<select data-flt="fn"><option value="">Todas</option>${o.funcoes.map(f=>`<option value="${f.id}" ${FL.fn===f.id?'selected':''}>${esc(f.nome)}</option>`).join('')}</select></label>
+    <label>Situação<select data-flt="sit">${[['','Todas'],['naoini','Não iniciados'],['andamento','Em execução'],['concl','Concluídos'],['acima','Acima do orçado'],['semverba','Sem verba de MO']].map(([v,t])=>`<option value="${v}" ${FL.sit===v?'selected':''}>${t}</option>`).join('')}</select></label>
+    <span class="cont">${mostrados} de ${o.servicos.length} serviço(s)</span>
+    ${filtroAtivo()?'<button class="link" data-act="limparFiltro">Limpar filtros</button>':''}
+  </div>`;
+}
+function resumoObra(o){
+  let verba=0,usado=0,moTot=0; o.servicos.forEach(s=>{const c=calc(o,s);verba+=c.verba;moTot+=c.moTot;usado+=medidoAcum(o,s.id,null)*c.preco});
+  let custo=0,moMed=0; o.medicoes.forEach(m=>{const r=calcMed(o,m);custo+=r.custo;moMed+=r.moOrc});
+  const ult=o.medicoes[o.medicoes.length-1];
+  return {verba,usado,moTot,custo,moMed,ult,premios:premiosPagos(o)};
+}
+function vObras(){
+  const lista=Object.values(S.obras).sort((a,b)=>a.nome.localeCompare(b.nome));
+  let h=`<div class="section-head"><div><h2>Minhas obras</h2><p class="muted">Cada obra tem a própria tabela de preços, equipe e medições. Clique em Abrir para trabalhar nela.</p></div>
+    <div class="tools"><button class="pri" data-act="novaObra">Nova obra</button></div></div><div class="obras">`;
+  lista.forEach(o=>{const r=resumoObra(o), ratio=r.moMed>0?r.custo/r.moMed:0;
+    const cor=!r.moMed?'var(--muted)':ratio<=0.9?'var(--green)':ratio<=1?'var(--amber)':'var(--red)';
+    h+=`<article class="obra${o.id===S.atual?' sel':''}"><h3>${esc(o.nome)}</h3>
+      <div class="small muted">${o.servicos.length} serviço(s) · ${o.funcionarios.length} funcionário(s) · ${o.regime==='clt'?'CLT':'Empreiteiro'} · ${({producao:'só produção',misto:'produção + meta',meta:'só meta'})[o.modelo]}</div>
+      <div class="pct" style="color:${cor}">${r.moMed?F0.format(ratio*100)+'%':'—'}</div>
+      <div class="small muted">custo real ÷ MO orçada do que já foi medido</div>
+      <div class="l"><span>Verba teto da obra</span><b>${brl(r.verba)}</b></div>
+      ${o.modelo!=='meta'?`<div class="l"><span>Produção já medida</span><b>${brl(r.usado)}</b></div>`:''}
+      ${o.modelo!=='producao'?`<div class="l"><span>Prêmios de metas pagos</span><b>${brl(r.premios)}</b></div>`:''}
+      <div class="l"><span>Última medição</span><b>${r.ult?esc(r.ult.periodo):'nenhuma'}</b></div>
+      <div class="tools" style="margin-top:6px"><button class="pri" data-act="abrirObra" data-id="${o.id}">Abrir</button><button data-act="abrirMed" data-id="${o.id}">Lançar medição</button></div></article>`});
+  return h+`</div>`;
+}
+function vPrecos(o){
+  const base=o.regime==='clt'?`Teto = MO orçada ÷ ${F2.format(1+o.enc/100)} (tira os encargos).`:`Teto = MO orçada − ${o.imp}% de impostos da nota.`;
+  const regra=base+' '+(o.modelo==='producao'?`Preço de tabela = teto − ${o.margem}% de margem.`
+    :o.modelo==='misto'?`Do teto, ${o.premioPct}% vai para o fundo de prêmios por meta, ${o.margem}% fica de margem e o restante é o preço de produção.`
+    :`Não há pagamento por quantidade: ${o.premioPct}% do teto forma o fundo de prêmios fixos por meta, e o restante cobre os salários.`);
+  let h=`<div class="section-head"><div><h2>Tabela de preços por serviço</h2><p class="muted">${regra} O ponto de equilíbrio mostra quanto a equipe precisa produzir por dia para a produção passar do salário.</p></div>
+    <div class="tools"><button data-act="detalhes">${detalhes?'Ocultar detalhes':'Mostrar detalhes'}</button><button data-act="copiarTabela">Copiar para Excel</button></div></div>
+    <div class="quick" role="group" aria-label="Adicionar serviço">
+      <label>Serviço<input id="qNome" placeholder="Ex.: Reboco interno 1,5cm"></label>
+      <label>Unidade<input id="qUn" placeholder="m2"></label>
+      <label>Quantidade orçada<input id="qQtd" inputmode="decimal" placeholder="0,00"></label>
+      <label>MO R$/un (Sienge)<input id="qMo" inputmode="decimal" placeholder="0,0000"></label>
+      <button class="pri" data-act="addRapido">Adicionar</button>
+    </div>`;
+  if(!o.servicos.length)return h+`<div class="empty"><p>A tabela está vazia. Cole as composições do Sienge na aba Importar ou adicione serviços um a um.</p><button data-act="tab" data-v="importar">Ir para Importar</button></div>`;
+  let tv=0,tmo=0;
+  const D=detalhes, abc=abcMap(o), lista=o.servicos.filter(s=>passa(o,s,abc));
+  h+=filtroBar(o,lista.length);
+  if(!lista.length)return h+`<div class="empty"><p>Nenhum serviço encontrado com esses filtros.</p><button data-act="limparFiltro">Limpar filtros</button></div>`;
+  h+=`<div class="scroll"><table><thead><tr>${D?'<th>Cód.</th>':''}<th${D?'':' class="stick"'}>Serviço</th><th>Un</th><th class="num">Qtd orçada</th><th class="num">MO orçada R$/un</th>${D?'<th class="num">Material R$/un</th><th>Oficial</th><th class="num">% oficial</th><th>Ajudante</th>':''}<th class="num">Teto R$/un</th>${o.modelo!=='meta'?'<th class="num">Preço produção</th>':''}${o.modelo!=='producao'?'<th class="num">Prêmio R$/un</th>':''}${o.modelo!=='meta'?'<th class="num">Equilíbrio</th>':''}<th class="num">Verba teto</th><th></th></tr></thead><tbody>`;
+  lista.forEach(s=>{
+    const c=calc(o,s); tv+=c.verba; tmo+=c.moTot;
+    const semMO=c.teto<=0;
+    h+=`<tr${semMO?' class="over"':''}>
+      ${D?`<td><input class="n-s" data-s="${s.id}" data-k="cod" value="${esc(s.cod)}" aria-label="Código"></td>`:''}
+      <td class="svc${D?'':' stick'}"><input data-s="${s.id}" data-k="nome" value="${esc(s.nome)}" aria-label="Serviço"></td>
+      <td><input class="n-s" style="width:52px" data-s="${s.id}" data-k="un" value="${esc(s.un)}" aria-label="Unidade"></td>
+      <td><input class="n" type="text" inputmode="decimal" data-s="${s.id}" data-k="qtd" value="${m2(num(s.qtd))}" aria-label="Quantidade"></td>
+      <td><input class="n" type="text" inputmode="decimal" data-s="${s.id}" data-k="mo" value="${m4(num(s.mo))}" aria-label="MO orçada"></td>
+      ${D?`<td><input class="n" type="text" inputmode="decimal" data-s="${s.id}" data-k="mat" value="${m4(num(s.mat))}" aria-label="Material"></td>
+      <td><select data-s="${s.id}" data-k="of" aria-label="Função oficial">${optsFn(o,s.of)}</select></td>
+      <td><input class="n-s" type="text" inputmode="decimal" data-s="${s.id}" data-k="pct" value="${c.auto?'':F1.format(c.pct)}" placeholder="${F1.format(c.pct)} auto" aria-label="% oficial (vazio = automático)"></td>
+      <td><select data-s="${s.id}" data-k="aj" aria-label="Função ajudante">${optsFn(o,s.aj,'Nenhum')}</select></td>`:''}
+      <td class="num calc">${m2(c.teto)}</td>
+      ${o.modelo!=='meta'?`<td class="num key">${m2(c.preco)}<span class="sub">of. ${m2(c.pOf)} · aj. ${m2(c.pAj)}</span></td>`:''}
+      ${o.modelo!=='producao'?`<td class="num${o.modelo==='meta'?' key':''}">${semMO?'<span class="chip bad">sem verba</span>':m2(c.premioU)}</td>`:''}
+      ${o.modelo!=='meta'?`<td class="num">${semMO?'<span class="chip bad">sem verba</span>':(c.eq!=null?F1.format(c.eq)+' '+esc(s.un)+'/dia':'—')}</td>`:''}
+      <td class="num">${m2(c.verba)}</td>
+      <td><button class="ghost" data-act="delServ" data-id="${s.id}" aria-label="Excluir serviço">✕</button></td></tr>`;
+  });
+  h+=`</tbody><tfoot><tr><td colspan="${(D?10:6)+(o.modelo==='misto'?3:2)}">${filtroAtivo()?'Total dos serviços filtrados':'Total da verba de mão de obra que pode ser paga (salários + produção + prêmios)'}</td><td class="num">${brl(tv)}</td><td></td></tr></tfoot></table></div>
+  <p class="small muted" style="margin-top:8px">MO orçada total com encargos: ${brl(tmo)}. Linhas em vermelho não têm mão de obra no orçamento: qualquer pagamento ali sai do lucro da obra. A função de quem executa e a divisão entre oficial e ajudante são preenchidas sozinhas pelo nome do serviço; para conferir ou mudar, use Mostrar detalhes.</p>`;
+  return h;
+}
+
+function vMedicao(o){
+  let h=`<div class="section-head"><div><h2>Medição e bonificação</h2><p class="muted">Lance o que cada funcionário produziu no período. Para equipes com mais de um oficial, faça uma linha por pessoa com a quantidade dela.</p></div>
+    <div class="tools"><button class="pri" data-act="novaMed">Nova medição</button></div></div>`;
+  if(!o.servicos.length)return h+`<div class="empty"><p>Cadastre os serviços primeiro, na aba Tabela de preços ou Importar.</p></div>`;
+  if(!o.funcionarios.length)h+=`<div class="note">Nenhum funcionário cadastrado. Cadastre a equipe na aba Equipe e funções para distribuir a produção.</div>`;
+  if(!o.medicoes.length)return h+`<div class="empty" style="margin-top:12px"><p>Nenhuma medição lançada nesta obra.</p><button class="pri" data-act="novaMed">Lançar primeira medição</button></div>`;
+  if(!o.medicoes.find(m=>m.id===medSel))medSel=o.medicoes[o.medicoes.length-1].id;
+  const m=o.medicoes.find(x=>x.id===medSel), r=calcMed(o,m), lock=m.fechada;
+  h+=`<div class="medbar">
+    <label>Medição<select data-act="medSel">${o.medicoes.map(x=>`<option value="${x.id}" ${x.id===medSel?'selected':''}>${esc(x.periodo||'Sem nome')}${x.fechada?' (fechada)':''}</option>`).join('')}</select></label>
+    <label>Período<input data-m="${m.id}" data-k="periodo" value="${esc(m.periodo)}" ${lock?'disabled':''}></label>
+    <label>Data<input type="date" data-m="${m.id}" data-k="data" value="${esc(m.data||'')}" ${lock?'disabled':''}></label>
+    ${o.regime==='clt'?`<label>Dias úteis no período<input type="text" inputmode="decimal" style="width:90px" data-m="${m.id}" data-k="diasPadrao" value="${F1.format(num(m.diasPadrao))}" ${lock?'disabled':''}></label>`:''}
+    <button data-act="fecharMed">${lock?'Reabrir medição':'Fechar medição'}</button>
+    <button data-act="copiarMed">Copiar resumo</button>
+    <button data-act="reciboMed">Recibos em PDF</button>
+    ${lock?'':`<button class="ghost" data-act="delMed">Excluir medição</button>`}
+  </div>`;
+  h+=`<div class="scroll"><table><thead><tr><th>Serviço</th><th class="num">Saldo a medir</th><th class="num">Qtd medida</th><th>Oficial</th><th>Ajudante</th><th class="num">R$/un</th><th class="num">Produção</th><th></th></tr></thead><tbody>`;
+  r.linhas.forEach((x,i)=>{
+    const l=x.l,s=x.s;
+    h+=`<tr${x.over?' class="over"':''}>
+      <td class="svc"><select style="max-width:340px;width:100%" data-ml="${m.id}|${i}" data-k="sid" ${lock?'disabled':''}>${o.servicos.map(sv=>`<option value="${sv.id}" ${sv.id===l.sid?'selected':''}>${esc((sv.cod?sv.cod+' · ':'')+sv.nome)}</option>`).join('')}</select></td>
+      <td class="num">${s?m2(x.saldo)+' '+esc(s.un):'—'}</td>
+      <td><input class="n" type="text" inputmode="decimal" data-ml="${m.id}|${i}" data-k="qtd" value="${m2(num(l.qtd))}" ${lock?'disabled':''} aria-label="Quantidade medida"></td>
+      <td><select data-ml="${m.id}|${i}" data-k="of" ${lock?'disabled':''}>${optsPe(o,l.of)}</select></td>
+      <td>${s&&x.c&&x.c.pAj>0?`<select data-ml="${m.id}|${i}" data-k="aj" ${lock?'disabled':''}>${optsPe(o,l.aj)}</select>`:'<span class="muted small">não se aplica</span>'}</td>
+      <td class="num">${x.c?m2(x.c.preco):'—'}</td>
+      <td class="num calc">${m2(x.valor)}</td>
+      <td>${lock?'':`<button class="ghost" data-act="delLinha" data-i="${i}" aria-label="Remover linha">✕</button>`}</td></tr>`;
+  });
+  h+=`</tbody><tfoot><tr><td colspan="6">${lock?'Medição fechada':`<button class="link" data-act="addLinha">+ Adicionar linha</button>`}</td><td class="num">${m2(r.prodTot)}</td><td></td></tr></tfoot></table></div>`;
+  const pct=r.ratio*100, cor=r.ratio<=0.9?'var(--green)':r.ratio<=1?'var(--amber)':'var(--red)';
+  const chip=r.moOrc<=0?'':r.ratio<=0.9?'<span class="chip ok">Dentro do orçado</span>':r.ratio<=1?'<span class="chip warn">No limite</span>':'<span class="chip bad">Prejuízo de mão de obra</span>';
+  h+=`<div class="ledger"><div><h3 style="margin-bottom:10px">Pagamento por funcionário</h3>`;
+  if(!r.lista.length)h+=`<div class="empty"><p class="muted">Selecione os funcionários nas linhas para ver o pagamento.</p></div>`;
+  else h+=`<div class="slips">${r.lista.map(p=>`<div class="slip${p.low?' low':''}">
+      <h3>${esc(p.nome)}</h3><div class="fn">${esc(p.funcao)}</div>
+      ${o.regime==='clt'?`<div class="l"><span>Dias trabalhados <span class="hint">(${F1.format(p.horas)} h)</span></span><input type="text" inputmode="decimal" data-md="${m.id}|${p.fid}" value="${F1.format(p.dias)}" ${lock?'disabled':''} aria-label="Dias trabalhados de ${esc(p.nome)}"></div>
+      <div class="l"><span>Salário do período</span><span>${m2(p.sal)}</span></div>`:''}
+      <div class="l"><span>Produção medida</span><span>${m2(p.prod)}</span></div>
+      ${o.regime==='clt'?`<div class="l"><span>Bonificação bruta</span><span>${m2(p.bonif)}</span></div>`:''}
+      <div class="l"><span>Retenção ${o.ret}%</span><span>− ${m2(o.regime==='clt'?p.ret:p.prod*o.ret/100)}</span></div>
+      <div class="pay">${brl(o.regime==='clt'?p.pagar:p.prod*(1-o.ret/100))}</div>
+      <div class="small muted">${o.regime==='clt'?'bonificação a pagar além do salário':'a pagar na nota deste período'}</div>
+      <p style="margin-top:6px"><button class="link" data-act="reciboMed" data-fid="${p.fid}">Recibo em PDF</button></p>
+      ${p.low?`<div class="note">Produziu menos que o salário. Recebe só o salário, e o custo dele passa do que o orçamento previu para esse serviço.</div>`:''}
+    </div>`).join('')}</div>`;
+  h+=`</div><div class="gauge"><h3>Controle da medição</h3>
+    <p class="small muted" style="margin:4px 0 10px">Compara o custo real da equipe medida (com encargos) com a mão de obra que o orçamento previu para essas quantidades.</p>
+    <div class="big" style="color:${cor}">${r.moOrc>0?F0.format(pct)+'%':'—'}</div>
+    <div class="bar" aria-hidden="true"><i style="width:${Math.min(100,pct/1.2)}%;background:${cor}"></i><span class="mark" style="left:${100/1.2}%"></span></div>
+    <div style="margin-bottom:10px">${chip}</div>
+    <div class="row"><span>MO orçada das quantidades medidas</span><b>${brl(r.moOrc)}</b></div>
+    <div class="row"><span>Custo real ${o.regime==='clt'?'(maior entre salário e produção, com encargos)':'(nota com impostos)'}</span><b>${brl(r.custo)}</b></div>
+    <div class="row"><span>Resultado de mão de obra</span><b style="color:${r.moOrc-r.custo>=0?'var(--green)':'var(--red)'}">${brl(r.moOrc-r.custo)}</b></div>
+    <div class="row"><span>Retido para a entrega</span><b>${brl(r.lista.reduce((a,p)=>a+(o.regime==='clt'?p.ret:p.prod*o.ret/100),0))}</b></div>
+    ${r.naoDist>0?`<div class="note">${brl(r.naoDist)} de produção ficaram sem funcionário escolhido e não entraram no pagamento.</div>`:''}
+    ${r.alertas.map(a=>`<div class="note bad">${esc(a)}</div>`).join('')}
+    ${o.regime==='clt'?`<p class="small muted" style="margin-top:10px">Considera que os funcionários desta medição trabalharam só nesses serviços no período. Se alguém fez serviço sem medição, ajuste os dias trabalhados dele (faltas também entram aqui).</p>`:''}
+  </div></div>`;
+  return h;
+}
+
+function vMetas(o){
+  const pe=o.pesos;
+  let h=`<div class="section-head"><div><h2>Metas por setor</h2><p class="muted">Divida a obra em setores (pavimento, ambiente, frente de serviço). Cada setor tem prazo, equipe e um prêmio fixo, pago na entrega conforme os critérios cumpridos.</p></div>
+    <div class="tools"><button class="pri" data-act="novaMeta">Nova meta</button></div></div>
+  <div class="mode">
+    <div class="${o.modelo==='misto'?'on':''}"><b>Produção + prêmio</b>A equipe recebe pela quantidade na quinzena e ganha o prêmio quando entrega o setor bem feito e no prazo.</div>
+    <div class="${o.modelo==='meta'?'on':''}"><b>Só prêmio fixo</b>Salário normal na quinzena e o prêmio na entrega. Bom para serviços difíceis de medir.</div>
+    <div><b>Peso de cada critério</b><div class="pesos" style="margin-top:6px">
+      <label>No prazo<input type="number" data-pe="prazo" value="${pe.prazo}"></label>
+      <label>Sem retrabalho<input type="number" data-pe="qual" value="${pe.qual}"></label>
+      <label>Organização e segurança<input type="number" data-pe="org" value="${pe.org}"></label></div></div>
+  </div>`;
+  if(!o.servicos.length)return h+`<div class="empty"><p>Cadastre os serviços primeiro: o prêmio sugerido sai da verba dos serviços de cada setor.</p></div>`;
+  if(!o.metas.length)return h+`<div class="empty"><p>Nenhuma meta criada. Comece pelo setor que vai iniciar agora.</p><button class="pri" data-act="novaMeta">Criar primeira meta</button></div>`;
+  h+='<div class="metas">';
+  [...o.metas].reverse().forEach(mt=>{
+    const r=calcMeta(o,mt), L=mt.encerrada?'disabled':'';
+    h+=`<section class="meta ${r.st}" aria-label="${esc(mt.nome)}">
+      <div class="meta-head">
+        <label class="nm">Setor / meta<input data-mt="${mt.id}" data-k="nome" value="${esc(mt.nome)}" ${L}></label>
+        <label>Início<input type="date" data-mt="${mt.id}" data-k="inicio" value="${esc(mt.inicio||'')}" ${L}></label>
+        <label>Prazo de entrega<input type="date" data-mt="${mt.id}" data-k="prazo" value="${esc(mt.prazo||'')}" ${L}></label>
+        <span class="chip ${r.st==='done'?'ok':r.st==='late'?'bad':r.st==='eval'?'warn':''}" style="${r.st==='and'?'background:var(--navy-soft);color:var(--navy)':''}">${r.stTxt}</span>
+      </div>
+      <div class="meta-grid"><div>
+        <h4>Serviços do setor</h4>
+        <div class="scroll"><table><thead><tr><th>Serviço</th><th class="num">Qtd</th><th class="num">Verba teto</th><th class="num">Prêmio sugerido</th><th></th></tr></thead><tbody>
+        ${r.linhas.map((x,i)=>`<tr><td class="svc"><select style="width:100%;max-width:320px" data-mtl="${mt.id}|${i}" data-k="sid" ${L}>${o.servicos.map(sv=>`<option value="${sv.id}" ${sv.id===x.l.sid?'selected':''}>${esc(sv.nome)}</option>`).join('')}</select></td>
+          <td><input class="n" type="text" inputmode="decimal" data-mtl="${mt.id}|${i}" data-k="qtd" value="${m2(num(x.l.qtd))}" ${L} aria-label="Quantidade"> <span class="small muted">${x.s?esc(x.s.un):''}</span></td>
+          <td class="num">${m2(x.v)}</td><td class="num">${m2(x.p)}</td>
+          <td>${L?'':`<button class="ghost" data-act="delMetaLinha" data-id="${mt.id}" data-i="${i}" aria-label="Remover">✕</button>`}</td></tr>`).join('')}
+        </tbody><tfoot><tr><td>${L?'':`<button class="link" data-act="addMetaLinha" data-id="${mt.id}">+ Adicionar serviço</button>`}</td><td></td><td class="num">${m2(r.verba)}</td><td class="num">${m2(r.sug)}</td><td></td></tr></tfoot></table></div>
+        <h4 style="margin-top:14px">Equipe do setor <span class="hint">(marque quem trabalhou e os dias no setor; o prêmio é dividido por dias × custo-hora da função)</span></h4>
+        <div class="team">${o.funcionarios.length?o.funcionarios.map(p=>{const on=mt.equipe&&mt.equipe[p.id]!=null;const f=fnById(o,p.funcao);return `<div class="p"><label><input type="checkbox" data-mte="${mt.id}|${p.id}" ${on?'checked':''} ${L}> ${esc(p.nome)} <span class="small muted">${f?esc(f.nome):''}</span></label>${on?`<span class="small muted">dias <input type="text" inputmode="decimal" data-mtd="${mt.id}|${p.id}" value="${F1.format(num(mt.equipe[p.id]))}" ${L} aria-label="Dias de ${esc(p.nome)} no setor"></span>`:''}</div>`}).join(''):'<p class="small muted">Cadastre funcionários na aba Equipe e funções.</p>'}</div>
+      </div><div>
+        <h4>Prêmio da meta</h4>
+        <label class="small muted" style="display:flex;flex-direction:column;gap:3px;font-weight:600">Valor do prêmio (vazio = sugerido)<input type="text" inputmode="decimal" data-mt="${mt.id}" data-k="premio" value="${r.manual?m2(r.premio):''}" placeholder="${m2(r.sug)}" ${L}></label>
+        ${r.acima?`<div class="note bad">O prêmio está ${brl(r.premio-r.sug)} acima do fundo dos serviços deste setor. A diferença sai da margem da obra.</div>`:''}
+        <div class="crit">
+          <label>Data da entrega<input type="date" data-mt="${mt.id}" data-k="entrega" value="${esc(mt.entrega||'')}" ${L}></label>
+          ${mt.entrega?`<div class="small ${r.atraso>0?'':'muted'}" style="${r.atraso>0?'color:var(--red);font-weight:600':''}">${r.atraso>0?`Entregue com ${r.atraso} dia(s) de atraso`:r.atraso<0?`Entregue ${-r.atraso} dia(s) antes do prazo`:r.atraso===0?'Entregue no dia do prazo':''}</div>`:''}
+          <label class="c"><input type="checkbox" data-mtc="${mt.id}|prazo" ${r.prazoOk?'checked':''} ${L||!mt.entrega?'disabled':''}> No prazo (${pe.prazo} pts)</label>
+          <label class="c"><input type="checkbox" data-mtc="${mt.id}|qual" ${(mt.crit||{}).qual?'checked':''} ${L||!mt.entrega?'disabled':''}> Aprovado na vistoria, sem retrabalho (${pe.qual} pts)</label>
+          <label class="c"><input type="checkbox" data-mtc="${mt.id}|org" ${(mt.crit||{}).org?'checked':''} ${L||!mt.entrega?'disabled':''}> Organização, limpeza e segurança (${pe.org} pts)</label>
+        </div>
+        ${mt.entrega?`<div class="prize">${brl(r.ganho)}</div><div class="small muted">${F0.format(r.pct)}% do prêmio de ${brl(r.premio)}</div>
+          ${r.eq.length?`<div class="team" style="margin-top:10px">${r.eq.map(x=>`<div class="p"><span>${esc(x.nome)} <span class="small muted">${esc(x.funcao)} · ${F1.format(x.dias)} dia(s)</span></span><b class="num">${brl(x.valor)}</b></div>`).join('')}</div>`:'<div class="note">Marque a equipe do setor para dividir o prêmio.</div>'}`
+          :`<p class="small muted">Lance a data da entrega para avaliar os critérios e calcular o prêmio.</p>`}
+        <div class="tools" style="margin-top:12px">
+          ${mt.entrega?`<button class="${mt.encerrada?'':'pri'}" data-act="encMeta" data-id="${mt.id}">${mt.encerrada?'Reabrir meta':'Encerrar e lançar pagamento'}</button>`:''}
+          <button data-act="copiarMeta" data-id="${mt.id}">Copiar resumo</button>
+          ${mt.entrega&&r.eq.length?`<button data-act="reciboMeta" data-id="${mt.id}">Recibos em PDF</button>`:''}
+          ${L?'':`<button class="ghost" data-act="delMeta" data-id="${mt.id}">Excluir</button>`}
+        </div>
+        ${o.regime==='clt'?`<p class="small muted" style="margin-top:10px">O fundo é calculado sem encargos. Pagando o prêmio como verba salarial, o custo para a empresa fica em ${brl(r.ganho*(1+o.enc/100))}.</p>`:''}
+      </div></div></section>`;
+  });
+  return h+'</div>';
+}
+function resumoMeta(o,mt){
+  const r=calcMeta(o,mt);
+  let t=`${o.nome} — Meta: ${mt.nome}\nPrazo: ${mt.prazo?mt.prazo.split('-').reverse().join('/'):'—'} · Entrega: ${mt.entrega?mt.entrega.split('-').reverse().join('/'):'—'}\n`;
+  r.linhas.forEach(x=>{if(x.s)t+=`${x.s.nome}: ${m2(x.q)} ${x.s.un}\n`});
+  t+=`\nPrêmio: ${brl(r.premio)} · atingido ${F0.format(r.pct)}% = ${brl(r.ganho)}\n`;
+  r.eq.forEach(x=>{t+=`${x.nome} (${x.funcao}, ${F1.format(x.dias)} dias): ${brl(x.valor)}\n`});
+  return t;
+}
+function vSaldo(o){
+  let h=`<div class="section-head"><div><h2>Saldo da obra</h2><p class="muted">Quanto de cada serviço já foi medido em todas as medições, e quanto da verba de produção ainda sobra.</p></div></div>`;
+  if(!o.servicos.length)return h+`<div class="empty"><p>Sem serviços cadastrados.</p></div>`;
+  let tv=0,tp=0;
+  const abc=abcMap(o), lista=o.servicos.filter(s=>passa(o,s,abc));
+  h+=filtroBar(o,lista.length);
+  h+=`<div class="scroll"><table><thead><tr><th class="stick">Serviço</th><th>Un</th><th class="num">Orçado</th><th class="num">${o.modelo==='meta'?'Entregue':'Medido'}</th><th class="num">Saldo</th><th class="num">% executado</th><th class="num">Verba teto</th><th class="num">Produção já medida</th><th class="num">Saldo de verba</th></tr></thead><tbody>`;
+  lista.forEach(s=>{
+    const c=calc(o,s), med=medidoAcum(o,s.id,null), q=num(s.qtd), pctE=q>0?med/q*100:0, pago=med*c.preco;
+    tv+=c.verba;tp+=pago;
+    const chip=pctE>100?'bad':pctE>=90?'warn':'ok';
+    h+=`<tr${pctE>100?' class="over"':''}><td class="svc stick">${esc(s.nome)}</td><td>${esc(s.un)}</td><td class="num">${m2(q)}</td><td class="num">${m2(med)}</td><td class="num">${m2(q-med)}</td>
+      <td class="num">${med>0?`<span class="chip ${chip}">${F1.format(pctE)}%</span>`:'—'}</td><td class="num">${m2(c.verba)}</td><td class="num">${m2(pago)}</td><td class="num calc">${m2(c.verba-pago)}</td></tr>`;
+  });
+  const pr=premiosPagos(o);
+  h+=`</tbody><tfoot><tr><td colspan="6">${filtroAtivo()?'Totais dos serviços filtrados':'Totais da produção'}</td><td class="num">${m2(tv)}</td><td class="num">${m2(tp)}</td><td class="num">${m2(tv-tp)}</td></tr>
+  ${o.modelo!=='producao'?`<tr><td colspan="7">Prêmios de metas já encerradas</td><td class="num">${m2(pr)}</td><td class="num">${m2(tv-tp-pr)}</td></tr>`:''}</tfoot></table></div>
+  <p class="small muted" style="margin-top:8px">O saldo de verba considera só a produção medida. Salários pagos em períodos de produção baixa também consomem essa verba; acompanhe o percentual na aba Medição.</p>`;
+  return h;
+}
+
+function vABC(o){
+  let h=`<div class="section-head"><div><h2>Curva ABC</h2><p class="muted">Ordena os serviços pelo peso no custo. A classe A (até 80% acumulado) é onde a medição e a produtividade precisam de mais atenção.</p></div>
+   <label class="small muted" style="display:flex;flex-direction:column;gap:3px;font-weight:600">Base da curva<select data-act="abcBase"><option value="total" ${abcBase==='total'?'selected':''}>Custo total (MO + material)</option><option value="mo" ${abcBase==='mo'?'selected':''}>Só mão de obra</option><option value="mat" ${abcBase==='mat'?'selected':''}>Só material</option></select></label></div>`;
+  if(!o.servicos.length)return h+`<div class="empty"><p>Sem serviços cadastrados.</p></div>`;
+  const rows=o.servicos.map(s=>{const c=calc(o,s);const v=abcBase==='mo'?c.moTot:abcBase==='mat'?c.matTot:c.moTot+c.matTot;return {s,v,c}}).filter(r=>r.v>0).sort((a,b)=>b.v-a.v);
+  const tot=rows.reduce((a,r)=>a+r.v,0); let acc=0; const cnt={A:[0,0],B:[0,0],C:[0,0]};
+  rows.forEach(r=>{acc+=r.v;r.p=r.v/tot*100;r.acc=acc/tot*100;r.cl=(r.acc-r.p)<80?'A':(r.acc-r.p)<95?'B':'C';cnt[r.cl][0]++;cnt[r.cl][1]+=r.v});
+  const max=rows[0]?rows[0].v:1;
+  h+=`<div class="legend">${['A','B','C'].map(k=>`<div><span class="chip ${k}">Classe ${k}</span><b>${brl(cnt[k][1])}</b><span class="small muted">${cnt[k][0]} serviço(s) · ${F1.format(tot?cnt[k][1]/tot*100:0)}%</span></div>`).join('')}</div>`;
+  const vis=rows.filter(r=>passa(o,r.s,Object.fromEntries(rows.map(x=>[x.s.id,x.cl]))));
+  h+=filtroBar(o,vis.length);
+  h+=`<div class="scroll"><table><thead><tr><th>Classe</th><th>Serviço</th><th class="num">Valor</th><th class="num">%</th><th class="num">% acumulado</th><th style="width:28%">Peso</th></tr></thead><tbody>`;
+  vis.forEach(r=>{h+=`<tr><td><span class="chip ${r.cl}">${r.cl}</span></td><td class="svc">${esc(r.s.nome)}</td><td class="num">${m2(r.v)}</td><td class="num">${F1.format(r.p)}%</td><td class="num">${F1.format(r.acc)}%</td><td><div class="abc-bar" style="width:${r.v/max*100}%"></div></td></tr>`});
+  return h+`</tbody><tfoot><tr><td colspan="2">Total</td><td class="num">${brl(tot)}</td><td colspan="3"></td></tr></tfoot></table></div>`;
+}
+
+function vEquipe(o){
+  let h=`<div class="grid2"><div class="card"><h3>Funções e custo-hora</h3>
+    <p class="small muted">Use o custo-hora com encargos que está nas composições do Sienge. O valor sem encargos é o que vira salário no cálculo.</p>
+    <div class="scroll"><table><thead><tr><th>Função</th><th class="num">Hora c/ encargos</th><th class="num">Hora s/ encargos</th><th class="num">Salário na quinzena</th><th></th></tr></thead><tbody>`;
+  o.funcoes.forEach(f=>{const hs=horaSem(o,f);
+    h+=`<tr><td><input data-fn="${f.id}" data-k="nome" value="${esc(f.nome)}" aria-label="Nome da função"></td><td><input class="n" type="text" inputmode="decimal" data-fn="${f.id}" data-k="hora" value="${m4(num(f.hora))}" aria-label="Hora com encargos"></td><td class="num">${m2(hs)}</td><td class="num">${m2(hs*o.horasDia*o.diasPadrao)}</td><td><button class="ghost" data-act="delFn" data-id="${f.id}" aria-label="Excluir função">✕</button></td></tr>`});
+  h+=`</tbody></table></div><p style="margin-top:10px"><button data-act="addFn">Adicionar função</button></p></div>`;
+  h+=`<div class="card"><h3>Funcionários da obra</h3><p class="small muted">A retenção acumulada soma só as medições fechadas. Libere quando a frente de serviço for entregue sem retrabalho.</p>
+    <div class="scroll"><table><thead><tr><th>Nome</th><th>CPF <span class="hint">(sai no recibo)</span></th><th>Função</th><th class="num">Retido acumulado</th><th></th></tr></thead><tbody>`;
+  const ret={};o.medicoes.filter(m=>m.fechada).forEach(m=>calcMed(o,m).lista.forEach(p=>{ret[p.fid]=(ret[p.fid]||0)+(o.regime==='clt'?p.ret:p.prod*o.ret/100)}));
+  o.funcionarios.forEach(p=>{h+=`<tr><td><input data-fu="${p.id}" data-k="nome" value="${esc(p.nome)}" aria-label="Nome"></td><td><input style="width:130px" data-fu="${p.id}" data-k="cpf" value="${esc(p.cpf||'')}" inputmode="numeric" placeholder="000.000.000-00" aria-label="CPF"></td><td><select data-fu="${p.id}" data-k="funcao">${optsFn(o,p.funcao)}</select></td><td class="num">${m2(ret[p.id]||0)}</td><td><button class="ghost" data-act="delFu" data-id="${p.id}" aria-label="Excluir funcionário">✕</button></td></tr>`});
+  if(!o.funcionarios.length)h+=`<tr><td colspan="5" class="muted">Ninguém cadastrado ainda.</td></tr>`;
+  return h+`</tbody></table></div><p style="margin-top:10px"><button class="pri" data-act="addFu">Adicionar funcionário</button></p></div></div>`;
+}
+
+function vImportar(o){
+  return `<div class="grid2"><div class="card"><h3>Colar composições do Sienge ou do Excel</h3>
+    <p class="small muted">Copie as colunas do Excel nesta ordem e cole abaixo. Material e % oficial são opcionais.</p>
+    <ol class="howto small"><li>Código · Serviço · Unidade · Quantidade · MO unitária (com encargos) · Material unitário · % oficial</li>
+    <li>Serviços repetidos em vários pavimentos são somados em uma linha só quando o código (ou o nome e a unidade) é igual.</li>
+    <li>Linhas de título ou cabeçalho sem número na quantidade são ignoradas.</li></ol>
+    <textarea id="txtImp" rows="10" placeholder="7273	Porcelanato 90x90	m2	650,72	31,8318	138,0107	57,6"></textarea>
+    <div class="tools" style="margin-top:10px"><button class="pri" data-act="importar" data-v="add">Acrescentar à tabela</button><button data-act="importar" data-v="sub">Substituir a tabela</button></div>
+    <p class="small muted" style="margin-top:10px">A função (pedreiro, pintor, armador…) e a divisão entre oficial e ajudante são preenchidas pelo nome do serviço. Confira em Tabela de preços › Mostrar detalhes.</p></div>
+  <div class="card"><h3>Backup da obra</h3>
+    <p class="small muted">Copie o texto para guardar uma cópia da obra (tabela, equipe e medições) ou cole um backup para recriar a obra.</p>
+    <textarea id="txtBkp" rows="10" placeholder="Cole aqui um backup para restaurar"></textarea>
+    <div class="tools" style="margin-top:10px"><button data-act="gerarBkp">Gerar backup desta obra</button><button class="pri" data-act="restaurar">Restaurar como nova obra</button></div></div></div>`;
+}
+
+/* ---------- permissões na tela ---------- */
+const ACT_PERM={novaObra:'obras',dupObra:'obras',delObra:'obras',restaurar:'obras',addRapido:'base',delServ:'base',addFn:'base',delFn:'base',addFu:'base',delFu:'base',importar:'base',
+  novaMed:'medir',addLinha:'medir',delLinha:'medir',delMed:'medir',fecharMed:'fechar',novaMeta:'metas',addMetaLinha:'metas',delMetaLinha:'metas',delMeta:'metas',encMeta:'fechar',
+  addUser:'usuarios',delUser:'usuarios'};
+const CAMPO_PERM=[['p','base'],['s','base'],['fn','base'],['fu','base'],['pe','base'],['m','medir'],['ml','medir'],['md','medir'],['mt','metas'],['mtl','metas'],['mte','metas'],['mtd','metas'],['mtc','metas'],['us','usuarios'],['uo','usuarios']];
+function aplicaPermissoes(){
+  const app=document.getElementById('app'); if(!app||!PERFIL)return;
+  CAMPO_PERM.forEach(([k,p])=>{if(!can(p))app.querySelectorAll(`[data-${k}]`).forEach(e=>e.disabled=true)});
+  if(!can('base'))app.querySelectorAll('#qNome,#qUn,#qQtd,#qMo,#txtImp').forEach(e=>e.disabled=true);
+  Object.entries(ACT_PERM).forEach(([a,p])=>{if(!can(p))app.querySelectorAll(`[data-act="${a}"]`).forEach(e=>e.style.display='none')});
+  if(!can('base'))app.querySelectorAll('.quick').forEach(e=>e.style.display='none');
+}
+
+/* ---------- usuários ---------- */
+function vUsuarios(){
+  const obras=Object.values(S.obras).sort((a,b)=>a.nome.localeCompare(b.nome));
+  let h=`<div class="section-head"><div><h2>Usuários e perfis</h2><p class="muted">Quem já tem login nos outros sistemas da SAVA (mesmo projeto Firebase) entra com a mesma senha: basta cadastrar o e-mail e o perfil aqui. Para quem ainda não tem login, preencha a senha inicial.</p></div></div>
+  <div class="card" style="margin-bottom:16px"><div class="uform">
+    <label>E-mail<input id="uEmail" type="email" placeholder="nome@savaconstrutora.com.br"></label>
+    <label>Nome<input id="uNome"></label>
+    <label>Perfil<select id="uPerfil">${Object.entries(PERFIS).map(([k,v])=>`<option value="${k}" ${k==='encarregado'?'selected':''}>${v}</option>`).join('')}</select></label>
+    <label>Senha inicial <span class="hint">(opcional)</span><input id="uSenha" type="text" autocomplete="off" placeholder="só se não tiver login"></label>
+    <button class="pri" data-act="addUser">Cadastrar</button></div>
+    <p class="small muted">Administrador: tudo, inclusive usuários. Engenheiro: tudo menos usuários. Encarregado: lança medições e metas, mas não altera preços nem fecha medição. Visualização: só consulta.</p></div>
+  <div class="scroll"><table><thead><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Obras liberadas</th><th>Ativo</th><th></th></tr></thead><tbody>`;
+  USERS.forEach(u=>{const sel=u.obras||[];
+    h+=`<tr><td><input data-us="${esc(u.email)}" data-k="nome" value="${esc(u.nome||'')}" aria-label="Nome"></td><td class="small">${esc(u.email)}${adminFixo(u.email)?' <span class="chip ok">admin fixo</span>':''}</td>
+    <td><select data-us="${esc(u.email)}" data-k="perfil">${Object.entries(PERFIS).map(([k,v])=>`<option value="${k}" ${u.perfil===k?'selected':''}>${v}</option>`).join('')}</select></td>
+    <td><details class="obsel"><summary>${sel.length?sel.length+' obra(s)':'Todas'}</summary>${obras.map(ob=>`<label><input type="checkbox" data-uo="${esc(u.email)}|${ob.id}" ${sel.includes(ob.id)?'checked':''}> ${esc(ob.nome)}</label>`).join('')}<p class="hint">Nenhuma marcada = todas as obras</p></details></td>
+    <td><input type="checkbox" data-us="${esc(u.email)}" data-k="ativo" ${u.ativo!==false?'checked':''} aria-label="Ativo"></td>
+    <td><button class="ghost" data-act="delUser" data-id="${esc(u.email)}" aria-label="Remover acesso">✕</button></td></tr>`});
+  if(!USERS.length)h+=`<tr><td colspan="6" class="muted">Nenhum usuário cadastrado.</td></tr>`;
+  return h+`</tbody></table></div>`;
+}
+async function addUser(){
+  const email=document.getElementById('uEmail').value.trim().toLowerCase(), nome=document.getElementById('uNome').value.trim(),
+    perfil=document.getElementById('uPerfil').value, senha=document.getElementById('uSenha').value;
+  if(!/^\S+@\S+\.\S+$/.test(email)){toast('Informe um e-mail válido');return}
+  try{
+    if(senha){
+      const sec=firebase.apps.find(a=>a.name==='cadastro')||firebase.initializeApp(CFG,'cadastro');
+      try{await sec.auth().createUserWithEmailAndPassword(email,senha);await sec.auth().signOut();toast('Login criado')}
+      catch(e){if(e.code==='auth/email-already-in-use')toast('Esse e-mail já tem login: a pessoa entra com a senha que já usa');else{toast(msgAuth(e));return}}
+    }
+    await fs.collection(USUARIOS).doc(email).set({nome:nome||email,perfil,ativo:true,obras:[],criadoPor:emailDe(USER),criadoEm:Date.now()},{merge:true});
+    toast('Usuário cadastrado');
+  }catch(e){toast('Não foi possível cadastrar ('+(e.code||e.message)+')')}
+}
+
+/* ---------- recibos em PDF ---------- */
+const UN=['','um','dois','três','quatro','cinco','seis','sete','oito','nove','dez','onze','doze','treze','quatorze','quinze','dezesseis','dezessete','dezoito','dezenove'];
+const DZ=['','','vinte','trinta','quarenta','cinquenta','sessenta','setenta','oitenta','noventa'];
+const CT=['','cento','duzentos','trezentos','quatrocentos','quinhentos','seiscentos','setecentos','oitocentos','novecentos'];
+function ate999(n){if(n===100)return 'cem';const c=Math.floor(n/100),r=n%100,p=[];if(c)p.push(CT[c]);if(r<20){if(r)p.push(UN[r])}else{p.push(DZ[Math.floor(r/10)]+(r%10?' e '+UN[r%10]:''))}return p.join(' e ')}
+function inteiroExt(n){if(!n)return 'zero';const mi=Math.floor(n/1e6),mil=Math.floor(n%1e6/1000),r=n%1000,p=[];
+  if(mi)p.push(mi===1?'um milhão':ate999(mi)+' milhões');if(mil)p.push(mil===1?'mil':ate999(mil)+' mil');if(r)p.push(ate999(r));
+  if(p.length>1){const ult=p.pop();return p.join(', ')+((r&&(r<100||r%100===0))||(!r)?' e ':', ')+ult}return p[0]}
+function extenso(v){v=Math.round((v||0)*100)/100;const i=Math.floor(v),c=Math.round((v-i)*100);
+  let t=i?inteiroExt(i)+(i===1?' real':(i%1e6===0?' de reais':' reais')):'';if(c)t+=(t?' e ':'')+inteiroExt(c)+(c===1?' centavo':' centavos');return t||'zero real'}
+const dataBR=d=>d?d.split('-').reverse().join('/'):'';
+function cabecalho(doc,titulo,sub){
+  const E=window.SAVA_EMPRESA||{}, W=doc.internal.pageSize.getWidth();
+  doc.setFillColor(30,63,143);doc.rect(0,0,W,4,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(13);doc.setTextColor(24,32,43);doc.text(E.nome||'',14,14);
+  doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(91,101,115);
+  doc.text([E.cnpj?'CNPJ '+E.cnpj:'',E.endereco||''].filter(Boolean).join(' · '),14,19);
+  doc.setFont('helvetica','bold');doc.setFontSize(15);doc.setTextColor(24,32,43);doc.text(titulo,14,31);
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(91,101,115);doc.text(sub,14,36.5);
+  doc.setDrawColor(24,32,43);doc.setLineWidth(0.6);doc.line(14,40,W-14,40);
+  return 46;
+}
+function blocoInfo(doc,y,pares){
+  const W=doc.internal.pageSize.getWidth();doc.autoTable({startY:y,theme:'plain',margin:{left:14,right:14},styles:{fontSize:9.5,cellPadding:1.4,textColor:[24,32,43]},
+    columnStyles:{0:{fontStyle:'bold',cellWidth:32,textColor:[91,101,115]},2:{fontStyle:'bold',cellWidth:26,textColor:[91,101,115]}},body:pares});
+  return doc.lastAutoTable.finalY+4;
+}
+function assinaturas(doc,y,pessoa,cpf){
+  const W=doc.internal.pageSize.getWidth(), H=doc.internal.pageSize.getHeight(), E=window.SAVA_EMPRESA||{};
+  if(y>H-62){doc.addPage();y=24}
+  doc.setFontSize(9.5);doc.setTextColor(24,32,43);doc.text(`${E.cidade||''}, ____ de ______________ de ________.`,14,y+6);
+  const yl=y+30, mid=W/2;
+  doc.setDrawColor(24,32,43);doc.setLineWidth(0.3);doc.line(14,yl,mid-8,yl);doc.line(mid+8,yl,W-14,yl);
+  doc.setFontSize(9);doc.text(pessoa,14,yl+5);doc.setTextColor(91,101,115);doc.text(cpf?'CPF '+cpf:'Funcionário',14,yl+9.5);
+  doc.setTextColor(24,32,43);doc.text((PERFIL&&PERFIL.nome)||'',mid+8,yl+5);doc.setTextColor(91,101,115);doc.text('Responsável pela medição',mid+8,yl+9.5);
+}
+function rodape(doc){
+  const n=doc.getNumberOfPages(),W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight();
+  for(let i=1;i<=n;i++){doc.setPage(i);doc.setFontSize(7.5);doc.setTextColor(140,148,160);
+    doc.text(`Gerado em ${new Date().toLocaleString('pt-BR')} por ${(PERFIL&&PERFIL.nome)||''} · Produção de obra`,14,H-8);doc.text(`${i}/${n}`,W-14,H-8,{align:'right'})}
+}
+function pdfPronto(){if(!window.jspdf||!window.jspdf.jsPDF){toast('O gerador de PDF não carregou. Verifique a internet.');return null}return new window.jspdf.jsPDF({unit:'mm',format:'a4'})}
+const nomeArq=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w-]+/g,'_').replace(/_+/g,'_').slice(0,80);
+function reciboMed(o,m,fid){
+  const doc=pdfPronto();if(!doc)return;
+  const r=calcMed(o,m), lista=fid?r.lista.filter(p=>p.fid===fid):r.lista;
+  if(!lista.length){toast('Nenhum funcionário com produção nesta medição');return}
+  lista.forEach((p,i)=>{
+    if(i)doc.addPage();
+    let y=cabecalho(doc,'Recibo de produção',o.regime==='clt'?'Conferência da medição e bonificação por produção':'Conferência da medição e pagamento por produção');
+    y=blocoInfo(doc,y,[['Obra',o.nome,'Medição',m.periodo||''],['Funcionário',p.nome,'Data',dataBR(m.data)],['Função',p.funcao,'CPF',p.cpf||'—']]);
+    doc.autoTable({startY:y,margin:{left:14,right:14},head:[['Serviço executado','Un','Quantidade','R$/un','Valor (R$)']],
+      body:p.itens.map(it=>[it.nome+(it.papel==='Ajudante'?' (ajudante)':''),it.un,m2(it.q),m2(it.unit),m2(it.q*it.unit)]),
+      foot:[['Produção medida','','','',m2(p.prod)]],
+      styles:{fontSize:9,cellPadding:2,textColor:[24,32,43]},headStyles:{fillColor:[30,63,143],textColor:255},footStyles:{fillColor:[236,239,236],textColor:[24,32,43],fontStyle:'bold'},
+      columnStyles:{1:{halign:'center',cellWidth:12},2:{halign:'right',cellWidth:26},3:{halign:'right',cellWidth:22},4:{halign:'right',cellWidth:28}}});
+    y=doc.lastAutoTable.finalY+5;
+    const ret=o.regime==='clt'?p.ret:p.prod*o.ret/100, liq=o.regime==='clt'?p.pagar:p.prod-ret;
+    const linhas=o.regime==='clt'
+      ?[['Produção medida',m2(p.prod)],[`Salário do período (${F1.format(p.dias)} dias · ${F1.format(p.horas)} h)`,m2(p.sal)],['Bonificação bruta (produção − salário)',m2(p.bonif)],[`Retenção até a entrega (${o.ret}%)`,'− '+m2(ret)],['VALOR LÍQUIDO DA BONIFICAÇÃO',m2(liq)]]
+      :[['Produção medida',m2(p.prod)],[`Retenção até a entrega (${o.ret}%)`,'− '+m2(ret)],['VALOR LÍQUIDO A PAGAR',m2(liq)]];
+    doc.autoTable({startY:y,margin:{left:90,right:14},theme:'plain',body:linhas,styles:{fontSize:9.5,cellPadding:1.6,textColor:[24,32,43]},columnStyles:{1:{halign:'right',cellWidth:30}},
+      didParseCell:d=>{if(d.row.index===linhas.length-1){d.cell.styles.fontStyle='bold';d.cell.styles.fontSize=11;d.cell.styles.fillColor=[227,233,246]}}});
+    y=doc.lastAutoTable.finalY+7;
+    const E=window.SAVA_EMPRESA||{};
+    const txt=liq>0
+      ?`Declaro que conferi as quantidades acima e que recebi de ${E.nome||'a empresa'} a importância de R$ ${m2(liq)} (${extenso(liq)}), referente à ${o.regime==='clt'?'bonificação por produção':'produção'} do período "${m.periodo||''}" na obra ${o.nome}.${ret>0?` O valor retido de R$ ${m2(ret)} será pago na entrega do serviço, após vistoria sem retrabalho.`:''}`
+      :`Declaro que conferi as quantidades acima, referentes ao período "${m.periodo||''}" na obra ${o.nome}. Neste período a produção medida não superou o salário, portanto não há bonificação a receber além do salário.`;
+    doc.setFontSize(9.5);doc.setTextColor(24,32,43);const W=doc.internal.pageSize.getWidth();
+    const linhasTxt=doc.splitTextToSize(txt,W-28);doc.text(linhasTxt,14,y);y+=linhasTxt.length*4.6+4;
+    if(o.regime==='clt'){doc.setFontSize(8);doc.setTextColor(91,101,115);const nt=doc.splitTextToSize('Este recibo comprova a conferência da medição. O valor integra a folha de pagamento do período, com os descontos e encargos legais.',W-28);doc.text(nt,14,y);y+=nt.length*3.8+2}
+    assinaturas(doc,y,p.nome,p.cpf);
+  });
+  rodape(doc);
+  doc.save(nomeArq(`Recibo_${m.periodo||'medicao'}_${fid?lista[0].nome:'todos'}`)+'.pdf');
+}
+function reciboMeta(o,mt){
+  const doc=pdfPronto();if(!doc)return;
+  const r=calcMeta(o,mt); if(!r.eq.length){toast('Marque a equipe da meta');return}
+  r.eq.forEach((p,i)=>{
+    if(i)doc.addPage();
+    const pe=pessoa(o,p.fid);
+    let y=cabecalho(doc,'Recibo de prêmio por meta','Entrega de setor no prazo e com qualidade');
+    y=blocoInfo(doc,y,[['Obra',o.nome,'Meta',mt.nome],['Funcionário',p.nome,'Prazo',dataBR(mt.prazo)],['Função',p.funcao,'Entrega',dataBR(mt.entrega)],['CPF',(pe&&pe.cpf)||'—','Dias no setor',F1.format(p.dias)]]);
+    const P=o.pesos, cr=mt.crit||{};
+    doc.autoTable({startY:y,margin:{left:14,right:14},head:[['Critério','Pontos','Cumprido']],
+      body:[['Entrega no prazo',String(P.prazo),r.prazoOk?'Sim':'Não'],['Aprovado na vistoria, sem retrabalho',String(P.qual),cr.qual?'Sim':'Não'],['Organização, limpeza e segurança',String(P.org),cr.org?'Sim':'Não']],
+      styles:{fontSize:9,cellPadding:2},headStyles:{fillColor:[30,63,143],textColor:255},columnStyles:{1:{halign:'center',cellWidth:22},2:{halign:'center',cellWidth:26}}});
+    y=doc.lastAutoTable.finalY+5;
+    const linhas=[['Prêmio da meta (equipe)',m2(r.premio)],[`Atingido (${F0.format(r.pct)}%)`,m2(r.ganho)],['VALOR DO PRÊMIO DESTE FUNCIONÁRIO',m2(p.valor)]];
+    doc.autoTable({startY:y,margin:{left:90,right:14},theme:'plain',body:linhas,styles:{fontSize:9.5,cellPadding:1.6},columnStyles:{1:{halign:'right',cellWidth:30}},
+      didParseCell:d=>{if(d.row.index===2){d.cell.styles.fontStyle='bold';d.cell.styles.fontSize=11;d.cell.styles.fillColor=[227,233,246]}}});
+    y=doc.lastAutoTable.finalY+7;
+    const E=window.SAVA_EMPRESA||{}, W=doc.internal.pageSize.getWidth();
+    const t=doc.splitTextToSize(`Declaro que recebi de ${E.nome||'a empresa'} a importância de R$ ${m2(p.valor)} (${extenso(p.valor)}), referente ao prêmio pela meta "${mt.nome}" na obra ${o.nome}, dividido entre a equipe proporcionalmente aos dias trabalhados no setor e à função.`,W-28);
+    doc.setFontSize(9.5);doc.setTextColor(24,32,43);doc.text(t,14,y);y+=t.length*4.6+4;
+    assinaturas(doc,y,p.nome,pe&&pe.cpf);
+  });
+  rodape(doc);
+  doc.save(nomeArq(`Recibo_meta_${mt.nome}`)+'.pdf');
+}
+
+/* ---------- ações ---------- */
+function copiar(txt,okMsg){
+  const fallback=()=>{const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}t.remove();toast(ok?okMsg:'Não foi possível copiar automaticamente')};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(()=>toast(okMsg),fallback);else fallback();
+}
+function importar(texto,modo){
+  const o=O();
+  const map=new Map(); let lidas=0, avisos=0;
+  texto.split(/\r?\n/).forEach(linha=>{
+    if(!linha.trim())return;
+    const c=linha.split(linha.includes('\t')?'\t':';').map(x=>x.trim());
+    if(c.length<5)return;
+    const qtd=num(c[3]); if(!/\d/.test(c[3]||''))return;
+    const cod=c[0], nome=c[1], un=c[2], mo=num(c[4]), mat=c[5]!=null&&c[5]!==''?num(c[5]):0, pct=c[6]!=null&&c[6]!==''?num(c[6]):null;
+    const key=(cod||'')+'|'+(cod?'':nome.toLowerCase()+'|'+un);
+    lidas++;
+    if(map.has(key)){const s=map.get(key);s.qtd+=qtd;if(Math.abs(s.mo-mo)>1e-6)avisos++}
+    else map.set(key,Object.assign({id:uid(),cod,nome,un,qtd,mo,mat,pct:pct,auto:true},adivinhaFn(o,nome)));
+  });
+  if(!lidas){toast('Nenhuma linha válida. Confira a ordem das colunas.');return}
+  if(modo==='sub'){if(o.medicoes.length&&!confirm('Substituir a tabela apaga a ligação das medições já lançadas com os serviços. Continuar?'))return;o.servicos=[]}
+  map.forEach(s=>{
+    const ex=modo==='add'&&o.servicos.find(x=>(s.cod&&x.cod===s.cod)||(!s.cod&&x.nome===s.nome&&x.un===s.un));
+    if(ex)ex.qtd=num(ex.qtd)+s.qtd;else o.servicos.push(s);
+  });
+  persist(o.id); tab='precos'; render();
+  toast(`${lidas} linha(s) lidas, ${map.size} serviço(s)${avisos?` · ${avisos} com MO diferente entre linhas (ficou a primeira)`:''}`);
+}
+function resumoMed(o,m){
+  const r=calcMed(o,m);
+  let t=`${o.nome} — ${m.periodo||'Medição'}${m.data?' ('+m.data.split('-').reverse().join('/')+')':''}\n\n`;
+  r.linhas.forEach(x=>{if(x.s)t+=`${x.s.nome}: ${m2(x.q)} ${x.s.un} × ${m2(x.c.preco)} = ${brl(x.valor)}\n`});
+  t+=`\nPagamento por funcionário\n`;
+  r.lista.forEach(p=>{t+=o.regime==='clt'
+    ?`${p.nome} (${p.funcao}): produção ${brl(p.prod)}, salário ${brl(p.sal)}, bonificação a pagar ${brl(p.pagar)} (retido ${brl(p.ret)})\n`
+    :`${p.nome}: produção ${brl(p.prod)}, a pagar ${brl(p.prod*(1-o.ret/100))}\n`});
+  t+=`\nMO orçada medida ${brl(r.moOrc)} · custo real ${brl(r.custo)} · ${F0.format(r.ratio*100)}%`;
+  return t;
+}
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]'); if(!b||b.tagName==='SELECT')return;
+  const a=b.dataset.act, o=O();
+  if(ACT_PERM[a]&&!can(ACT_PERM[a])){toast('Seu perfil não tem permissão para isso');return}
+  if(a==='entrar'){const em=document.getElementById('lEmail').value.trim(),se=document.getElementById('lSenha').value;if(!em||!se){loginErro='Preencha e-mail e senha.';render();return}
+    b.disabled=true;auth.signInWithEmailAndPassword(em,se).then(()=>{loginErro=''}).catch(err=>{loginErro=msgAuth(err);render()});return}
+  if(a==='resetSenha'){const em=(document.getElementById('lEmail')||{}).value;if(!em){loginErro='Digite seu e-mail e clique de novo em "Esqueci minha senha".';render();return}
+    auth.sendPasswordResetEmail(em.trim()).then(()=>{loginErro='';toast('Enviamos um link para redefinir a senha no seu e-mail')}).catch(err=>{loginErro=msgAuth(err);render()});return}
+  if(a==='sair'){auth.signOut();tab='obras';return}
+  if(a==='addUser'){addUser();return}
+  if(a==='delUser'){if(!confirm('Remover o acesso de '+b.dataset.id+' à Produção de obra? O login nos outros sistemas continua.'))return;fs.collection(USUARIOS).doc(b.dataset.id).delete().then(()=>toast('Acesso removido')).catch(e=>toast('Erro: '+e.code));return}
+  if(a==='reciboMed'){const m=o&&o.medicoes.find(x=>x.id===medSel);if(m)reciboMed(o,m,b.dataset.fid||null);return}
+  if(a==='reciboMeta'){const mt=o&&o.metas.find(x=>x.id===b.dataset.id);if(mt)reciboMeta(o,mt);return}
+  if(a==='tab'){tab=b.dataset.v;render();return}
+  if(a==='tema'){const ord=['auto','light','dark'],n=ord[(ord.indexOf(temaAtual())+1)%3];try{localStorage.setItem(TKEY,n)}catch(e){}aplicaTema();render();toast('Tema: '+TEMAS[n][0]);return}
+  if(a==='limparFiltro'){FL.q='';FL.cls='';FL.fn='';FL.sit='';render();return}
+  const mtx=b.dataset.id&&O()&&(O().metas||[]).find(x=>x.id===b.dataset.id);
+  if(a==='novaMeta'){const o=O();const n=o.metas.length+1;const d=hoje();const p=new Date(Date.now()+14*864e5).toISOString().slice(0,10);o.metas.push({id:uid(),criado:Date.now(),nome:`Setor ${n}`,inicio:d,prazo:p,entrega:'',premio:null,linhas:[{sid:o.servicos[0]?o.servicos[0].id:'',qtd:0}],equipe:{},crit:{},encerrada:false});persist(o.id);render();return}
+  if(a==='addMetaLinha'&&mtx){const ult=mtx.linhas[mtx.linhas.length-1];mtx.linhas.push({sid:ult?ult.sid:O().servicos[0].id,qtd:0});persist(O().id);render();return}
+  if(a==='delMetaLinha'&&mtx){mtx.linhas.splice(+b.dataset.i,1);persist(O().id);render();return}
+  if(a==='delMeta'&&mtx){if(!confirm('Excluir esta meta?'))return;O().metas=O().metas.filter(x=>x!==mtx);persist(O().id);render();return}
+  if(a==='encMeta'&&mtx){mtx.encerrada=!mtx.encerrada;persist(O().id);render();toast(mtx.encerrada?'Meta encerrada':'Meta reaberta');return}
+  if(a==='copiarMeta'&&mtx){copiar(resumoMeta(O(),mtx),'Resumo copiado');return}
+  if(a==='abrirObra'){S.atual=b.dataset.id;try{localStorage.setItem('calcProducaoAtual',S.atual)}catch(x){}medSel=null;tab='precos';render();return}
+  if(a==='abrirMed'){S.atual=b.dataset.id;medSel=null;tab='medicao';render();return}
+  if(a==='detalhes'){detalhes=!detalhes;render();return}
+  if(a==='novaObra'){const n=prompt('Nome da obra','Nova obra');if(n===null)return;const x=novaObra(n.trim()||'Nova obra');S.obras[x.id]=x;S.atual=x.id;tab='precos';persist(x.id);render();return}
+  if(!o)return;
+  if(a==='dupObra'){const x=JSON.parse(JSON.stringify(o));x.id=uid();x.nome=o.nome+' (cópia)';x.medicoes=[];S.obras[x.id]=x;S.atual=x.id;persist(x.id);render();toast('Obra duplicada sem as medições');return}
+  if(a==='delObra'){if(!confirm(`Excluir a obra "${o.nome}" com todas as medições? Isso não pode ser desfeito.`))return;const id=o.id;delete S.obras[id];S.atual=Object.keys(S.obras)[0]||null;persist(id);render();return}
+  if(a==='addRapido'){const nome=document.getElementById('qNome').value.trim();if(!nome){toast('Escreva o nome do serviço');document.getElementById('qNome').focus();return}
+    o.servicos.push(Object.assign({id:uid(),cod:'',nome,un:document.getElementById('qUn').value.trim()||'un',qtd:num(document.getElementById('qQtd').value),mo:num(document.getElementById('qMo').value),mat:0,pct:null,auto:true},adivinhaFn(o,nome)));
+    persist(o.id);render();const q=document.getElementById('qNome');if(q)q.focus();toast('Serviço adicionado');return}
+  if(a==='delServ'){const s=o.servicos.find(x=>x.id===b.dataset.id);if(medidoAcum(o,s.id,null)>0&&!confirm('Este serviço já tem medições. Excluir mesmo assim?'))return;o.servicos=o.servicos.filter(x=>x.id!==b.dataset.id);persist(o.id);render();return}
+  if(a==='copiarTabela'){let t='Código\tServiço\tUn\tQtd orçada\tMO orçada\tTeto\tPreço tabela\tOficial\tAjudante\tVerba teto\n';o.servicos.forEach(s=>{const c=calc(o,s);t+=[s.cod,s.nome,s.un,m2(num(s.qtd)),m4(num(s.mo)),m2(c.teto),m2(c.preco),m2(c.pOf),m2(c.pAj),m2(c.verba)].join('\t')+'\n'});copiar(t,'Tabela copiada. Cole no Excel.');return}
+  if(a==='novaMed'){const n=o.medicoes.length+1;const m={id:uid(),criado:Date.now(),periodo:`Medição ${n}`,data:new Date().toISOString().slice(0,10),linhas:[{sid:o.servicos[0]?o.servicos[0].id:'',qtd:0,of:'',aj:''}],diasPadrao:o.diasPadrao,dias:{},fechada:false};o.medicoes.push(m);medSel=m.id;tab='medicao';persist(o.id);render();return}
+  const m=o.medicoes.find(x=>x.id===medSel);
+  if(a==='addLinha'&&m){const ult=m.linhas[m.linhas.length-1];m.linhas.push({sid:ult?ult.sid:o.servicos[0].id,qtd:0,of:ult?ult.of:'',aj:ult?ult.aj:''});persist(o.id);render();return}
+  if(a==='delLinha'&&m){m.linhas.splice(+b.dataset.i,1);persist(o.id);render();return}
+  if(a==='fecharMed'&&m){m.fechada=!m.fechada;persist(o.id);render();toast(m.fechada?'Medição fechada':'Medição reaberta');return}
+  if(a==='delMed'&&m){if(!confirm('Excluir esta medição?'))return;o.medicoes=o.medicoes.filter(x=>x.id!==m.id);medSel=null;persist(o.id);render();return}
+  if(a==='copiarMed'&&m){copiar(resumoMed(o,m),'Resumo copiado');return}
+  if(a==='addFn'){o.funcoes.push({id:uid(),nome:'Nova função',hora:0});persist(o.id);render();return}
+  if(a==='delFn'){const id=b.dataset.id;if(o.servicos.some(s=>s.of===id||s.aj===id)||o.funcionarios.some(p=>p.funcao===id)){toast('Essa função está em uso por serviços ou funcionários');return}o.funcoes=o.funcoes.filter(f=>f.id!==id);persist(o.id);render();return}
+  if(a==='addFu'){const n=prompt('Nome do funcionário');if(!n||!n.trim())return;const p=o.funcoes.find(f=>/pedreiro/i.test(f.nome))||o.funcoes[0];o.funcionarios.push({id:uid(),nome:n.trim(),funcao:p?p.id:''});persist(o.id);render();return}
+  if(a==='delFu'){if(!confirm('Remover este funcionário da obra?'))return;o.funcionarios=o.funcionarios.filter(p=>p.id!==b.dataset.id);persist(o.id);render();return}
+  if(a==='importar'){importar(document.getElementById('txtImp').value,b.dataset.v);return}
+  if(a==='gerarBkp'){const t=JSON.stringify(o);document.getElementById('txtBkp').value=t;copiar(t,'Backup gerado e copiado');return}
+  if(a==='restaurar'){try{const x=JSON.parse(document.getElementById('txtBkp').value);if(!x.servicos||!x.funcoes)throw 0;x.id=uid();x.nome=Object.values(S.obras).some(y=>y.nome===x.nome)?(x.nome||'Obra')+' (restaurada)':(x.nome||'Obra');normaliza(x);S.obras[x.id]=x;S.atual=x.id;persist(x.id);tab='precos';render();toast('Obra restaurada')}catch(err){toast('O texto colado não é um backup válido desta calculadora')}return}
+});
+
+document.addEventListener('change',e=>{
+  const t=e.target, d=t.dataset, o=O();
+  const neg=CAMPO_PERM.find(([k,p])=>d[k]!==undefined&&!can(p));if(neg){toast('Seu perfil não tem permissão para isso');render();return}
+  if(d.us){const v=d.k==='ativo'?t.checked:t.value;fs.collection(USUARIOS).doc(d.us).set({[d.k]:v},{merge:true}).catch(err=>toast('Erro: '+err.code));return}
+  if(d.uo){const [em,oid]=d.uo.split('|');const u=USERS.find(x=>x.email===em);const sel=new Set((u&&u.obras)||[]);t.checked?sel.add(oid):sel.delete(oid);
+    fs.collection(USUARIOS).doc(em).set({obras:[...sel]},{merge:true}).catch(err=>toast('Erro: '+err.code));return}
+  if(d.flt&&d.flt!=='q'){FL[d.flt]=t.value;render();return}
+  if(d.act==='obra'){FL.fn='';S.atual=t.value;medSel=null;try{localStorage.setItem('calcProducaoAtual',S.atual)}catch(x){}render();return}
+  if(d.act==='medSel'){medSel=t.value;render();return}
+  if(d.act==='abcBase'){abcBase=t.value;render();return}
+  if(!o)return;
+  const numK=['qtd','mo','mat','pct','hora'];
+  if(d.p){o[d.p]=['nome','regime','modelo'].includes(d.p)?t.value:num(t.value);if(d.p==='modelo'&&tab==='medicao'&&t.value==='meta')tab='metas';if(d.p==='modelo'&&tab==='metas'&&t.value==='producao')tab='precos';persist(o.id);render();return}
+  if(d.pe){o.pesos[d.pe]=num(t.value);persist(o.id);render();return}
+  if(d.mt){const mt=o.metas.find(x=>x.id===d.mt);mt[d.k]=d.k==='premio'?(t.value.trim()?num(t.value):null):t.value;if(d.k==='entrega'&&mt.crit)delete mt.crit.prazo;persist(o.id);render();return}
+  if(d.mtl){const [mid,i]=d.mtl.split('|');const l=o.metas.find(x=>x.id===mid).linhas[+i];l[d.k]=d.k==='qtd'?num(t.value):t.value;persist(o.id);render();return}
+  if(d.mte){const [mid,fid]=d.mte.split('|');const mt=o.metas.find(x=>x.id===mid);mt.equipe=mt.equipe||{};if(t.checked)mt.equipe[fid]=mt.inicio&&mt.prazo?Math.max(1,diasEntre(mt.inicio,mt.prazo)):1;else delete mt.equipe[fid];persist(o.id);render();return}
+  if(d.mtd){const [mid,fid]=d.mtd.split('|');o.metas.find(x=>x.id===mid).equipe[fid]=num(t.value);persist(o.id);render();return}
+  if(d.mtc){const [mid,k]=d.mtc.split('|');const mt=o.metas.find(x=>x.id===mid);mt.crit=mt.crit||{};mt.crit[k]=t.checked;persist(o.id);render();return}
+  if(d.s){const s=o.servicos.find(x=>x.id===d.s);s[d.k]=d.k==='pct'&&!t.value.trim()?null:numK.includes(d.k)?num(t.value):t.value;if(d.k==='nome'&&s.auto){Object.assign(s,adivinhaFn(o,s.nome))}persist(o.id);render();return}
+  if(d.fn){const f=o.funcoes.find(x=>x.id===d.fn);f[d.k]=numK.includes(d.k)?num(t.value):t.value;persist(o.id);render();return}
+  if(d.fu){const p=o.funcionarios.find(x=>x.id===d.fu);p[d.k]=t.value;persist(o.id);render();return}
+  if(d.m){const m=o.medicoes.find(x=>x.id===d.m);m[d.k]=d.k==='diasPadrao'?num(t.value):t.value;persist(o.id);render();return}
+  if(d.ml){const [mid,i]=d.ml.split('|');const l=o.medicoes.find(x=>x.id===mid).linhas[+i];l[d.k]=d.k==='qtd'?num(t.value):t.value;persist(o.id);render();return}
+  if(d.md){const [mid,fid]=d.md.split('|');const m=o.medicoes.find(x=>x.id===mid);(m.dias=m.dias||{})[fid]=num(t.value);persist(o.id);render();return}
+});
+
+let tBusca;
+document.addEventListener('input',e=>{
+  const t=e.target; if(t.dataset.flt!=='q')return;
+  FL.q=t.value; clearTimeout(tBusca);
+  tBusca=setTimeout(()=>{const pos=t.selectionStart;render();const n=document.getElementById('fBusca');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(x){}}},180);
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.id==='lEmail'||e.target.id==='lSenha')){e.preventDefault();const b=document.querySelector('[data-act="entrar"]');if(b)b.click();return}
+  if(e.key==='Enter'&&e.target.closest&&e.target.closest('.uform')){e.preventDefault();const b=document.querySelector('[data-act="addUser"]');if(b)b.click();return}
+  if(e.key==='Enter'&&e.target.closest&&e.target.closest('.quick')){e.preventDefault();const b=document.querySelector('[data-act="addRapido"]');if(b)b.click()}});
+render(); iniciar();
+})();
+</script>
+</body>
+</html>
