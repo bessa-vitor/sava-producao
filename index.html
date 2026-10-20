@@ -148,6 +148,8 @@ tbody tr:hover td.stick{background:var(--sunk)}
 ol.howto{padding-left:20px;margin:6px 0 0}
 ol.howto li{margin-bottom:4px}
 .quick{display:grid;grid-template-columns:2.4fr .6fr 1fr 1fr auto;gap:8px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:12px}
+.quick>*{min-width:0}
+.quick input{width:100%}
 .quick label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);font-weight:600}
 @media (max-width:700px){.quick{grid-template-columns:1fr 1fr}.quick label:first-child{grid-column:span 2}}
 .obras{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
@@ -197,6 +199,299 @@ details.obsel label{display:flex;gap:6px;align-items:center;font-size:13px;paddi
 .drop{display:flex;flex-direction:column;align-items:center;gap:4px;border:2px dashed var(--line);border-radius:8px;padding:26px 16px;text-align:center;cursor:pointer;margin:10px 0;background:var(--sunk)}
 .drop.on,.drop:hover{border-color:var(--navy);background:var(--navy-soft)}
 .drop b{font-family:var(--cond);font-size:19px}
+/* (etapa 2 abaixo) */
+/* ===== layout v2: barra, cabeçalho da obra, KPIs, gaveta ===== */
+.wrap{max-width:none;padding:0}
+.page{max-width:1280px;margin:0 auto;padding:18px 20px 56px}
+.appbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--surface);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--surface)}
+.bar-in{max-width:1280px;margin:0 auto;padding:8px 20px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{width:32px;height:32px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font:700 14px/1 var(--cond);letter-spacing:.04em;flex:none}
+:root[data-theme="dark"] .logo{color:#0E1420}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo{color:#0E1420}}
+.brand-t{font:700 19px/1 var(--cond);white-space:nowrap}
+.grupos{display:flex;gap:4px;margin:0 auto;background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:3px}
+.grupos button{display:flex;align-items:center;gap:7px;border:none;background:none;border-radius:7px;padding:7px 14px;color:var(--muted);font:600 16px/1 var(--cond)}
+.grupos button svg{width:18px;height:18px}
+.grupos button[aria-current="page"]{background:var(--surface);color:var(--navy);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.bar-dir{display:flex;align-items:center;gap:6px;flex:none}
+button.icon{display:inline-grid;place-items:center;width:38px;height:38px;padding:0;border-radius:8px;background:transparent;border:1px solid transparent;color:var(--ink)}
+button.icon:hover{background:var(--sunk);border-color:var(--line)}
+button.icon svg{width:19px;height:19px}
+button.icon.sm{width:32px;height:32px;border-color:var(--line)}
+button.danger{color:var(--red);border-color:var(--red)}
+.menu{position:relative}
+.menu summary{list-style:none;cursor:pointer}.menu summary::-webkit-details-marker{display:none}
+.avatar{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--navy-soft);color:var(--navy);font:700 14px/1 var(--body)}
+.menu-pop{position:absolute;right:0;top:44px;min-width:240px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px;box-shadow:0 10px 30px rgba(0,0,0,.18);z-index:40}
+.eyebrow{font:600 12px/1 var(--body);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0}
+.obra-head{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:18px}
+.obra-head>*,.oh-id{min-width:0}
+.oh-sel{display:flex;align-items:center;gap:8px;margin-top:6px;min-width:0}
+.oh-sel select.obra-select{flex:0 1 auto;min-width:0;width:auto}
+select.obra-select{font:700 26px/1.15 var(--cond);border:none;background:transparent;padding:2px 26px 2px 0;max-width:100%;min-width:0;text-overflow:ellipsis;cursor:pointer;
+  appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:right 9px center,right 3px center;background-size:6px 6px;background-repeat:no-repeat}
+select.obra-select:focus-visible{outline:2px solid var(--navy);border-radius:6px}
+.oh-meta{font-size:13px;color:var(--muted);margin-top:6px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:860px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.k-l{font-size:12px;color:var(--muted);font-weight:600}
+.k-v{font:700 25px/1.1 var(--cond);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k-s{font-size:12px;color:var(--muted)}
+.k-bar{height:5px;border-radius:3px;background:var(--sunk);overflow:hidden;border:1px solid var(--line)}
+.k-bar i{display:block;height:100%}
+.pg-head{margin-bottom:6px}
+nav.subtabs{display:flex;gap:4px;overflow-x:auto;margin:0 0 18px;border-bottom:1px solid var(--line);scrollbar-width:none}
+nav.subtabs button{border:none;border-bottom:3px solid transparent;border-radius:0;background:none;padding:10px 14px;color:var(--muted);white-space:nowrap;font:600 17px/1 var(--cond)}
+nav.subtabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--navy)}
+.empty.big{margin-top:10vh;padding:44px 24px}.empty.big h2{margin-bottom:6px}
+/* gaveta de configurações */
+body.travado{overflow:hidden}
+.scrim{position:fixed;inset:0;background:rgba(10,14,20,.45);z-index:50}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--surface);z-index:51;display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.25);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);animation:entra .18s ease-out}
+@keyframes entra{from{transform:translateX(24px);opacity:.4}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.drawer{animation:none}}
+.dr-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:18px 20px 12px;border-bottom:1px solid var(--line)}
+.dr-head h2{font-size:22px;margin-top:4px}
+.dr-body{overflow:auto;padding:8px 20px 24px;display:flex;flex-direction:column;gap:6px}
+.dr-body fieldset{border:none;border-bottom:1px solid var(--line);margin:0;padding:12px 0 16px;display:flex;flex-direction:column;gap:10px}
+.dr-body fieldset:last-child{border-bottom:none}
+.dr-body legend{font:700 16px/1 var(--cond);padding:0;margin-bottom:10px}
+.dr-body label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-weight:600}
+.dr-body input,.dr-body select{font-size:15px;color:var(--ink);padding:8px 10px;width:100%;min-width:0}
+.dr-grid>label{min-width:0}
+.drawer{overflow-x:hidden}
+.dr-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+.split{display:flex;height:10px;border-radius:5px;overflow:hidden;gap:2px;margin-top:4px}
+.split i{display:block;min-width:4px}
+/* celular: seções viram barra inferior */
+@media (max-width:760px){
+  .brand-t{display:none}
+  .bar-in{padding:8px 14px;justify-content:space-between}
+  .grupos{position:fixed;left:0;right:0;bottom:0;margin:0;border-radius:0;border:none;border-top:1px solid var(--line);background:var(--surface);
+    padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));justify-content:space-around;z-index:30}
+  .grupos button{flex-direction:column;gap:3px;font-size:13px;padding:6px 10px;flex:1}
+  .grupos button[aria-current="page"]{box-shadow:none;background:var(--navy-soft)}
+  .page{padding:14px 14px calc(90px + env(safe-area-inset-bottom,0px))}
+  select.obra-select{font-size:22px}
+  .k-v{font-size:18px}
+  .kpi{padding:10px 12px}
+  .dr-grid{grid-template-columns:1fr}
+}
+
+/* ===== etapa 2: tabelas ===== */
+:root{--zebra:#F2F4F1;--hover:#EAEFF8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--zebra:#1E252E;--hover:#222C3B}}
+:root[data-theme="dark"]{--zebra:#1E252E;--hover:#222C3B}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sec-head{display:flex;flex-wrap:wrap;gap:10px 16px;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.sec-head h2{font-size:24px}
+.sec-acoes{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sec-sub{color:var(--muted);font-size:14px;margin-top:2px}
+details.ajuda{position:relative}
+details.ajuda summary{list-style:none;cursor:pointer;color:var(--navy);font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+details.ajuda summary::-webkit-details-marker{display:none}
+details.ajuda summary::before{content:"?";display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--navy-soft);font-size:12px}
+.ajuda-pop{position:absolute;right:0;top:40px;width:min(380px,86vw);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;box-shadow:0 12px 32px rgba(0,0,0,.18);z-index:20;font-size:14px;display:flex;flex-direction:column;gap:8px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.toolbar .busca{flex:1 1 260px;position:relative;display:flex}
+.toolbar .busca svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted);pointer-events:none}
+.toolbar .busca input{width:100%;padding:9px 10px 9px 34px;font-size:15px;border-radius:8px}
+.fsel{display:inline-flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:8px;background:var(--surface);overflow:hidden}
+.fsel>span{font-size:12px;font-weight:600;color:var(--muted);padding:0 4px 0 10px}
+.fsel select{border:none;background:transparent;padding:8px 8px 8px 2px;font-weight:600;font-size:14px}
+.fsel.on{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.fsel.on>span{color:var(--navy)}
+.toolbar .cont{font-size:13px;color:var(--muted);white-space:nowrap}
+.tb-acoes{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
+button.toggle[aria-pressed="true"]{background:var(--navy-soft);border-color:var(--navy);color:var(--navy)}
+.quick{grid-template-columns:2.4fr .6fr 1fr 1fr auto!important;border-color:var(--navy)!important;box-shadow:0 0 0 3px var(--navy-soft)}
+.q-acoes{display:flex;gap:6px;align-items:flex-end}
+@media (max-width:700px){.quick{grid-template-columns:1fr 1fr!important}.q-acoes{grid-column:span 2}}
+/* tabela */
+table.tbl{font-size:14px}
+table.tbl th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:10px 12px;vertical-align:bottom;line-height:1.25}
+.th-sub{display:block;text-transform:none;letter-spacing:0;font-weight:500;font-size:11px;opacity:.8}
+table.tbl th.th-key{color:var(--navy)}
+table.tbl td{padding:8px 12px;border-bottom:1px solid var(--line)}
+table.tbl tbody tr:nth-child(even) td{background:var(--zebra)}
+table.tbl tbody tr:hover td{background:var(--hover)}
+table.tbl tbody tr:nth-child(even) td.stick{background:var(--zebra)}
+table.tbl tbody tr:hover td.stick{background:var(--hover)}
+table.tbl td.key{background:var(--navy-soft)!important;color:var(--navy);font-weight:700;font-size:15px}
+table.tbl td.key .sub{font-weight:500}
+table.tbl td.strong{font-weight:600}
+table.tbl td.soft{color:var(--muted)}
+table.tbl td.neg,table.tbl td.key.neg{color:var(--red)}
+.tbl .over td{background:var(--red-soft)!important}
+input.cell,select.cell{border:1px solid transparent;background:transparent;border-radius:6px;padding:5px 7px;font-size:14px}
+input.cell:hover,select.cell:hover{border-color:var(--line);background:var(--surface)}
+input.cell:focus{border-color:var(--navy);background:var(--surface)}
+input.cell.n{width:96px;text-align:right;font-variant-numeric:tabular-nums}
+input.cell.n-s{width:64px}
+input.cell.un{width:52px}
+input.cell.nome{font-weight:600;width:100%;min-width:240px;text-overflow:ellipsis}
+td.acao{width:36px;text-align:center}
+button.del{opacity:.35}
+tr:hover button.del,button.del:focus-visible{opacity:1}
+table.tbl tfoot td{background:var(--navy-soft);border-top:2px solid var(--navy);padding:12px;color:var(--ink)}
+table.tbl tfoot tr.tf-sub td{background:var(--surface);border-top:1px solid var(--line);font-weight:600;color:var(--muted)}
+.tf-l{font:700 16px/1.2 var(--cond)}
+.tf-s{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-top:2px}
+td.tf-v{font:700 19px/1 var(--cond);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.tf-v.pos{color:var(--green)}td.tf-v.neg{color:var(--red)}
+/* saldo */
+.sit-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+@media (max-width:700px){.sit-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+button.sit{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
+button.sit b{font:700 26px/1 var(--cond)}
+button.sit span{font-size:13px;color:var(--muted);font-weight:600}
+button.sit.nav b{color:var(--navy)}button.sit.ok b{color:var(--green)}button.sit.bad b{color:var(--red)}
+button.sit.on{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy);background:var(--navy-soft)}
+.exec{display:flex;align-items:center;gap:8px}
+.exec-bar{flex:1;height:7px;border-radius:4px;background:var(--sunk);border:1px solid var(--line);overflow:hidden;min-width:70px}
+.exec-bar i{display:block;height:100%}
+.exec-p{font-size:13px;font-variant-numeric:tabular-nums;min-width:38px;text-align:right;font-weight:600}
+/* curva ABC */
+.abc-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.abc-stack{grid-column:1/-1;display:flex;height:8px;border-radius:4px;overflow:hidden;gap:2px}
+.abc-stack i.A,.abc-bar.A{background:var(--red)}.abc-stack i.B,.abc-bar.B{background:var(--amber)}.abc-stack i.C,.abc-bar.C{background:var(--green)}
+button.abc-card{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;padding:12px 14px;border-radius:10px;border:1px solid var(--line);border-top:4px solid var(--line);background:var(--surface)}
+button.abc-card.A{border-top-color:var(--red)}button.abc-card.B{border-top-color:var(--amber)}button.abc-card.C{border-top-color:var(--green)}
+button.abc-card b{font:700 22px/1.1 var(--cond);font-variant-numeric:tabular-nums}
+.abc-k{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+button.abc-card.on{background:var(--navy-soft);box-shadow:inset 0 0 0 1px var(--navy)}
+@media (max-width:620px){.abc-cards{grid-template-columns:1fr}}
+.abc-bar{height:9px;border-radius:5px}
+@media (max-width:700px){
+  .toolbar{gap:6px}.toolbar .busca{flex-basis:100%}
+  .fsel{flex:1 1 0;min-width:0}.fsel>span{display:none}.fsel select{width:100%;min-width:0;padding:8px 6px}
+  .toolbar .cont{flex-basis:100%}
+  .sec-acoes{width:100%}.sec-acoes button{padding:6px 10px;font-size:14px}
+}
+
+/* ===== etapa 3: medição e metas ===== */
+.pills{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:thin}
+.pill{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px;background:var(--surface)}
+.pill.on{background:var(--navy);border-color:var(--navy);color:#fff}
+:root[data-theme="dark"] .pill.on{color:#0E1420}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pill.on{color:#0E1420}}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dot.ok{background:var(--green)}.dot.open{background:var(--amber)}
+.callout{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--amber-soft);border-radius:10px;padding:12px 16px;margin-bottom:12px}
+.med-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:6px}
+.med-card .scroll{border-radius:8px}
+.med-top{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:flex-end;margin-bottom:12px}
+.med-campos,.meta-campos{display:flex;flex-wrap:wrap;gap:10px}
+.med-campos label,.meta-campos label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);font-weight:600}
+.med-campos input.curto{width:80px}
+.meta-campos .nm{flex:1 1 260px}.meta-campos .nm input{width:100%;font-weight:700}
+.med-acoes,.meta-acoes{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button.del-txt{color:var(--muted)}button.del-txt:hover{color:var(--red)}
+select.cell.svc-sel{width:100%;max-width:360px;font-weight:600}
+.qtd-un{display:inline-flex;align-items:center;gap:4px}.qtd-un>span{font-size:12px;color:var(--muted);min-width:22px;text-align:left}
+button.add-row{display:block;width:100%;margin-top:8px;border:1.5px dashed var(--line);background:transparent;color:var(--navy);padding:9px;border-radius:8px}
+button.add-row:hover{border-color:var(--navy);background:var(--navy-soft)}
+.sub-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.ledger{margin-top:20px}
+@media (min-width:980px){.ledger{grid-template-columns:1.6fr 1fr;align-items:start}.ledger .gauge{position:sticky;top:76px}}
+.gauge{border-radius:12px}
+.gbar{height:10px;background:var(--sunk);border-radius:5px;overflow:hidden;margin:10px 0 12px;position:relative;border:1px solid var(--line)}
+.gbar i{display:block;height:100%}.gbar .mark{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.gauge .row.tot{font-weight:700}
+.slips{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.slip{border-left-width:4px;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:4px}
+.slip-h{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.slip h4{font:700 18px/1.15 var(--cond);margin:0}
+.slip .fn{font-size:13px;color:var(--muted)}
+.slip .pay{font-size:30px;margin-top:6px}
+.slip label.dias{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);font-weight:600;margin-top:6px;padding-top:8px;border-top:1px solid var(--line)}
+.slip label.dias input{width:56px;padding:3px 6px;text-align:right}
+details.calc-d summary{cursor:pointer;font-size:13px;color:var(--navy);font-weight:600;padding:4px 0}
+details.calc-d .l{font-size:13px}
+.slip-n{font-size:12px;background:var(--amber-soft);border-radius:6px;padding:6px 8px;margin:4px 0}
+.chip.nav{background:var(--navy-soft);color:var(--navy)}
+/* metas */
+.meta{padding:0;border-left-width:5px;border-radius:10px;overflow:hidden}
+.meta-sum{display:grid;grid-template-columns:1fr auto auto 20px;gap:14px;align-items:center;width:100%;text-align:left;border:none;border-radius:0;background:transparent;padding:14px 16px}
+.meta-sum:hover{background:var(--sunk)}
+.ms-nome{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ms-nome b{font:700 18px/1.2 var(--cond)}
+.ms-val{display:flex;flex-direction:column;align-items:flex-end}
+.ms-val b{font:700 20px/1.1 var(--cond);font-variant-numeric:tabular-nums}
+.chev{transition:transform .15s}.meta.aberta .chev{transform:rotate(180deg)}
+@media (max-width:640px){.meta-sum{grid-template-columns:1fr auto;}.meta-sum .chip{grid-row:2}.chev{display:none}}
+.meta-body{border-top:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:16px}
+.steps{display:grid;grid-template-columns:1fr;gap:18px}
+@media (min-width:1100px){.steps{grid-template-columns:1.4fr 1fr 1.1fr}}
+.step h4{display:flex;align-items:center;gap:8px;font:700 16px/1 var(--cond);margin:0 0 10px}
+.sn{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font:700 12px/1 var(--body)}
+:root[data-theme="dark"] .sn{color:#0E1420}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sn{color:#0E1420}}
+.team .p.on{background:var(--navy-soft);border-radius:6px;padding:4px 8px;border-bottom-color:transparent}
+.crit .c{justify-content:flex-start}.pts{margin-left:auto;font-size:12px;color:var(--muted);font-weight:600}
+.premio-box{margin-top:10px;background:var(--sunk);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.meta-acoes{border-top:1px solid var(--line);padding-top:12px}
+.meta-form{grid-template-columns:2fr 1fr 1fr auto!important}
+@media (max-width:700px){.meta-form{grid-template-columns:1fr 1fr!important}.meta-form label:first-child{grid-column:span 2}}
+.pesos-d .ajuda-pop .pesos{display:grid;grid-template-columns:1fr;gap:8px}
+.pesos-d .pesos label{flex-direction:row;justify-content:space-between;align-items:center;font-size:14px;color:var(--ink)}
+.pesos-d .pesos input{width:80px}
+.steps>.step{min-width:0}
+.team .p{flex-wrap:nowrap}
+.team .p input:not([type=checkbox]){width:58px;padding:2px 6px;text-align:right}
+.team .p>.small{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.slip .pay{font-size:24px;white-space:nowrap}
+.slip label.dias{gap:8px}
+.slip label.dias>span{display:flex;align-items:center;gap:4px;white-space:nowrap}
+.slip button.link{align-self:flex-start;margin-top:4px}
+
+/* ===== etapa 4: obras, equipe, usuários, importar ===== */
+.obras{grid-template-columns:repeat(auto-fill,minmax(310px,1fr))}
+.obra-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.obra-card.atual{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.oc-h{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.oc-h h3{font-size:21px;line-height:1.15}
+.oc-kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.oc-kpi>div{display:flex;flex-direction:column;gap:2px}
+.oc-pct{font:700 30px/1 var(--cond);font-variant-numeric:tabular-nums}
+.oc-rows .l{display:flex;justify-content:space-between;gap:8px;font-size:14px;padding:5px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.oc-rows .l:last-child{border-bottom:none}
+.oc-acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.bloco{margin-bottom:26px}
+.fu-form{grid-template-columns:2fr 1fr 1fr auto!important}
+.u-form{grid-template-columns:1.6fr 1.2fr 1fr 1fr auto!important}
+@media (max-width:760px){.fu-form,.u-form{grid-template-columns:1fr 1fr!important}.fu-form label:first-child,.u-form label:first-child{grid-column:span 2}}
+input.cell.fn-nome{min-width:180px}
+tr.inativo td{opacity:.55}
+details.obsel{position:relative}
+details.obsel summary{list-style:none;cursor:pointer;padding:5px 8px;border:1px solid var(--line);border-radius:6px;display:inline-block;color:var(--ink);font-size:13px}
+details.obsel summary::after{content:" ▾";color:var(--muted)}
+details.obsel summary::-webkit-details-marker{display:none}
+.obsel-pop{margin-top:6px;min-width:220px;max-height:220px;overflow:auto;background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.switch{position:relative;display:inline-block;width:40px;height:22px}
+.switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:1}
+.switch span{position:absolute;inset:0;background:var(--line);border-radius:11px;transition:background .15s}
+.switch span::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}
+.switch input:checked+span{background:var(--green)}
+.switch input:checked+span::after{transform:translateX(18px)}
+.switch input:focus-visible+span{outline:2px solid var(--navy);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.switch span,.switch span::after{transition:none}}
+.drop{padding:40px 16px;border-radius:12px}
+.drop b{font-size:21px}
+.outras{margin-top:22px}
+.outras-t{font-size:17px;color:var(--muted);margin-bottom:10px}
+details.dobra{margin-bottom:10px;padding:0}
+details.dobra summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.dobra summary::-webkit-details-marker{display:none}
+details.dobra summary::after{content:"▾";color:var(--muted);transition:transform .15s}
+details.dobra[open] summary::after{transform:rotate(180deg)}
+details.dobra summary>div{display:flex;flex-direction:column;gap:2px}
+.dobra-c{padding:0 16px 16px}
+
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:6px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
 .toast.on{opacity:1}
 @media (prefers-reduced-motion:reduce){.toast{transition:none}}
@@ -405,7 +700,7 @@ function assinarObras(){
   if(can('usuarios'))unsubUsers=fs.collection(USUARIOS).onSnapshot(snap=>{USERS=snap.docs.map(d=>({...d.data(),email:d.id})).sort((a,b)=>(a.nome||a.email).localeCompare(b.nome||b.email));agendaRender()},()=>{});
 }
 let rT=null, rPend=false;
-const editando=()=>{const a=document.activeElement;return a&&a.closest&&a.closest('#app')&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)&&a.id!=='fBusca'&&a.type!=='checkbox'};
+const editando=()=>{const a=document.activeElement;return a&&a.closest&&a.closest('#app')&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)&&a.id!=='fBusca'&&a.id!=='oBusca'&&a.type!=='checkbox'};
 function agendaRender(){clearTimeout(rT);rT=setTimeout(()=>{if(editando()){rPend=true;return}render()},80)}
 document.addEventListener('focusout',()=>{if(rPend)setTimeout(()=>{if(!editando()){rPend=false;render()}},60)});
 
@@ -450,7 +745,7 @@ function calc(o,s){
   const auto=s.pct==null||s.pct==='';
   const hO=horaSem(o,of), hA=aj?horaSem(o,aj):0;
   const pct=auto?(hA>0?hO/(hO+hA)*100:100):Math.min(100,Math.max(0,num(s.pct)));
-  const pOf=preco*pct/100, pAj=preco-pOf;
+  const pOf=preco*pct/100, pAj=Math.max(0,preco-pOf);
   const dia=o.horasDia*(horaSem(o,of)+(pct<100?horaSem(o,aj):0));
   return {teto,preco,premioU,pOf,pAj,pct,auto,eq:preco>0?dia/preco:null,verba:teto*num(s.qtd),
     moTot:mo*num(s.qtd),matTot:num(s.mat)*num(s.qtd)};
@@ -509,43 +804,123 @@ function calcMed(o,m){
 }
 
 /* ---------- render ---------- */
+const IC={
+  painel:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
+  operacao:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3h6v3H9zM9 12l2 2 4-4M9 17h6"/></svg>',
+  cadastros:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>',
+  cfg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>',
+  mais:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
+  fechar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+};
+let cfgAberto=false; const ultimoDoGrupo={};
+function grupos(o){
+  return [
+    {k:'painel',nome:'Painel',tabs:[['obras','Obras'],...(o?[['saldo','Saldo da obra'],['abc','Curva ABC']]:[])]},
+    {k:'operacao',nome:'Operação',tabs:o?[...(o.modelo!=='meta'?[['medicao','Medição']]:[]),...(o.modelo!=='producao'?[['metas','Metas por setor']]:[])]:[]},
+    {k:'cadastros',nome:'Cadastros',tabs:[...(o?[['precos','Tabela de preços'],['equipe','Equipe e funções'],['importar','Importar e backup']]:[]),...(can('usuarios')?[['usuarios','Usuários']]:[])]}
+  ].filter(g=>g.tabs.length);
+}
+const iniciais=n=>String(n||'?').trim().split(/[\s@.]+/).filter(Boolean).slice(0,2).map(x=>x[0].toUpperCase()).join('');
+function barra(o,G,gAtual){
+  const obras=Object.values(S.obras).sort((a,b)=>a.nome.localeCompare(b.nome));
+  const nomeUser=(PERFIL&&PERFIL.nome)||(USER&&USER.email)||'';
+  return `<header class="appbar"><div class="bar-in">
+    <div class="brand"><span class="logo" aria-hidden="true">PO</span><span class="brand-t">Produção de obra</span></div>
+    <nav class="grupos" aria-label="Seções do app">${G.map(g=>`<button data-act="grupo" data-v="${g.k}" ${g.k===gAtual?'aria-current="page"':''}>${IC[g.k]}<span>${g.nome}</span></button>`).join('')}</nav>
+    <div class="bar-dir">
+      ${o?`<button class="icon" data-act="cfg" title="Configurações da obra" aria-label="Configurações da obra">${IC.cfg}</button>`:''}
+      <button class="icon" data-act="tema" title="Tema: ${TEMAS[temaAtual()][0]} (clique para trocar)" aria-label="Tema: ${TEMAS[temaAtual()][0]}. Clique para trocar">${TEMAS[temaAtual()][1]}</button>
+      ${USER?`<details class="menu"><summary aria-label="Conta de ${esc(nomeUser)}"><span class="avatar">${esc(iniciais(nomeUser))}</span></summary>
+        <div class="menu-pop"><b>${esc(nomeUser)}</b><span class="small muted">${esc(USER.email||'')}</span>
+        <span class="chip" style="background:var(--navy-soft);color:var(--navy);align-self:flex-start">${PERFIS[PERFIL.perfil]||''}</span>
+        <span class="small muted" id="status">${esc(setStatus.last||'')}</span><button data-act="sair">Sair</button></div></details>`:`<span class="small muted" id="status">${esc(setStatus.last||'')}</span>`}
+    </div></div></header>`;
+}
+function kpis(o){
+  const r=resumoObra(o), comp=r.usado+r.premios, saldo=r.verba-comp, pc=r.verba>0?comp/r.verba:0, ratio=r.moMed>0?r.custo/r.moMed:null;
+  const cor=ratio==null?'var(--muted)':ratio<=0.9?'var(--green)':ratio<=1?'var(--amber)':'var(--red)';
+  const txt=ratio==null?'Sem medição ainda':ratio<=0.9?'Dentro do orçado':ratio<=1?'No limite':'Acima do orçado';
+  return `<div class="kpis">
+    <div class="kpi"><span class="k-l">Verba de mão de obra</span><span class="k-v">${brl(r.verba)}</span><span class="k-s">teto para salários, produção e prêmios</span></div>
+    <div class="kpi"><span class="k-l">Já comprometido</span><span class="k-v">${brl(comp)}</span>
+      <span class="k-bar" aria-hidden="true"><i style="width:${Math.min(100,pc*100)}%;background:${pc>1?'var(--red)':'var(--navy)'}"></i></span>
+      <span class="k-s">${F1.format(pc*100)}% da verba${o.modelo!=='producao'&&r.premios?` · prêmios ${brl(r.premios)}`:''}</span></div>
+    <div class="kpi"><span class="k-l">Saldo de verba</span><span class="k-v" style="color:${saldo<0?'var(--red)':'var(--green)'}">${brl(saldo)}</span><span class="k-s">${saldo<0?'verba estourada':'disponível até o fim da obra'}</span></div>
+    <div class="kpi"><span class="k-l">Custo real ÷ orçado</span><span class="k-v" style="color:${cor}">${ratio==null?'—':F0.format(ratio*100)+'%'}</span><span class="k-s">${txt}${r.ult?` · ${esc(r.ult.periodo)}`:''}</span></div>
+  </div>`;
+}
+function cabecalhoObra(o){
+  const obras=Object.values(S.obras).sort((a,b)=>a.nome.localeCompare(b.nome));
+  const md={producao:'Só produção',misto:'Produção + prêmio',meta:'Só prêmio por meta'}[o.modelo];
+  const pcts=o.regime==='clt'?`encargos ${F1.format(o.enc)}%`:`impostos ${F1.format(o.imp)}%`;
+  return `<section class="obra-head">
+    <div class="oh-id">
+      <label class="eyebrow" for="selObra">Obra</label>
+      <div class="oh-sel"><select id="selObra" data-act="obra" class="obra-select">${obras.map(x=>`<option value="${x.id}" ${x.id===S.atual?'selected':''}>${esc(x.nome)}</option>`).join('')}</select>
+      ${can('obras')?`<button class="icon sm" data-act="novaObra" title="Nova obra" aria-label="Nova obra">${IC.mais}</button>`:''}</div>
+      <p class="oh-meta">${o.regime==='clt'?'CLT':'Empreiteiro'} · ${md} · ${pcts} · margem ${F1.format(o.modelo==='meta'?0:o.margem)}%${o.modelo!=='producao'?` · prêmios ${F1.format(o.premioPct)}%`:''} · <button class="link" data-act="cfg">Ajustar parâmetros</button></p>
+    </div>${kpis(o)}</section>`;
+}
+function gaveta(o){
+  if(!cfgAberto||!o)return '';
+  const md=o.modelo, prod=Math.max(0,100-(md==='meta'?0:num(o.margem))-(md==='producao'?0:num(o.premioPct)));
+  return `<div class="scrim" data-act="cfgFechar"></div>
+  <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="cfgTit">
+    <div class="dr-head"><div><p class="eyebrow">Configurações</p><h2 id="cfgTit">${esc(o.nome)}</h2></div><button class="icon" data-act="cfgFechar" aria-label="Fechar">${IC.fechar}</button></div>
+    <div class="dr-body">
+      <fieldset><legend>Identificação</legend>
+        <label>Nome da obra<input data-p="nome" value="${esc(o.nome)}"></label></fieldset>
+      <fieldset><legend>Como a equipe recebe</legend>
+        <label>Regime de pagamento<select data-p="regime"><option value="clt" ${o.regime==='clt'?'selected':''}>CLT (produção + salário)</option><option value="emp" ${o.regime==='emp'?'selected':''}>Empreiteiro com nota</option></select></label>
+        <label>Modelo de bonificação<select data-p="modelo"><option value="producao" ${md==='producao'?'selected':''}>Só por produção</option><option value="misto" ${md==='misto'?'selected':''}>Produção + prêmio por meta</option><option value="meta" ${md==='meta'?'selected':''}>Só prêmio fixo por meta</option></select></label></fieldset>
+      <fieldset><legend>Percentuais</legend>
+        <div class="dr-grid">
+        ${o.regime==='clt'?`<label>Encargos sociais (%)<input type="number" step="0.01" data-p="enc" value="${o.enc}"><span class="hint">o mesmo do orçamento no Sienge</span></label>`:`<label>Impostos da nota (%)<input type="number" step="0.01" data-p="imp" value="${o.imp}"></label>`}
+        ${md!=='meta'?`<label>Margem de segurança (%)<input type="number" step="0.5" data-p="margem" value="${o.margem}"><span class="hint">chuva, retrabalho, semanas fracas</span></label>`:''}
+        ${md!=='producao'?`<label>Fundo de prêmios (%)<input type="number" step="0.5" data-p="premioPct" value="${o.premioPct}"><span class="hint">do teto, pago nas metas</span></label>`:''}
+        <label>Retenção até a entrega (%)<input type="number" step="0.5" data-p="ret" value="${o.ret}"><span class="hint">liberada sem retrabalho</span></label>
+        </div>
+        <div class="split" aria-label="Divisão do teto de mão de obra">
+          ${md!=='meta'?`<i style="flex:${prod};background:var(--navy)" title="Produção ${F1.format(prod)}%"></i>`:''}
+          ${md!=='producao'?`<i style="flex:${num(o.premioPct)};background:var(--green)" title="Prêmios ${F1.format(o.premioPct)}%"></i>`:''}
+          ${md!=='meta'?`<i style="flex:${num(o.margem)};background:var(--amber)" title="Margem ${F1.format(o.margem)}%"></i>`:`<i style="flex:${100-num(o.premioPct)};background:var(--line)" title="Salários"></i>`}
+        </div>
+        <p class="hint">${md==='meta'?`Teto: ${F1.format(o.premioPct)}% prêmios · restante cobre salários`:`Teto: ${F1.format(prod)}% produção${md!=='producao'?` · ${F1.format(o.premioPct)}% prêmios`:''} · ${F1.format(o.margem)}% margem`}</p></fieldset>
+      ${o.regime==='clt'?`<fieldset><legend>Jornada</legend><div class="dr-grid">
+        <label>Dias úteis da quinzena<input type="number" step="1" data-p="diasPadrao" value="${o.diasPadrao}"><span class="hint">padrão das novas medições</span></label>
+        <label>Jornada diária (h)<input type="number" step="0.1" data-p="horasDia" value="${o.horasDia}"><span class="hint">44h ÷ 5 dias = 8,8</span></label></div></fieldset>`:`<fieldset><legend>Jornada</legend><label>Horas por dia<input type="number" step="0.1" data-p="horasDia" value="${o.horasDia}"></label></fieldset>`}
+      ${can('obras')?`<fieldset class="perigo"><legend>Obra</legend><div class="tools"><button data-act="dupObra">Duplicar obra</button><button class="danger" data-act="delObra">Excluir obra</button></div><p class="hint">Duplicar copia tabela, funções e equipe, sem as medições.</p></fieldset>`:''}
+    </div></aside>`;
+}
 function render(){
   const app=document.getElementById('app');
-  if(!authPronto){app.innerHTML='<div class="empty" style="margin-top:12vh"><p class="muted">Carregando…</p></div>';return}
-  if(!USER){app.innerHTML=vLogin();const e=document.getElementById('lEmail');if(e)e.focus();return}
-  if(!PERFIL||PERFIL.ativo===false){app.innerHTML=`<div class="login"><h1>Sem acesso</h1><p class="muted">Você entrou como <b>${esc(USER.email)}</b>, mas ainda não tem perfil liberado na Produção de obra. Peça ao administrador para cadastrar seu e-mail na aba Usuários.</p><button data-act="sair">Sair</button></div>`;return}
+  const foco=(()=>{const a=document.activeElement;if(!a||!app.contains(a))return null;if(a.id)return '#'+a.id;for(const k of ['p','pe']){if(a.dataset&&a.dataset[k]!=null)return `[data-${k}="${a.dataset[k]}"]`}return null})();
+  document.body.classList.toggle('travado',false);
+  if(!authPronto){app.innerHTML='<div class="page"><div class="empty" style="margin-top:12vh"><p class="muted">Carregando…</p></div></div>';return}
+  if(!USER){app.innerHTML='<div class="page">'+vLogin()+'</div>';const e=document.getElementById('lEmail');if(e)e.focus();return}
+  if(!PERFIL||PERFIL.ativo===false){app.innerHTML=`<div class="page"><div class="login"><h1>Sem acesso</h1><p class="muted">Você entrou como <b>${esc(USER.email)}</b>, mas ainda não tem perfil liberado na Produção de obra. Peça ao administrador para cadastrar seu e-mail na aba Usuários.</p><button data-act="sair">Sair</button></div></div>`;return}
   const o=O();
-  const obras=Object.values(S.obras).sort((a,b)=>a.nome.localeCompare(b.nome));
-  let h=`<header class="top"><div class="id"><h1>Produção de obra</h1>
-    <p class="muted">Tabela de preços por serviço, medição da quinzena e bonificação por funcionário, com teto tirado da mão de obra orçada.</p></div>
-    <div><div class="obrabar">
-      ${obras.length?`<label class="small muted" for="selObra">Obra</label><select id="selObra" data-act="obra">${obras.map(x=>`<option value="${x.id}" ${x.id===S.atual?'selected':''}>${esc(x.nome)}</option>`).join('')}</select>`:''}
-      <button class="tema" data-act="tema" title="Trocar tema: automático, claro ou escuro" aria-label="Tema: ${TEMAS[temaAtual()][0]}. Clique para trocar">${TEMAS[temaAtual()][1]}${TEMAS[temaAtual()][0]}</button>
-      ${can('obras')?`<button class="pri" data-act="novaObra">Nova obra</button>`:''}
-      ${o&&can('obras')?`<button data-act="dupObra">Duplicar</button><button class="ghost" data-act="delObra">Excluir obra</button>`:''}
-    </div><div class="status"><span class="user">${esc(PERFIL.nome||USER.email)} <span class="chip">${PERFIS[PERFIL.perfil]||''}</span></span> · <button class="link" data-act="sair">Sair</button> · <span id="status">${esc(setStatus.last||'')}</span></div></div></header>`;
+  const G=grupos(o);
+  if(!G.some(g=>g.tabs.some(([k])=>k===tab)))tab=o?'precos':'obras';
+  if(!G.some(g=>g.tabs.some(([k])=>k===tab)))tab=G[0].tabs[0][0];
+  const gA=(G.find(g=>g.tabs.some(([k])=>k===tab))||G[0]);
+  ultimoDoGrupo[gA.k]=tab;
+  let h=barra(o,G,gA.k)+'<div class="page">';
   if(!o){
-    if(tab==='usuarios'&&can('usuarios')){app.innerHTML=h+'<main style="margin-top:18px">'+vUsuarios()+'</main>';return}
-    app.innerHTML=h+`<div class="empty" style="margin-top:24px">${can('obras')?`<p>Nenhuma obra cadastrada ainda. Crie uma obra e depois cole as composições do Sienge na aba Importar.</p><button class="pri" data-act="novaObra">Criar primeira obra</button>`:`<p>Nenhuma obra liberada para o seu perfil. Fale com o administrador.</p>`}
-    ${can('usuarios')?`<p style="margin-top:12px"><button data-act="tab" data-v="usuarios">Cadastrar usuários</button></p>`:''}</div>`;return}
-  if(tab!=='obras'&&tab!=='usuarios')h+=`<section class="params" aria-label="Parâmetros da obra">
-    <label class="wide">Nome da obra<input data-p="nome" value="${esc(o.nome)}"></label>
-    <label>Regime de pagamento<select data-p="regime"><option value="clt" ${o.regime==='clt'?'selected':''}>CLT (produção + salário)</option><option value="emp" ${o.regime==='emp'?'selected':''}>Empreiteiro com nota</option></select></label>
-    ${o.regime==='clt'?`<label>Encargos sociais (%)<input type="number" step="0.01" data-p="enc" value="${o.enc}"></label>`:`<label>Impostos da nota (%)<input type="number" step="0.01" data-p="imp" value="${o.imp}"></label>`}
-    <label>Como a equipe ganha<select data-p="modelo"><option value="producao" ${o.modelo==='producao'?'selected':''}>Só por produção</option><option value="misto" ${o.modelo==='misto'?'selected':''}>Produção + prêmio por meta</option><option value="meta" ${o.modelo==='meta'?'selected':''}>Só prêmio fixo por meta</option></select></label>
-    ${o.modelo!=='meta'?`<label>Margem de segurança (%)<input type="number" step="0.5" data-p="margem" value="${o.margem}"></label>`:''}
-    ${o.modelo!=='producao'?`<label>Fundo de prêmios (% do teto)<input type="number" step="0.5" data-p="premioPct" value="${o.premioPct}"></label>`:''}
-    <label>Retenção até a entrega (%)<input type="number" step="0.5" data-p="ret" value="${o.ret}"></label>
-    ${o.regime==='clt'?`<label>Dias úteis da quinzena<input type="number" step="1" data-p="diasPadrao" value="${o.diasPadrao}"><span class="hint">padrão das novas medições</span></label>`:''}
-    <label>Jornada diária (h)<input type="number" step="0.1" data-p="horasDia" value="${o.horasDia}"><span class="hint">44h ÷ 5 dias = 8,8</span></label>
-  </section>`;
-  const tabs=[['obras','Minhas obras'],['precos','Tabela de preços'],...(o.modelo!=='meta'?[['medicao','Medição e bonificação']]:[]),...(o.modelo!=='producao'?[['metas','Metas por setor']]:[]),...(can('usuarios')?[['usuarios','Usuários']]:[]),['saldo','Saldo da obra'],['abc','Curva ABC'],['equipe','Equipe e funções'],['importar','Importar e backup']];
-  h+=`<nav class="tabs" role="tablist">${tabs.map(([k,t])=>`<button role="tab" aria-selected="${tab===k}" data-act="tab" data-v="${k}">${t}</button>`).join('')}</nav><main>`;
-  if(!tabs.some(([k])=>k===tab))tab='precos';
-  h+=({usuarios:vUsuarios,metas:vMetas,obras:vObras,precos:vPrecos,medicao:vMedicao,saldo:vSaldo,abc:vABC,equipe:vEquipe,importar:vImportar}[tab])(o);
-  app.innerHTML=h+'</main>';
+    if(tab==='usuarios'&&can('usuarios')){app.innerHTML=h+'<main>'+vUsuarios()+'</main></div>';aplicaPermissoes();return}
+    app.innerHTML=h+`<div class="empty big"><h2>Nenhuma obra ${can('obras')?'cadastrada':'liberada'} ainda</h2>${can('obras')?`<p class="muted">Crie a obra e depois importe os relatórios do Sienge.</p><div class="tools" style="justify-content:center"><button class="pri" data-act="novaObra">Criar primeira obra</button>${can('usuarios')?`<button data-act="tab" data-v="usuarios">Cadastrar usuários</button>`:''}</div>`:`<p class="muted">Fale com o administrador para liberar suas obras.</p>`}</div></div>`;return}
+  if(tab!=='obras'&&tab!=='usuarios')h+=cabecalhoObra(o);
+  else h+=`<div class="pg-head"><p class="eyebrow">${gA.nome}</p></div>`;
+  if(gA.tabs.length>1)h+=`<nav class="subtabs" role="tablist" aria-label="${gA.nome}">${gA.tabs.map(([k,t])=>`<button role="tab" aria-selected="${tab===k}" data-act="tab" data-v="${k}">${t}</button>`).join('')}</nav>`;
+  h+='<main>'+({usuarios:vUsuarios,metas:vMetas,obras:vObras,precos:vPrecos,medicao:vMedicao,saldo:vSaldo,abc:vABC,equipe:vEquipe,importar:vImportar}[tab])(o)+'</main></div>';
+  h+=gaveta(o);
+  app.innerHTML=h;
+  document.body.classList.toggle('travado',cfgAberto);
   aplicaPermissoes();
+  if(foco){const n=app.querySelector(foco);if(n&&!n.disabled)n.focus()}
+  else if(cfgAberto&&render.abriuCfg){render.abriuCfg=false;const n=app.querySelector('.drawer input,.drawer select');if(n)n.focus()}
 }
+
 const optsFn=(o,sel,blank)=>(blank?`<option value="">${blank}</option>`:'')+o.funcoes.map(f=>`<option value="${f.id}" ${f.id===sel?'selected':''}>${esc(f.nome)}</option>`).join('');
 const optsPe=(o,sel,blank)=>`<option value="">${blank||'—'}</option>`+o.funcionarios.map(p=>`<option value="${p.id}" ${p.id===sel?'selected':''}>${esc(p.nome)}</option>`).join('');
 
@@ -568,316 +943,361 @@ function passa(o,s,abc){
   return true;
 }
 const filtroAtivo=()=>!!(FL.q||FL.cls||FL.fn||FL.sit);
-function filtroBar(o,mostrados){
-  return `<div class="filtros" role="search">
-    <label class="busca">Buscar serviço<input type="search" id="fBusca" data-flt="q" value="${esc(FL.q)}" placeholder="Nome, código ou unidade. Ex.: reboco, 7273, m3" autocomplete="off"></label>
-    <label>Curva ABC<select data-flt="cls"><option value="">Todas</option>${['A','B','C'].map(k=>`<option ${FL.cls===k?'selected':''}>${k}</option>`).join('')}</select></label>
-    <label>Função<select data-flt="fn"><option value="">Todas</option>${o.funcoes.map(f=>`<option value="${f.id}" ${FL.fn===f.id?'selected':''}>${esc(f.nome)}</option>`).join('')}</select></label>
-    <label>Situação<select data-flt="sit">${[['','Todas'],['naoini','Não iniciados'],['andamento','Em execução'],['concl','Concluídos'],['acima','Acima do orçado'],['semverba','Sem verba de MO']].map(([v,t])=>`<option value="${v}" ${FL.sit===v?'selected':''}>${t}</option>`).join('')}</select></label>
-    <span class="cont">${mostrados} de ${o.servicos.length} serviço(s)</span>
-    ${filtroAtivo()?'<button class="link" data-act="limparFiltro">Limpar filtros</button>':''}
+function ajuda(titulo,html){return `<details class="ajuda"><summary>${titulo}</summary><div class="ajuda-pop">${html}</div></details>`}
+function filtroBar(o,mostrados,acoes){
+  return `<div class="toolbar" role="search">
+    <label class="busca"><span class="sr">Buscar serviço</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input type="search" id="fBusca" data-flt="q" value="${esc(FL.q)}" placeholder="Buscar por nome, código ou unidade" autocomplete="off"></label>
+    <label class="fsel${FL.cls?' on':''}"><span>ABC</span><select data-flt="cls" aria-label="Filtrar por classe ABC"><option value="">Todas as classes</option>${['A','B','C'].map(k=>`<option ${FL.cls===k?'selected':''}>${k}</option>`).join('')}</select></label>
+    <label class="fsel${FL.fn?' on':''}"><span>Função</span><select data-flt="fn" aria-label="Filtrar por função"><option value="">Todas as funções</option>${o.funcoes.map(f=>`<option value="${f.id}" ${FL.fn===f.id?'selected':''}>${esc(f.nome)}</option>`).join('')}</select></label>
+    <label class="fsel${FL.sit?' on':''}"><span>Situação</span><select data-flt="sit" aria-label="Filtrar por situação">${[['','Todas as situações'],['naoini','Não iniciados'],['andamento','Em execução'],['concl','Concluídos'],['acima','Acima do orçado'],['semverba','Sem verba de MO']].map(([v,t])=>`<option value="${v}" ${FL.sit===v?'selected':''}>${t}</option>`).join('')}</select></label>
+    <span class="cont">${mostrados} de ${o.servicos.length}${filtroAtivo()?' · <button class="link" data-act="limparFiltro">limpar</button>':''}</span>
+    ${acoes?`<span class="tb-acoes">${acoes}</span>`:''}
   </div>`;
 }
-function resumoObra(o){
-  let verba=0,usado=0,moTot=0; o.servicos.forEach(s=>{const c=calc(o,s);verba+=c.verba;moTot+=c.moTot;usado+=medidoAcum(o,s.id,null)*c.preco});
-  let custo=0,moMed=0; o.medicoes.forEach(m=>{const r=calcMed(o,m);custo+=r.custo;moMed+=r.moOrc});
-  const ult=o.medicoes[o.medicoes.length-1];
-  return {verba,usado,moTot,custo,moMed,ult,premios:premiosPagos(o)};
-}
-function vObras(){
-  const lista=Object.values(S.obras).sort((a,b)=>a.nome.localeCompare(b.nome));
-  let h=`<div class="section-head"><div><h2>Minhas obras</h2><p class="muted">Cada obra tem a própria tabela de preços, equipe e medições. Clique em Abrir para trabalhar nela.</p></div>
-    <div class="tools"><button class="pri" data-act="novaObra">Nova obra</button></div></div><div class="obras">`;
-  lista.forEach(o=>{const r=resumoObra(o), ratio=r.moMed>0?r.custo/r.moMed:0;
-    const cor=!r.moMed?'var(--muted)':ratio<=0.9?'var(--green)':ratio<=1?'var(--amber)':'var(--red)';
-    h+=`<article class="obra${o.id===S.atual?' sel':''}"><h3>${esc(o.nome)}</h3>
-      <div class="small muted">${o.servicos.length} serviço(s) · ${o.funcionarios.length} funcionário(s) · ${o.regime==='clt'?'CLT':'Empreiteiro'} · ${({producao:'só produção',misto:'produção + meta',meta:'só meta'})[o.modelo]}</div>
-      <div class="pct" style="color:${cor}">${r.moMed?F0.format(ratio*100)+'%':'—'}</div>
-      <div class="small muted">custo real ÷ MO orçada do que já foi medido</div>
-      <div class="l"><span>Verba teto da obra</span><b>${brl(r.verba)}</b></div>
-      ${o.modelo!=='meta'?`<div class="l"><span>Produção já medida</span><b>${brl(r.usado)}</b></div>`:''}
-      ${o.modelo!=='producao'?`<div class="l"><span>Prêmios de metas pagos</span><b>${brl(r.premios)}</b></div>`:''}
-      <div class="l"><span>Última medição</span><b>${r.ult?esc(r.ult.periodo):'nenhuma'}</b></div>
-      <div class="tools" style="margin-top:6px"><button class="pri" data-act="abrirObra" data-id="${o.id}">Abrir</button><button data-act="abrirMed" data-id="${o.id}">Lançar medição</button></div></article>`});
-  return h+`</div>`;
-}
+let addAberto=false;
 function vPrecos(o){
   const base=o.regime==='clt'?`Teto = MO orçada ÷ ${F2.format(1+o.enc/100)} (tira os encargos).`:`Teto = MO orçada − ${o.imp}% de impostos da nota.`;
-  const regra=base+' '+(o.modelo==='producao'?`Preço de tabela = teto − ${o.margem}% de margem.`
-    :o.modelo==='misto'?`Do teto, ${o.premioPct}% vai para o fundo de prêmios por meta, ${o.margem}% fica de margem e o restante é o preço de produção.`
-    :`Não há pagamento por quantidade: ${o.premioPct}% do teto forma o fundo de prêmios fixos por meta, e o restante cobre os salários.`);
-  let h=`<div class="section-head"><div><h2>Tabela de preços por serviço</h2><p class="muted">${regra} O ponto de equilíbrio mostra quanto a equipe precisa produzir por dia para a produção passar do salário.</p></div>
-    <div class="tools"><button data-act="detalhes">${detalhes?'Ocultar detalhes':'Mostrar detalhes'}</button><button data-act="copiarTabela">Copiar para Excel</button></div></div>
-    <div class="quick" role="group" aria-label="Adicionar serviço">
+  const regra=base+' '+(o.modelo==='producao'?`Preço de produção = teto − ${o.margem}% de margem.`
+    :o.modelo==='misto'?`Do teto, ${o.premioPct}% vai para o fundo de prêmios, ${o.margem}% fica de margem e o restante é o preço de produção.`
+    :`Não há pagamento por quantidade: ${o.premioPct}% do teto forma o fundo de prêmios e o restante cobre os salários.`);
+  let tvAll=0; o.servicos.forEach(s=>tvAll+=calc(o,s).verba);
+  let h=`<div class="sec-head"><div><h2>Tabela de preços</h2><p class="sec-sub">${o.servicos.length} serviço(s) · verba total ${brl(tvAll)}</p></div>
+    <div class="sec-acoes"><button class="toggle" data-act="detalhes" aria-pressed="${detalhes}" title="Mostrar código, material e funções">Detalhes</button><button data-act="copiarTabela">Copiar para Excel</button>${addAberto?'':'<button class="pri" data-act="novoServ">+ Novo serviço</button>'}
+    ${ajuda('Como o preço é calculado',`<p>${regra}</p><p><b>Equilíbrio</b>: quanto a equipe precisa produzir por dia para a produção passar do salário.</p><p>Linhas em vermelho não têm mão de obra no orçamento: qualquer pagamento ali sai do lucro.</p><p>A função de quem executa vem das composições do Sienge ou do nome do serviço. Para conferir ou mudar, ligue <b>Detalhes</b>.</p>`)}</div></div>`;
+  if(addAberto)h+=`<div class="quick" role="group" aria-label="Novo serviço">
       <label>Serviço<input id="qNome" placeholder="Ex.: Reboco interno 1,5cm"></label>
       <label>Unidade<input id="qUn" placeholder="m2"></label>
       <label>Quantidade orçada<input id="qQtd" inputmode="decimal" placeholder="0,00"></label>
       <label>MO R$/un (Sienge)<input id="qMo" inputmode="decimal" placeholder="0,0000"></label>
-      <button class="pri" data-act="addRapido">Adicionar</button>
+      <div class="q-acoes"><button class="pri" data-act="addRapido">Adicionar</button><button class="ghost" data-act="novoServ">Fechar</button></div>
     </div>`;
-  if(!o.servicos.length)return h+`<div class="empty"><p>A tabela está vazia. Cole as composições do Sienge na aba Importar ou adicione serviços um a um.</p><button data-act="tab" data-v="importar">Ir para Importar</button></div>`;
+  if(!o.servicos.length)return h+`<div class="empty big"><h3>A tabela de preços está vazia</h3><p class="muted">Importe os relatórios do Sienge para montar tudo de uma vez, ou cadastre os serviços um a um.</p>
+    <div class="tools" style="justify-content:center"><button class="pri" data-act="tab" data-v="importar">Importar do Sienge</button>${addAberto?'':'<button data-act="novoServ">Adicionar serviço</button>'}</div></div>`;
   let tv=0,tmo=0;
   const D=detalhes, abc=abcMap(o), lista=o.servicos.filter(s=>passa(o,s,abc));
   h+=filtroBar(o,lista.length);
   if(!lista.length)return h+`<div class="empty"><p>Nenhum serviço encontrado com esses filtros.</p><button data-act="limparFiltro">Limpar filtros</button></div>`;
-  h+=`<div class="scroll"><table><thead><tr>${D?'<th>Cód.</th>':''}<th${D?'':' class="stick"'}>Serviço</th><th>Un</th><th class="num">Qtd orçada</th><th class="num">MO orçada R$/un</th>${D?'<th class="num">Material R$/un</th><th>Oficial</th><th class="num">% oficial</th><th>Ajudante</th>':''}<th class="num">Teto R$/un</th>${o.modelo!=='meta'?'<th class="num">Preço produção</th>':''}${o.modelo!=='producao'?'<th class="num">Prêmio R$/un</th>':''}${o.modelo!=='meta'?'<th class="num">Equilíbrio</th>':''}<th class="num">Verba teto</th><th></th></tr></thead><tbody>`;
+  const P=o.modelo!=='meta', Q=o.modelo!=='producao';
+  h+=`<div class="scroll"><table class="tbl"><thead><tr>${D?'<th>Cód.</th>':''}<th${D?'':' class="stick"'}>Serviço</th><th>Un</th><th class="num">Qtd orçada</th><th class="num">MO orçada<span class="th-sub">R$/un c/ enc.</span></th>${D?'<th class="num">Material<span class="th-sub">R$/un</span></th><th>Oficial</th><th class="num">% of.</th><th>Ajudante</th>':''}<th class="num">Teto<span class="th-sub">R$/un</span></th>${P?'<th class="num th-key">Preço produção<span class="th-sub">R$/un</span></th>':''}${Q?`<th class="num${P?'':' th-key'}">Prêmio<span class="th-sub">R$/un</span></th>`:''}${P?'<th class="num">Equilíbrio<span class="th-sub">por dia</span></th>':''}<th class="num">Verba teto</th><th><span class="sr">Ações</span></th></tr></thead><tbody>`;
   lista.forEach(s=>{
     const c=calc(o,s); tv+=c.verba; tmo+=c.moTot;
     const semMO=c.teto<=0;
     h+=`<tr${semMO?' class="over"':''}>
-      ${D?`<td><input class="n-s" data-s="${s.id}" data-k="cod" value="${esc(s.cod)}" aria-label="Código"></td>`:''}
-      <td class="svc${D?'':' stick'}"><input data-s="${s.id}" data-k="nome" value="${esc(s.nome)}" aria-label="Serviço"></td>
-      <td><input class="n-s" style="width:52px" data-s="${s.id}" data-k="un" value="${esc(s.un)}" aria-label="Unidade"></td>
-      <td><input class="n" type="text" inputmode="decimal" data-s="${s.id}" data-k="qtd" value="${m2(num(s.qtd))}" aria-label="Quantidade"></td>
-      <td><input class="n" type="text" inputmode="decimal" data-s="${s.id}" data-k="mo" value="${m4(num(s.mo))}" aria-label="MO orçada"></td>
-      ${D?`<td><input class="n" type="text" inputmode="decimal" data-s="${s.id}" data-k="mat" value="${m4(num(s.mat))}" aria-label="Material"></td>
-      <td><select data-s="${s.id}" data-k="of" aria-label="Função oficial">${optsFn(o,s.of)}</select></td>
-      <td><input class="n-s" type="text" inputmode="decimal" data-s="${s.id}" data-k="pct" value="${c.auto?'':F1.format(c.pct)}" placeholder="${F1.format(c.pct)} auto" aria-label="% oficial (vazio = automático)"></td>
-      <td><select data-s="${s.id}" data-k="aj" aria-label="Função ajudante">${optsFn(o,s.aj,'Nenhum')}</select></td>`:''}
-      <td class="num calc">${m2(c.teto)}</td>
-      ${o.modelo!=='meta'?`<td class="num key">${m2(c.preco)}<span class="sub">of. ${m2(c.pOf)} · aj. ${m2(c.pAj)}</span></td>`:''}
-      ${o.modelo!=='producao'?`<td class="num${o.modelo==='meta'?' key':''}">${semMO?'<span class="chip bad">sem verba</span>':m2(c.premioU)}</td>`:''}
-      ${o.modelo!=='meta'?`<td class="num">${semMO?'<span class="chip bad">sem verba</span>':(c.eq!=null?F1.format(c.eq)+' '+esc(s.un)+'/dia':'—')}</td>`:''}
-      <td class="num">${m2(c.verba)}</td>
-      <td><button class="ghost" data-act="delServ" data-id="${s.id}" aria-label="Excluir serviço">✕</button></td></tr>`;
+      ${D?`<td><input class="cell n-s" data-s="${s.id}" data-k="cod" value="${esc(s.cod)}" aria-label="Código"></td>`:''}
+      <td class="svc${D?'':' stick'}"><input class="cell nome" data-s="${s.id}" data-k="nome" value="${esc(s.nome)}" title="${esc(s.nome)}" aria-label="Serviço"></td>
+      <td><input class="cell un" data-s="${s.id}" data-k="un" value="${esc(s.un)}" aria-label="Unidade"></td>
+      <td><input class="cell n" inputmode="decimal" data-s="${s.id}" data-k="qtd" value="${m2(num(s.qtd))}" aria-label="Quantidade"></td>
+      <td><input class="cell n" inputmode="decimal" data-s="${s.id}" data-k="mo" value="${m4(num(s.mo))}" aria-label="MO orçada"></td>
+      ${D?`<td><input class="cell n" inputmode="decimal" data-s="${s.id}" data-k="mat" value="${m4(num(s.mat))}" aria-label="Material"></td>
+      <td><select class="cell" data-s="${s.id}" data-k="of" aria-label="Função oficial">${optsFn(o,s.of)}</select></td>
+      <td><input class="cell n-s" inputmode="decimal" data-s="${s.id}" data-k="pct" value="${c.auto?'':F1.format(c.pct)}" placeholder="${F1.format(c.pct)} auto" aria-label="% oficial (vazio = automático)"></td>
+      <td><select class="cell" data-s="${s.id}" data-k="aj" aria-label="Função ajudante">${optsFn(o,s.aj,'Nenhum')}</select></td>`:''}
+      <td class="num">${m2(c.teto)}</td>
+      ${P?`<td class="num key">${semMO?'<span class="chip bad">sem verba</span>':m2(c.preco)+`<span class="sub">of. ${m2(c.pOf)} · aj. ${m2(c.pAj)}</span>`}</td>`:''}
+      ${Q?`<td class="num${P?'':' key'}">${semMO?(P?'—':'<span class="chip bad">sem verba</span>'):m2(c.premioU)}</td>`:''}
+      ${P?`<td class="num soft">${semMO||c.eq==null?'—':F1.format(c.eq)+' '+esc(s.un)}</td>`:''}
+      <td class="num strong">${m2(c.verba)}</td>
+      <td class="acao"><button class="ghost del" data-act="delServ" data-id="${s.id}" aria-label="Excluir ${esc(s.nome)}" title="Excluir serviço">✕</button></td></tr>`;
   });
-  h+=`</tbody><tfoot><tr><td colspan="${(D?10:6)+(o.modelo==='misto'?3:2)}">${filtroAtivo()?'Total dos serviços filtrados':'Total da verba de mão de obra que pode ser paga (salários + produção + prêmios)'}</td><td class="num">${brl(tv)}</td><td></td></tr></tfoot></table></div>
-  <p class="small muted" style="margin-top:8px">MO orçada total com encargos: ${brl(tmo)}. Linhas em vermelho não têm mão de obra no orçamento: qualquer pagamento ali sai do lucro da obra. A função de quem executa e a divisão entre oficial e ajudante são preenchidas sozinhas pelo nome do serviço; para conferir ou mudar, use Mostrar detalhes.</p>`;
+  const span=(D?10:6)+(P&&Q?3:2);
+  h+=`</tbody><tfoot><tr><td colspan="${span}"><span class="tf-l">${filtroAtivo()?'Total dos serviços filtrados':'Verba total de mão de obra'}</span><span class="tf-s">MO orçada com encargos: ${brl(tmo)}</span></td><td class="num tf-v">${brl(tv)}</td><td></td></tr></tfoot></table></div>`;
   return h;
-}
-
-function vMedicao(o){
-  let h=`<div class="section-head"><div><h2>Medição e bonificação</h2><p class="muted">Lance o que cada funcionário produziu no período. Para equipes com mais de um oficial, faça uma linha por pessoa com a quantidade dela.</p></div>
-    <div class="tools"><button class="pri" data-act="novaMed">Nova medição</button></div></div>`;
-  if(!o.servicos.length)return h+`<div class="empty"><p>Cadastre os serviços primeiro, na aba Tabela de preços ou Importar.</p></div>`;
-  if(!o.funcionarios.length)h+=`<div class="note">Nenhum funcionário cadastrado. Cadastre a equipe na aba Equipe e funções para distribuir a produção.</div>`;
-  if(!o.medicoes.length)return h+`<div class="empty" style="margin-top:12px"><p>Nenhuma medição lançada nesta obra.</p><button class="pri" data-act="novaMed">Lançar primeira medição</button></div>`;
-  if(!o.medicoes.find(m=>m.id===medSel))medSel=o.medicoes[o.medicoes.length-1].id;
-  const m=o.medicoes.find(x=>x.id===medSel), r=calcMed(o,m), lock=m.fechada;
-  h+=`<div class="medbar">
-    <label>Medição<select data-act="medSel">${o.medicoes.map(x=>`<option value="${x.id}" ${x.id===medSel?'selected':''}>${esc(x.periodo||'Sem nome')}${x.fechada?' (fechada)':''}</option>`).join('')}</select></label>
-    <label>Período<input data-m="${m.id}" data-k="periodo" value="${esc(m.periodo)}" ${lock?'disabled':''}></label>
-    <label>Data<input type="date" data-m="${m.id}" data-k="data" value="${esc(m.data||'')}" ${lock?'disabled':''}></label>
-    ${o.regime==='clt'?`<label>Dias úteis no período<input type="text" inputmode="decimal" style="width:90px" data-m="${m.id}" data-k="diasPadrao" value="${F1.format(num(m.diasPadrao))}" ${lock?'disabled':''}></label>`:''}
-    <button data-act="fecharMed">${lock?'Reabrir medição':'Fechar medição'}</button>
-    <button data-act="copiarMed">Copiar resumo</button>
-    <button data-act="reciboMed">Recibos em PDF</button>
-    ${lock?'':`<button class="ghost" data-act="delMed">Excluir medição</button>`}
-  </div>`;
-  h+=`<div class="scroll"><table><thead><tr><th>Serviço</th><th class="num">Saldo a medir</th><th class="num">Qtd medida</th><th>Oficial</th><th>Ajudante</th><th class="num">R$/un</th><th class="num">Produção</th><th></th></tr></thead><tbody>`;
-  r.linhas.forEach((x,i)=>{
-    const l=x.l,s=x.s;
-    h+=`<tr${x.over?' class="over"':''}>
-      <td class="svc"><select style="max-width:340px;width:100%" data-ml="${m.id}|${i}" data-k="sid" ${lock?'disabled':''}>${o.servicos.map(sv=>`<option value="${sv.id}" ${sv.id===l.sid?'selected':''}>${esc((sv.cod?sv.cod+' · ':'')+sv.nome)}</option>`).join('')}</select></td>
-      <td class="num">${s?m2(x.saldo)+' '+esc(s.un):'—'}</td>
-      <td><input class="n" type="text" inputmode="decimal" data-ml="${m.id}|${i}" data-k="qtd" value="${m2(num(l.qtd))}" ${lock?'disabled':''} aria-label="Quantidade medida"></td>
-      <td><select data-ml="${m.id}|${i}" data-k="of" ${lock?'disabled':''}>${optsPe(o,l.of)}</select></td>
-      <td>${s&&x.c&&x.c.pAj>0?`<select data-ml="${m.id}|${i}" data-k="aj" ${lock?'disabled':''}>${optsPe(o,l.aj)}</select>`:'<span class="muted small">não se aplica</span>'}</td>
-      <td class="num">${x.c?m2(x.c.preco):'—'}</td>
-      <td class="num calc">${m2(x.valor)}</td>
-      <td>${lock?'':`<button class="ghost" data-act="delLinha" data-i="${i}" aria-label="Remover linha">✕</button>`}</td></tr>`;
-  });
-  h+=`</tbody><tfoot><tr><td colspan="6">${lock?'Medição fechada':`<button class="link" data-act="addLinha">+ Adicionar linha</button>`}</td><td class="num">${m2(r.prodTot)}</td><td></td></tr></tfoot></table></div>`;
-  const pct=r.ratio*100, cor=r.ratio<=0.9?'var(--green)':r.ratio<=1?'var(--amber)':'var(--red)';
-  const chip=r.moOrc<=0?'':r.ratio<=0.9?'<span class="chip ok">Dentro do orçado</span>':r.ratio<=1?'<span class="chip warn">No limite</span>':'<span class="chip bad">Prejuízo de mão de obra</span>';
-  h+=`<div class="ledger"><div><h3 style="margin-bottom:10px">Pagamento por funcionário</h3>`;
-  if(!r.lista.length)h+=`<div class="empty"><p class="muted">Selecione os funcionários nas linhas para ver o pagamento.</p></div>`;
-  else h+=`<div class="slips">${r.lista.map(p=>`<div class="slip${p.low?' low':''}">
-      <h3>${esc(p.nome)}</h3><div class="fn">${esc(p.funcao)}</div>
-      ${o.regime==='clt'?`<div class="l"><span>Dias trabalhados <span class="hint">(${F1.format(p.horas)} h)</span></span><input type="text" inputmode="decimal" data-md="${m.id}|${p.fid}" value="${F1.format(p.dias)}" ${lock?'disabled':''} aria-label="Dias trabalhados de ${esc(p.nome)}"></div>
-      <div class="l"><span>Salário do período</span><span>${m2(p.sal)}</span></div>`:''}
-      <div class="l"><span>Produção medida</span><span>${m2(p.prod)}</span></div>
-      ${o.regime==='clt'?`<div class="l"><span>Bonificação bruta</span><span>${m2(p.bonif)}</span></div>`:''}
-      <div class="l"><span>Retenção ${o.ret}%</span><span>− ${m2(o.regime==='clt'?p.ret:p.prod*o.ret/100)}</span></div>
-      <div class="pay">${brl(o.regime==='clt'?p.pagar:p.prod*(1-o.ret/100))}</div>
-      <div class="small muted">${o.regime==='clt'?'bonificação a pagar além do salário':'a pagar na nota deste período'}</div>
-      <p style="margin-top:6px"><button class="link" data-act="reciboMed" data-fid="${p.fid}">Recibo em PDF</button></p>
-      ${p.low?`<div class="note">Produziu menos que o salário. Recebe só o salário, e o custo dele passa do que o orçamento previu para esse serviço.</div>`:''}
-    </div>`).join('')}</div>`;
-  h+=`</div><div class="gauge"><h3>Controle da medição</h3>
-    <p class="small muted" style="margin:4px 0 10px">Compara o custo real da equipe medida (com encargos) com a mão de obra que o orçamento previu para essas quantidades.</p>
-    <div class="big" style="color:${cor}">${r.moOrc>0?F0.format(pct)+'%':'—'}</div>
-    <div class="bar" aria-hidden="true"><i style="width:${Math.min(100,pct/1.2)}%;background:${cor}"></i><span class="mark" style="left:${100/1.2}%"></span></div>
-    <div style="margin-bottom:10px">${chip}</div>
-    <div class="row"><span>MO orçada das quantidades medidas</span><b>${brl(r.moOrc)}</b></div>
-    <div class="row"><span>Custo real ${o.regime==='clt'?'(maior entre salário e produção, com encargos)':'(nota com impostos)'}</span><b>${brl(r.custo)}</b></div>
-    <div class="row"><span>Resultado de mão de obra</span><b style="color:${r.moOrc-r.custo>=0?'var(--green)':'var(--red)'}">${brl(r.moOrc-r.custo)}</b></div>
-    <div class="row"><span>Retido para a entrega</span><b>${brl(r.lista.reduce((a,p)=>a+(o.regime==='clt'?p.ret:p.prod*o.ret/100),0))}</b></div>
-    ${r.naoDist>0?`<div class="note">${brl(r.naoDist)} de produção ficaram sem funcionário escolhido e não entraram no pagamento.</div>`:''}
-    ${r.alertas.map(a=>`<div class="note bad">${esc(a)}</div>`).join('')}
-    ${o.regime==='clt'?`<p class="small muted" style="margin-top:10px">Considera que os funcionários desta medição trabalharam só nesses serviços no período. Se alguém fez serviço sem medição, ajuste os dias trabalhados dele (faltas também entram aqui).</p>`:''}
-  </div></div>`;
-  return h;
-}
-
-function vMetas(o){
-  const pe=o.pesos;
-  let h=`<div class="section-head"><div><h2>Metas por setor</h2><p class="muted">Divida a obra em setores (pavimento, ambiente, frente de serviço). Cada setor tem prazo, equipe e um prêmio fixo, pago na entrega conforme os critérios cumpridos.</p></div>
-    <div class="tools"><button class="pri" data-act="novaMeta">Nova meta</button></div></div>
-  <div class="mode">
-    <div class="${o.modelo==='misto'?'on':''}"><b>Produção + prêmio</b>A equipe recebe pela quantidade na quinzena e ganha o prêmio quando entrega o setor bem feito e no prazo.</div>
-    <div class="${o.modelo==='meta'?'on':''}"><b>Só prêmio fixo</b>Salário normal na quinzena e o prêmio na entrega. Bom para serviços difíceis de medir.</div>
-    <div><b>Peso de cada critério</b><div class="pesos" style="margin-top:6px">
-      <label>No prazo<input type="number" data-pe="prazo" value="${pe.prazo}"></label>
-      <label>Sem retrabalho<input type="number" data-pe="qual" value="${pe.qual}"></label>
-      <label>Organização e segurança<input type="number" data-pe="org" value="${pe.org}"></label></div></div>
-  </div>`;
-  if(!o.servicos.length)return h+`<div class="empty"><p>Cadastre os serviços primeiro: o prêmio sugerido sai da verba dos serviços de cada setor.</p></div>`;
-  if(!o.metas.length)return h+`<div class="empty"><p>Nenhuma meta criada. Comece pelo setor que vai iniciar agora.</p><button class="pri" data-act="novaMeta">Criar primeira meta</button></div>`;
-  h+='<div class="metas">';
-  [...o.metas].reverse().forEach(mt=>{
-    const r=calcMeta(o,mt), L=mt.encerrada?'disabled':'';
-    h+=`<section class="meta ${r.st}" aria-label="${esc(mt.nome)}">
-      <div class="meta-head">
-        <label class="nm">Setor / meta<input data-mt="${mt.id}" data-k="nome" value="${esc(mt.nome)}" ${L}></label>
-        <label>Início<input type="date" data-mt="${mt.id}" data-k="inicio" value="${esc(mt.inicio||'')}" ${L}></label>
-        <label>Prazo de entrega<input type="date" data-mt="${mt.id}" data-k="prazo" value="${esc(mt.prazo||'')}" ${L}></label>
-        <span class="chip ${r.st==='done'?'ok':r.st==='late'?'bad':r.st==='eval'?'warn':''}" style="${r.st==='and'?'background:var(--navy-soft);color:var(--navy)':''}">${r.stTxt}</span>
-      </div>
-      <div class="meta-grid"><div>
-        <h4>Serviços do setor</h4>
-        <div class="scroll"><table><thead><tr><th>Serviço</th><th class="num">Qtd</th><th class="num">Verba teto</th><th class="num">Prêmio sugerido</th><th></th></tr></thead><tbody>
-        ${r.linhas.map((x,i)=>`<tr><td class="svc"><select style="width:100%;max-width:320px" data-mtl="${mt.id}|${i}" data-k="sid" ${L}>${o.servicos.map(sv=>`<option value="${sv.id}" ${sv.id===x.l.sid?'selected':''}>${esc(sv.nome)}</option>`).join('')}</select></td>
-          <td><input class="n" type="text" inputmode="decimal" data-mtl="${mt.id}|${i}" data-k="qtd" value="${m2(num(x.l.qtd))}" ${L} aria-label="Quantidade"> <span class="small muted">${x.s?esc(x.s.un):''}</span></td>
-          <td class="num">${m2(x.v)}</td><td class="num">${m2(x.p)}</td>
-          <td>${L?'':`<button class="ghost" data-act="delMetaLinha" data-id="${mt.id}" data-i="${i}" aria-label="Remover">✕</button>`}</td></tr>`).join('')}
-        </tbody><tfoot><tr><td>${L?'':`<button class="link" data-act="addMetaLinha" data-id="${mt.id}">+ Adicionar serviço</button>`}</td><td></td><td class="num">${m2(r.verba)}</td><td class="num">${m2(r.sug)}</td><td></td></tr></tfoot></table></div>
-        <h4 style="margin-top:14px">Equipe do setor <span class="hint">(marque quem trabalhou e os dias no setor; o prêmio é dividido por dias × custo-hora da função)</span></h4>
-        <div class="team">${o.funcionarios.length?o.funcionarios.map(p=>{const on=mt.equipe&&mt.equipe[p.id]!=null;const f=fnById(o,p.funcao);return `<div class="p"><label><input type="checkbox" data-mte="${mt.id}|${p.id}" ${on?'checked':''} ${L}> ${esc(p.nome)} <span class="small muted">${f?esc(f.nome):''}</span></label>${on?`<span class="small muted">dias <input type="text" inputmode="decimal" data-mtd="${mt.id}|${p.id}" value="${F1.format(num(mt.equipe[p.id]))}" ${L} aria-label="Dias de ${esc(p.nome)} no setor"></span>`:''}</div>`}).join(''):'<p class="small muted">Cadastre funcionários na aba Equipe e funções.</p>'}</div>
-      </div><div>
-        <h4>Prêmio da meta</h4>
-        <label class="small muted" style="display:flex;flex-direction:column;gap:3px;font-weight:600">Valor do prêmio (vazio = sugerido)<input type="text" inputmode="decimal" data-mt="${mt.id}" data-k="premio" value="${r.manual?m2(r.premio):''}" placeholder="${m2(r.sug)}" ${L}></label>
-        ${r.acima?`<div class="note bad">O prêmio está ${brl(r.premio-r.sug)} acima do fundo dos serviços deste setor. A diferença sai da margem da obra.</div>`:''}
-        <div class="crit">
-          <label>Data da entrega<input type="date" data-mt="${mt.id}" data-k="entrega" value="${esc(mt.entrega||'')}" ${L}></label>
-          ${mt.entrega?`<div class="small ${r.atraso>0?'':'muted'}" style="${r.atraso>0?'color:var(--red);font-weight:600':''}">${r.atraso>0?`Entregue com ${r.atraso} dia(s) de atraso`:r.atraso<0?`Entregue ${-r.atraso} dia(s) antes do prazo`:r.atraso===0?'Entregue no dia do prazo':''}</div>`:''}
-          <label class="c"><input type="checkbox" data-mtc="${mt.id}|prazo" ${r.prazoOk?'checked':''} ${L||!mt.entrega?'disabled':''}> No prazo (${pe.prazo} pts)</label>
-          <label class="c"><input type="checkbox" data-mtc="${mt.id}|qual" ${(mt.crit||{}).qual?'checked':''} ${L||!mt.entrega?'disabled':''}> Aprovado na vistoria, sem retrabalho (${pe.qual} pts)</label>
-          <label class="c"><input type="checkbox" data-mtc="${mt.id}|org" ${(mt.crit||{}).org?'checked':''} ${L||!mt.entrega?'disabled':''}> Organização, limpeza e segurança (${pe.org} pts)</label>
-        </div>
-        ${mt.entrega?`<div class="prize">${brl(r.ganho)}</div><div class="small muted">${F0.format(r.pct)}% do prêmio de ${brl(r.premio)}</div>
-          ${r.eq.length?`<div class="team" style="margin-top:10px">${r.eq.map(x=>`<div class="p"><span>${esc(x.nome)} <span class="small muted">${esc(x.funcao)} · ${F1.format(x.dias)} dia(s)</span></span><b class="num">${brl(x.valor)}</b></div>`).join('')}</div>`:'<div class="note">Marque a equipe do setor para dividir o prêmio.</div>'}`
-          :`<p class="small muted">Lance a data da entrega para avaliar os critérios e calcular o prêmio.</p>`}
-        <div class="tools" style="margin-top:12px">
-          ${mt.entrega?`<button class="${mt.encerrada?'':'pri'}" data-act="encMeta" data-id="${mt.id}">${mt.encerrada?'Reabrir meta':'Encerrar e lançar pagamento'}</button>`:''}
-          <button data-act="copiarMeta" data-id="${mt.id}">Copiar resumo</button>
-          ${mt.entrega&&r.eq.length?`<button data-act="reciboMeta" data-id="${mt.id}">Recibos em PDF</button>`:''}
-          ${L?'':`<button class="ghost" data-act="delMeta" data-id="${mt.id}">Excluir</button>`}
-        </div>
-        ${o.regime==='clt'?`<p class="small muted" style="margin-top:10px">O fundo é calculado sem encargos. Pagando o prêmio como verba salarial, o custo para a empresa fica em ${brl(r.ganho*(1+o.enc/100))}.</p>`:''}
-      </div></div></section>`;
-  });
-  return h+'</div>';
-}
-function resumoMeta(o,mt){
-  const r=calcMeta(o,mt);
-  let t=`${o.nome} — Meta: ${mt.nome}\nPrazo: ${mt.prazo?mt.prazo.split('-').reverse().join('/'):'—'} · Entrega: ${mt.entrega?mt.entrega.split('-').reverse().join('/'):'—'}\n`;
-  r.linhas.forEach(x=>{if(x.s)t+=`${x.s.nome}: ${m2(x.q)} ${x.s.un}\n`});
-  t+=`\nPrêmio: ${brl(r.premio)} · atingido ${F0.format(r.pct)}% = ${brl(r.ganho)}\n`;
-  r.eq.forEach(x=>{t+=`${x.nome} (${x.funcao}, ${F1.format(x.dias)} dias): ${brl(x.valor)}\n`});
-  return t;
 }
 function vSaldo(o){
-  let h=`<div class="section-head"><div><h2>Saldo da obra</h2><p class="muted">Quanto de cada serviço já foi medido em todas as medições, e quanto da verba de produção ainda sobra.</p></div></div>`;
-  if(!o.servicos.length)return h+`<div class="empty"><p>Sem serviços cadastrados.</p></div>`;
+  let h=`<div class="sec-head"><div><h2>Saldo da obra</h2><p class="sec-sub">Quanto de cada serviço já foi ${o.modelo==='meta'?'entregue':'medido'} e quanto da verba ainda sobra.</p></div>
+    ${ajuda('Como ler o saldo',`<p>O saldo de verba desconta a produção já medida${o.modelo!=='producao'?' e os prêmios de metas encerradas':''}.</p><p>Salários pagos em quinzenas de produção baixa também consomem a verba: acompanhe o <b>Custo real ÷ orçado</b> no topo.</p>`)}</div>`;
+  if(!o.servicos.length)return h+`<div class="empty big"><h3>Sem serviços cadastrados</h3><p class="muted">O saldo aparece depois que a tabela de preços estiver montada.</p><div class="tools" style="justify-content:center"><button class="pri" data-act="tab" data-v="importar">Importar do Sienge</button></div></div>`;
+  const cont={naoini:0,andamento:0,concl:0,acima:0};
+  o.servicos.forEach(s=>{const med=medidoAcum(o,s.id,null),q=num(s.qtd);if(med>q+1e-9)cont.acima++;else if(q>0&&med>=q)cont.concl++;else if(med>0)cont.andamento++;else cont.naoini++});
+  h+=`<div class="sit-cards">${[['naoini','Não iniciados',''],['andamento','Em execução','nav'],['concl','Concluídos','ok'],['acima','Acima do orçado','bad']].map(([k,t,c])=>`<button class="sit ${c}${FL.sit===k?' on':''}" data-act="sitFiltro" data-v="${k}" aria-pressed="${FL.sit===k}"><b>${cont[k]}</b><span>${t}</span></button>`).join('')}</div>`;
   let tv=0,tp=0;
   const abc=abcMap(o), lista=o.servicos.filter(s=>passa(o,s,abc));
   h+=filtroBar(o,lista.length);
-  h+=`<div class="scroll"><table><thead><tr><th class="stick">Serviço</th><th>Un</th><th class="num">Orçado</th><th class="num">${o.modelo==='meta'?'Entregue':'Medido'}</th><th class="num">Saldo</th><th class="num">% executado</th><th class="num">Verba teto</th><th class="num">Produção já medida</th><th class="num">Saldo de verba</th></tr></thead><tbody>`;
+  if(!lista.length)return h+`<div class="empty"><p>Nenhum serviço com esses filtros.</p><button data-act="limparFiltro">Limpar filtros</button></div>`;
+  h+=`<div class="scroll"><table class="tbl"><thead><tr><th class="stick">Serviço</th><th>Un</th><th class="num">Orçado</th><th class="num">${o.modelo==='meta'?'Entregue':'Medido'}</th><th class="num">Falta</th><th style="min-width:150px">Execução</th><th class="num">Verba teto</th><th class="num">${o.modelo==='meta'?'Produção':'Produção medida'}</th><th class="num th-key">Saldo de verba</th></tr></thead><tbody>`;
   lista.forEach(s=>{
-    const c=calc(o,s), med=medidoAcum(o,s.id,null), q=num(s.qtd), pctE=q>0?med/q*100:0, pago=med*c.preco;
+    const c=calc(o,s), med=medidoAcum(o,s.id,null), q=num(s.qtd), pctE=q>0?med/q*100:0, pago=med*c.preco, sv=c.verba-pago;
     tv+=c.verba;tp+=pago;
-    const chip=pctE>100?'bad':pctE>=90?'warn':'ok';
-    h+=`<tr${pctE>100?' class="over"':''}><td class="svc stick">${esc(s.nome)}</td><td>${esc(s.un)}</td><td class="num">${m2(q)}</td><td class="num">${m2(med)}</td><td class="num">${m2(q-med)}</td>
-      <td class="num">${med>0?`<span class="chip ${chip}">${F1.format(pctE)}%</span>`:'—'}</td><td class="num">${m2(c.verba)}</td><td class="num">${m2(pago)}</td><td class="num calc">${m2(c.verba-pago)}</td></tr>`;
+    const cor=pctE>100?'var(--red)':pctE>=100?'var(--green)':'var(--navy)';
+    h+=`<tr${pctE>100?' class="over"':''}><td class="svc stick" title="${esc(s.nome)}">${esc(s.nome)}</td><td>${esc(s.un)}</td><td class="num">${m2(q)}</td><td class="num">${m2(med)}</td><td class="num${q-med<0?' neg':''}">${m2(q-med)}</td>
+      <td><div class="exec"><span class="exec-bar"><i style="width:${Math.min(100,pctE)}%;background:${cor}"></i></span><span class="exec-p">${med>0?F0.format(pctE)+'%':'—'}</span></div></td>
+      <td class="num">${m2(c.verba)}</td><td class="num">${m2(pago)}</td><td class="num key ${sv<0?'neg':''}">${m2(sv)}</td></tr>`;
   });
-  const pr=premiosPagos(o);
-  h+=`</tbody><tfoot><tr><td colspan="6">${filtroAtivo()?'Totais dos serviços filtrados':'Totais da produção'}</td><td class="num">${m2(tv)}</td><td class="num">${m2(tp)}</td><td class="num">${m2(tv-tp)}</td></tr>
-  ${o.modelo!=='producao'?`<tr><td colspan="7">Prêmios de metas já encerradas</td><td class="num">${m2(pr)}</td><td class="num">${m2(tv-tp-pr)}</td></tr>`:''}</tfoot></table></div>
-  <p class="small muted" style="margin-top:8px">O saldo de verba considera só a produção medida. Salários pagos em períodos de produção baixa também consomem essa verba; acompanhe o percentual na aba Medição.</p>`;
+  const pr=premiosPagos(o), fim=tv-tp-(o.modelo!=='producao'?pr:0);
+  h+=`</tbody><tfoot>
+    ${o.modelo!=='producao'?`<tr class="tf-sub"><td colspan="7">Prêmios de metas encerradas</td><td class="num">− ${m2(pr)}</td><td></td></tr>`:''}
+    <tr><td colspan="6"><span class="tf-l">${filtroAtivo()?'Saldo dos serviços filtrados':'Saldo de verba da obra'}</span></td><td class="num">${m2(tv)}</td><td class="num">${m2(tp+(o.modelo!=='producao'?pr:0))}</td><td class="num tf-v ${fim<0?'neg':'pos'}">${brl(fim)}</td></tr></tfoot></table></div>`;
   return h;
 }
-
 function vABC(o){
-  let h=`<div class="section-head"><div><h2>Curva ABC</h2><p class="muted">Ordena os serviços pelo peso no custo. A classe A (até 80% acumulado) é onde a medição e a produtividade precisam de mais atenção.</p></div>
-   <label class="small muted" style="display:flex;flex-direction:column;gap:3px;font-weight:600">Base da curva<select data-act="abcBase"><option value="total" ${abcBase==='total'?'selected':''}>Custo total (MO + material)</option><option value="mo" ${abcBase==='mo'?'selected':''}>Só mão de obra</option><option value="mat" ${abcBase==='mat'?'selected':''}>Só material</option></select></label></div>`;
-  if(!o.servicos.length)return h+`<div class="empty"><p>Sem serviços cadastrados.</p></div>`;
+  let h=`<div class="sec-head"><div><h2>Curva ABC</h2><p class="sec-sub">Serviços ordenados pelo peso no custo da obra.</p></div>
+    ${ajuda('Como usar',`<p><b>Classe A</b>: os poucos serviços que somam até 80% do custo. É onde a medição, a produtividade e a negociação fazem mais diferença.</p><p><b>B</b>: de 80% a 95%. <b>C</b>: o restante.</p><p>Clique numa classe para filtrar a tabela.</p>`)}</div>`;
+  if(!o.servicos.length)return h+`<div class="empty big"><h3>Sem serviços cadastrados</h3><p class="muted">A curva aparece depois que a tabela de preços estiver montada.</p><div class="tools" style="justify-content:center"><button class="pri" data-act="tab" data-v="importar">Importar do Sienge</button></div></div>`;
   const rows=o.servicos.map(s=>{const c=calc(o,s);const v=abcBase==='mo'?c.moTot:abcBase==='mat'?c.matTot:c.moTot+c.matTot;return {s,v,c}}).filter(r=>r.v>0).sort((a,b)=>b.v-a.v);
   const tot=rows.reduce((a,r)=>a+r.v,0); let acc=0; const cnt={A:[0,0],B:[0,0],C:[0,0]};
   rows.forEach(r=>{acc+=r.v;r.p=r.v/tot*100;r.acc=acc/tot*100;r.cl=(r.acc-r.p)<80?'A':(r.acc-r.p)<95?'B':'C';cnt[r.cl][0]++;cnt[r.cl][1]+=r.v});
   const max=rows[0]?rows[0].v:1;
-  h+=`<div class="legend">${['A','B','C'].map(k=>`<div><span class="chip ${k}">Classe ${k}</span><b>${brl(cnt[k][1])}</b><span class="small muted">${cnt[k][0]} serviço(s) · ${F1.format(tot?cnt[k][1]/tot*100:0)}%</span></div>`).join('')}</div>`;
-  const vis=rows.filter(r=>passa(o,r.s,Object.fromEntries(rows.map(x=>[x.s.id,x.cl]))));
-  h+=filtroBar(o,vis.length);
-  h+=`<div class="scroll"><table><thead><tr><th>Classe</th><th>Serviço</th><th class="num">Valor</th><th class="num">%</th><th class="num">% acumulado</th><th style="width:28%">Peso</th></tr></thead><tbody>`;
-  vis.forEach(r=>{h+=`<tr><td><span class="chip ${r.cl}">${r.cl}</span></td><td class="svc">${esc(r.s.nome)}</td><td class="num">${m2(r.v)}</td><td class="num">${F1.format(r.p)}%</td><td class="num">${F1.format(r.acc)}%</td><td><div class="abc-bar" style="width:${r.v/max*100}%"></div></td></tr>`});
-  return h+`</tbody><tfoot><tr><td colspan="2">Total</td><td class="num">${brl(tot)}</td><td colspan="3"></td></tr></tfoot></table></div>`;
+  h+=`<div class="abc-cards">${['A','B','C'].map(k=>`<button class="abc-card ${k}${FL.cls===k?' on':''}" data-act="clsFiltro" data-v="${k}" aria-pressed="${FL.cls===k}">
+      <span class="abc-k">Classe ${k}</span><b>${brl(cnt[k][1])}</b><span class="small muted">${cnt[k][0]} serviço(s) · ${F1.format(tot?cnt[k][1]/tot*100:0)}% do custo</span></button>`).join('')}
+    <div class="abc-stack" aria-hidden="true">${['A','B','C'].map(k=>`<i class="${k}" style="flex:${cnt[k][1]||0}"></i>`).join('')}</div></div>`;
+  const mapa=Object.fromEntries(rows.map(x=>[x.s.id,x.cl]));
+  const vis=rows.filter(r=>passa(o,r.s,mapa));
+  h+=filtroBar(o,vis.length,`<label class="fsel"><span>Base</span><select data-act="abcBase" aria-label="Base da curva"><option value="total" ${abcBase==='total'?'selected':''}>MO + material</option><option value="mo" ${abcBase==='mo'?'selected':''}>Só mão de obra</option><option value="mat" ${abcBase==='mat'?'selected':''}>Só material</option></select></label>`);
+  if(!vis.length)return h+`<div class="empty"><p>Nenhum serviço com esses filtros.</p><button data-act="limparFiltro">Limpar filtros</button></div>`;
+  h+=`<div class="scroll"><table class="tbl"><thead><tr><th>Classe</th><th class="stick">Serviço</th><th class="num">Valor</th><th class="num">%</th><th class="num">Acumulado</th><th style="width:26%">Peso</th></tr></thead><tbody>`;
+  vis.forEach(r=>{h+=`<tr><td><span class="chip ${r.cl}">${r.cl}</span></td><td class="svc stick" title="${esc(r.s.nome)}">${esc(r.s.nome)}</td><td class="num strong">${m2(r.v)}</td><td class="num">${F1.format(r.p)}%</td><td class="num soft">${F1.format(r.acc)}%</td><td><div class="abc-bar ${r.cl}" style="width:${Math.max(1,r.v/max*100)}%"></div></td></tr>`});
+  return h+`</tbody><tfoot><tr><td colspan="2"><span class="tf-l">${filtroAtivo()?'Total filtrado':'Total da curva'}</span></td><td class="num tf-v">${brl(vis.reduce((a,r)=>a+r.v,0))}</td><td colspan="3"></td></tr></tfoot></table></div>`;
 }
 
+const TEM_RECIBO=typeof reciboMed==='function';
+let novaMetaAberta=false, metaFiltro=''; const metasAbertas=new Set(); let metasIniciadas=false;
+function vMedicao(o){
+  const help=ajuda('Como funciona',`<p>Lance o que cada funcionário produziu no período. Para equipes com mais de um oficial, faça um lançamento por pessoa com a quantidade dela.</p><p>${o.regime==='clt'?'Cada um recebe o <b>maior valor entre salário e produção</b>. A bonificação é o que passa do salário, menos a retenção.':'O pagamento é a produção medida, menos a retenção.'}</p><p>O <b>controle</b> compara o custo real da equipe com a mão de obra que o orçamento previu para as quantidades medidas.</p>`);
+  let h=`<div class="sec-head"><div><h2>Medição</h2><p class="sec-sub">${o.medicoes.length?`${o.medicoes.length} medição(ões) · ${o.medicoes.filter(m=>m.fechada).length} fechada(s)`:'Nenhuma medição lançada ainda'}</p></div>
+    <div class="sec-acoes"><button class="pri" data-act="novaMed">+ Nova medição</button>${help}</div></div>`;
+  if(!o.servicos.length)return h+`<div class="empty big"><h3>Falta a tabela de preços</h3><p class="muted">A medição usa os preços de cada serviço. Monte a tabela primeiro.</p><div class="tools" style="justify-content:center"><button class="pri" data-act="tab" data-v="importar">Importar do Sienge</button><button data-act="tab" data-v="precos">Abrir tabela de preços</button></div></div>`;
+  const semEquipe=!o.funcionarios.length;
+  const avisoEquipe=semEquipe?`<div class="callout"><div><b>Nenhum funcionário cadastrado</b><p class="small muted">Sem equipe, a produção não tem para quem ir.</p></div><button class="pri" data-act="tab" data-v="equipe">Cadastrar equipe</button></div>`:'';
+  if(!o.medicoes.length)return h+avisoEquipe+`<div class="empty big"><h3>Nenhuma medição nesta obra</h3><p class="muted">Crie a medição da quinzena e lance o que cada funcionário produziu.</p><div class="tools" style="justify-content:center"><button class="pri" data-act="novaMed">Lançar primeira medição</button></div></div>`;
+  if(!o.medicoes.find(m=>m.id===medSel))medSel=o.medicoes[o.medicoes.length-1].id;
+  const m=o.medicoes.find(x=>x.id===medSel), r=calcMed(o,m), lock=m.fechada;
+  h+=`<div class="pills" role="tablist" aria-label="Medições">${o.medicoes.map(x=>`<button role="tab" class="pill${x.id===medSel?' on':''}" aria-selected="${x.id===medSel}" data-act="medPick" data-v="${x.id}"><i class="dot ${x.fechada?'ok':'open'}"></i>${esc(x.periodo||'Sem nome')}</button>`).join('')}</div>`;
+  h+=avisoEquipe;
+  h+=`<div class="med-card">
+    <div class="med-top">
+      <div class="med-campos">
+        <label>Período<input data-m="${m.id}" data-k="periodo" value="${esc(m.periodo)}" ${lock?'disabled':''}></label>
+        <label>Data<input type="date" data-m="${m.id}" data-k="data" value="${esc(m.data||'')}" ${lock?'disabled':''}></label>
+        ${o.regime==='clt'?`<label>Dias úteis<input class="curto" inputmode="decimal" data-m="${m.id}" data-k="diasPadrao" value="${F1.format(num(m.diasPadrao))}" ${lock?'disabled':''}></label>`:''}
+      </div>
+      <div class="med-acoes">
+        <span class="chip ${lock?'ok':'warn'}">${lock?'Fechada':'Em aberto'}</span>
+        <button data-act="copiarMed">Copiar resumo</button>
+        ${TEM_RECIBO?'<button data-act="reciboMed">Recibos em PDF</button>':''}
+        <button class="${lock?'':'pri'}" data-act="fecharMed">${lock?'Reabrir':'Fechar medição'}</button>
+        ${lock?'':'<button class="ghost del-txt" data-act="delMed" title="Excluir medição">Excluir</button>'}
+      </div>
+    </div>
+    <div class="scroll"><table class="tbl"><thead><tr><th>Serviço</th><th class="num">Saldo a medir</th><th class="num">Qtd medida</th><th>Oficial</th><th>Ajudante</th><th class="num">R$/un</th><th class="num th-key">Produção</th><th><span class="sr">Ações</span></th></tr></thead><tbody>`;
+  r.linhas.forEach((x,i)=>{
+    const l=x.l,s=x.s;
+    h+=`<tr${x.over?' class="over"':''}>
+      <td class="svc"><select class="cell svc-sel" data-ml="${m.id}|${i}" data-k="sid" ${lock?'disabled':''} aria-label="Serviço">${o.servicos.map(sv=>`<option value="${sv.id}" ${sv.id===l.sid?'selected':''}>${esc((sv.cod?sv.cod+' · ':'')+sv.nome)}</option>`).join('')}</select></td>
+      <td class="num soft">${s?m2(x.saldo)+' '+esc(s.un):'—'}</td>
+      <td class="num"><span class="qtd-un"><input class="cell n" inputmode="decimal" data-ml="${m.id}|${i}" data-k="qtd" value="${m2(num(l.qtd))}" ${lock?'disabled':''} aria-label="Quantidade medida"><span>${s?esc(s.un):''}</span></span></td>
+      <td><select class="cell" data-ml="${m.id}|${i}" data-k="of" ${lock?'disabled':''} aria-label="Oficial">${optsPe(o,l.of,'Escolher…')}</select></td>
+      <td>${s&&x.c&&x.c.pAj>0?`<select class="cell" data-ml="${m.id}|${i}" data-k="aj" ${lock?'disabled':''} aria-label="Ajudante">${optsPe(o,l.aj,'Escolher…')}</select>`:'<span class="soft small">—</span>'}</td>
+      <td class="num soft">${x.c?m2(x.c.preco):'—'}</td>
+      <td class="num key">${m2(x.valor)}</td>
+      <td class="acao">${lock?'':`<button class="ghost del" data-act="delLinha" data-i="${i}" aria-label="Remover lançamento" title="Remover">✕</button>`}</td></tr>`;
+  });
+  h+=`</tbody><tfoot><tr><td colspan="6"><span class="tf-l">Produção total da medição</span></td><td class="num tf-v">${brl(r.prodTot)}</td><td></td></tr></tfoot></table></div>
+    ${lock?'':'<button class="add-row" data-act="addLinha">+ Adicionar lançamento</button>'}
+  </div>`;
+  const pct=r.ratio*100, cor=r.ratio<=0.9?'var(--green)':r.ratio<=1?'var(--amber)':'var(--red)';
+  const chip=r.moOrc<=0?'<span class="chip">Sem quantidades</span>':r.ratio<=0.9?'<span class="chip ok">Dentro do orçado</span>':r.ratio<=1?'<span class="chip warn">No limite</span>':'<span class="chip bad">Prejuízo de mão de obra</span>';
+  const retTot=r.lista.reduce((a,p)=>a+(o.regime==='clt'?p.ret:p.prod*o.ret/100),0);
+  h+=`<div class="ledger"><div><div class="sub-head"><h3>Pagamento por funcionário</h3><span class="small muted">${r.lista.length} pessoa(s)</span></div>`;
+  if(!r.lista.length)h+=`<div class="empty"><p class="muted">Escolha o oficial e o ajudante nos lançamentos para ver quanto cada um recebe.</p>${semEquipe?'<button class="pri" data-act="tab" data-v="equipe">Cadastrar equipe</button>':''}</div>`;
+  else h+=`<div class="slips">${r.lista.map(p=>{const liq=o.regime==='clt'?p.pagar:p.prod*(1-o.ret/100), ret=o.regime==='clt'?p.ret:p.prod*o.ret/100;
+    return `<article class="slip${p.low?' low':''}">
+      <div class="slip-h"><div><h4>${esc(p.nome)}</h4><span class="fn">${esc(p.funcao)}</span></div>
+        ${o.regime==='clt'?(p.low?'<span class="chip warn">Só salário</span>':'<span class="chip ok">Bonificação</span>'):''}</div>
+      <div class="pay">${brl(liq)}</div>
+      <div class="small muted">${o.regime==='clt'?'a pagar além do salário':'a pagar na nota'}</div>
+      ${o.regime==='clt'?`<label class="dias">Dias trabalhados<span><input inputmode="decimal" data-md="${m.id}|${p.fid}" value="${F1.format(p.dias)}" ${lock?'disabled':''} aria-label="Dias trabalhados de ${esc(p.nome)}"> <span class="hint">${F1.format(p.horas)} h</span></span></label>`:''}
+      <details class="calc-d"><summary>Ver cálculo</summary>
+        ${o.regime==='clt'?`<div class="l"><span>Salário do período</span><span>${m2(p.sal)}</span></div>`:''}
+        <div class="l"><span>Produção medida</span><span>${m2(p.prod)}</span></div>
+        ${o.regime==='clt'?`<div class="l"><span>Bonificação bruta</span><span>${m2(p.bonif)}</span></div>`:''}
+        <div class="l"><span>Retenção ${o.ret}%</span><span>− ${m2(ret)}</span></div>
+      </details>
+      ${p.low?`<p class="slip-n">Produziu menos que o salário: o custo dele passa do previsto no orçamento.</p>`:''}
+      ${TEM_RECIBO?`<button class="link" data-act="reciboMed" data-fid="${p.fid}">Recibo em PDF</button>`:''}
+    </article>`}).join('')}</div>`;
+  h+=`</div><aside class="gauge"><div class="sub-head"><h3>Controle da medição</h3>${chip}</div>
+    <div class="big" style="color:${cor}">${r.moOrc>0?F0.format(pct)+'%':'—'}</div>
+    <p class="small muted">custo real ÷ mão de obra orçada</p>
+    <div class="gbar" aria-hidden="true"><i style="width:${Math.min(100,pct/1.2)}%;background:${cor}"></i><span class="mark" style="left:${100/1.2}%"></span></div>
+    <div class="row"><span>MO orçada do que foi medido</span><b>${brl(r.moOrc)}</b></div>
+    <div class="row"><span>Custo real${o.regime==='clt'?' (com encargos)':' (com impostos)'}</span><b>${brl(r.custo)}</b></div>
+    <div class="row tot"><span>Resultado de mão de obra</span><b style="color:${r.moOrc-r.custo>=0?'var(--green)':'var(--red)'}">${brl(r.moOrc-r.custo)}</b></div>
+    <div class="row"><span>Retido para a entrega</span><b>${brl(retTot)}</b></div>
+    ${r.naoDist>0?`<div class="note">${brl(r.naoDist)} de produção ficaram sem funcionário escolhido e não entraram no pagamento.</div>`:''}
+    ${r.alertas.map(a=>`<div class="note bad">${esc(a)}</div>`).join('')}
+    ${o.regime==='clt'?`<p class="small muted" style="margin-top:10px">Se alguém trabalhou em serviço sem medição ou faltou, ajuste os dias trabalhados no cartão dele.</p>`:''}
+  </aside></div>`;
+  return h;
+}
+function vMetas(o){
+  const pe=o.pesos;
+  const help=ajuda('Como funciona',`<p>Divida a obra em setores (pavimento, ambiente ou frente de serviço). Cada setor tem prazo, equipe e um prêmio fixo, pago na entrega conforme os critérios cumpridos.</p><p>${o.modelo==='misto'?'Nesta obra a equipe recebe a <b>produção na quinzena</b> e o <b>prêmio na entrega</b> do setor.':'Nesta obra a equipe recebe o <b>salário</b> na quinzena e o <b>prêmio na entrega</b> do setor.'}</p><p>O prêmio sugerido é o fundo de prêmios dos serviços do setor. O prêmio é dividido por dias trabalhados × custo-hora da função.</p>`);
+  const lista=o.metas.map(mt=>({mt,r:calcMeta(o,mt)}));
+  const cnt={and:0,late:0,eval:0,done:0}; lista.forEach(x=>cnt[x.r.st]++);
+  let h=`<div class="sec-head"><div><h2>Metas por setor</h2><p class="sec-sub">${o.metas.length} meta(s) · prêmios pagos ${brl(premiosPagos(o))}</p></div>
+    <div class="sec-acoes">
+      <details class="ajuda pesos-d"><summary>Critérios e pesos</summary><div class="ajuda-pop"><p class="small muted">Pontos de cada critério na avaliação da entrega.</p><div class="pesos">
+        <label>No prazo<input type="number" data-pe="prazo" value="${pe.prazo}"></label>
+        <label>Sem retrabalho<input type="number" data-pe="qual" value="${pe.qual}"></label>
+        <label>Organização e segurança<input type="number" data-pe="org" value="${pe.org}"></label></div></div></details>
+      ${novaMetaAberta?'':'<button class="pri" data-act="novaMeta">+ Nova meta</button>'}${help}</div></div>`;
+  if(novaMetaAberta){const ini=hoje(),pz=new Date(Date.now()+14*864e5).toISOString().slice(0,10);
+    h+=`<div class="quick meta-form" role="group" aria-label="Nova meta">
+      <label>Setor ou frente de serviço<input id="nmNome" placeholder="Ex.: 1º andar · alvenaria e reboco"></label>
+      <label>Início<input id="nmIni" type="date" value="${ini}"></label>
+      <label>Prazo de entrega<input id="nmPrazo" type="date" value="${pz}"></label>
+      <div class="q-acoes"><button class="pri" data-act="criarMeta">Criar meta</button><button class="ghost" data-act="fecharNovaMeta">Cancelar</button></div></div>`}
+  if(!o.servicos.length)return h+`<div class="empty big"><h3>Falta a tabela de preços</h3><p class="muted">O prêmio sugerido sai da verba dos serviços de cada setor.</p><div class="tools" style="justify-content:center"><button class="pri" data-act="tab" data-v="importar">Importar do Sienge</button></div></div>`;
+  if(!o.metas.length)return h+(novaMetaAberta?'':`<div class="empty big"><h3>Nenhuma meta criada</h3><p class="muted">Comece pelo setor que vai iniciar agora. Setores curtos, de 1 a 3 semanas, motivam mais a equipe.</p><div class="tools" style="justify-content:center"><button class="pri" data-act="novaMeta">Criar primeira meta</button></div></div>`);
+  if(!metasIniciadas){metasIniciadas=true;const prim=[...lista].reverse().find(x=>!x.mt.encerrada);if(prim)metasAbertas.add(prim.mt.id)}
+  h+=`<div class="sit-cards">${[['and','Em andamento','nav'],['late','Atrasadas','bad'],['eval','Para avaliar','warn'],['done','Encerradas','ok']].map(([k,t,c])=>`<button class="sit ${c}${metaFiltro===k?' on':''}" data-act="metaFiltro" data-v="${k}" aria-pressed="${metaFiltro===k}"><b>${cnt[k]}</b><span>${t}</span></button>`).join('')}</div>`;
+  const vis=[...lista].reverse().filter(x=>!metaFiltro||x.r.st===metaFiltro);
+  if(!vis.length)return h+`<div class="empty"><p>Nenhuma meta nessa situação.</p><button data-act="metaFiltro" data-v="${metaFiltro}">Mostrar todas</button></div>`;
+  h+='<div class="metas">';
+  vis.forEach(({mt,r})=>{
+    const L=mt.encerrada?'disabled':'', aberta=metasAbertas.has(mt.id);
+    const falta=mt.prazo&&!mt.entrega?diasEntre(hoje(),mt.prazo):null;
+    const stChip=r.st==='done'?'ok':r.st==='late'?'bad':r.st==='eval'?'warn':'nav';
+    h+=`<section class="meta ${r.st}${aberta?' aberta':''}" aria-label="${esc(mt.nome)}">
+      <button class="meta-sum" data-act="metaToggle" data-id="${mt.id}" aria-expanded="${aberta}">
+        <span class="ms-nome"><b>${esc(mt.nome)}</b><span class="small muted">${dataBRs(mt.inicio)} → ${dataBRs(mt.prazo)}${falta!=null?` · ${falta>=0?`faltam ${falta} dia(s)`:`${-falta} dia(s) de atraso`}`:''}</span></span>
+        <span class="chip ${stChip}">${r.stTxt}</span>
+        <span class="ms-val"><b>${brl(mt.entrega?r.ganho:r.premio)}</b><span class="small muted">${mt.entrega?`${F0.format(r.pct)}% do prêmio`:'prêmio previsto'}</span></span>
+        <span class="chev" aria-hidden="true">▾</span>
+      </button>`;
+    if(aberta){
+      h+=`<div class="meta-body">
+        <div class="meta-campos">
+          <label class="nm">Setor / meta<input data-mt="${mt.id}" data-k="nome" value="${esc(mt.nome)}" ${L}></label>
+          <label>Início<input type="date" data-mt="${mt.id}" data-k="inicio" value="${esc(mt.inicio||'')}" ${L}></label>
+          <label>Prazo de entrega<input type="date" data-mt="${mt.id}" data-k="prazo" value="${esc(mt.prazo||'')}" ${L}></label>
+        </div>
+        <div class="steps">
+        <div class="step"><h4><span class="sn">1</span>Serviços do setor</h4>
+          <div class="scroll"><table class="tbl"><thead><tr><th>Serviço</th><th class="num">Qtd</th><th class="num">Verba teto</th><th class="num th-key">Prêmio sugerido</th><th><span class="sr">Ações</span></th></tr></thead><tbody>
+          ${r.linhas.map((x,i)=>`<tr><td class="svc"><select class="cell svc-sel" data-mtl="${mt.id}|${i}" data-k="sid" ${L} aria-label="Serviço">${o.servicos.map(sv=>`<option value="${sv.id}" ${sv.id===x.l.sid?'selected':''}>${esc(sv.nome)}</option>`).join('')}</select></td>
+            <td class="num"><span class="qtd-un"><input class="cell n" inputmode="decimal" data-mtl="${mt.id}|${i}" data-k="qtd" value="${m2(num(x.l.qtd))}" ${L} aria-label="Quantidade"><span>${x.s?esc(x.s.un):''}</span></span></td>
+            <td class="num soft">${m2(x.v)}</td><td class="num key">${m2(x.p)}</td>
+            <td class="acao">${L?'':`<button class="ghost del" data-act="delMetaLinha" data-id="${mt.id}" data-i="${i}" aria-label="Remover serviço">✕</button>`}</td></tr>`).join('')}
+          </tbody><tfoot><tr><td><span class="tf-l">Total do setor</span></td><td></td><td class="num">${m2(r.verba)}</td><td class="num tf-v">${brl(r.sug)}</td><td></td></tr></tfoot></table></div>
+          ${L?'':`<button class="add-row" data-act="addMetaLinha" data-id="${mt.id}">+ Adicionar serviço</button>`}</div>
+        <div class="step"><h4><span class="sn">2</span>Equipe do setor</h4>
+          ${o.funcionarios.length?`<div class="team">${o.funcionarios.map(p=>{const on=mt.equipe&&mt.equipe[p.id]!=null;const f=fnById(o,p.funcao);return `<div class="p${on?' on':''}"><label><input type="checkbox" data-mte="${mt.id}|${p.id}" ${on?'checked':''} ${L}> ${esc(p.nome)} <span class="small muted">${f?esc(f.nome):''}</span></label>${on?`<span class="small muted">dias <input inputmode="decimal" data-mtd="${mt.id}|${p.id}" value="${F1.format(num(mt.equipe[p.id]))}" ${L} aria-label="Dias de ${esc(p.nome)} no setor"></span>`:''}</div>`}).join('')}</div>`
+          :`<div class="callout"><div><b>Nenhum funcionário cadastrado</b><p class="small muted">Cadastre a equipe para dividir o prêmio.</p></div><button class="pri" data-act="tab" data-v="equipe">Cadastrar equipe</button></div>`}</div>
+        <div class="step"><h4><span class="sn">3</span>Entrega e prêmio</h4>
+          <div class="meta-campos">
+            <label>Prêmio da meta<input inputmode="decimal" data-mt="${mt.id}" data-k="premio" value="${r.manual?m2(r.premio):''}" placeholder="${m2(r.sug)} (sugerido)" ${L}></label>
+            <label>Data da entrega<input type="date" data-mt="${mt.id}" data-k="entrega" value="${esc(mt.entrega||'')}" ${L}></label>
+          </div>
+          ${r.acima?`<div class="note bad">O prêmio está ${brl(r.premio-r.sug)} acima do fundo dos serviços deste setor. A diferença sai da margem da obra.</div>`:''}
+          ${mt.entrega?`<p class="small" style="margin:8px 0;${r.atraso>0?'color:var(--red);font-weight:600':''}">${r.atraso>0?`Entregue com ${r.atraso} dia(s) de atraso`:r.atraso<0?`Entregue ${-r.atraso} dia(s) antes do prazo`:'Entregue no dia do prazo'}</p>
+          <div class="crit">
+            <label class="c"><input type="checkbox" data-mtc="${mt.id}|prazo" ${r.prazoOk?'checked':''} ${L}> No prazo <span class="pts">${pe.prazo} pts</span></label>
+            <label class="c"><input type="checkbox" data-mtc="${mt.id}|qual" ${(mt.crit||{}).qual?'checked':''} ${L}> Aprovado na vistoria, sem retrabalho <span class="pts">${pe.qual} pts</span></label>
+            <label class="c"><input type="checkbox" data-mtc="${mt.id}|org" ${(mt.crit||{}).org?'checked':''} ${L}> Organização, limpeza e segurança <span class="pts">${pe.org} pts</span></label>
+          </div>
+          <div class="premio-box"><div><div class="prize">${brl(r.ganho)}</div><div class="small muted">${F0.format(r.pct)}% do prêmio de ${brl(r.premio)}${o.regime==='clt'?` · custo com encargos ${brl(r.ganho*(1+o.enc/100))}`:''}</div></div>
+            ${r.eq.length?`<div class="team">${r.eq.map(x=>`<div class="p"><span>${esc(x.nome)} <span class="small muted">${esc(x.funcao)} · ${F1.format(x.dias)} dia(s)</span></span><b class="num">${brl(x.valor)}</b></div>`).join('')}</div>`:'<div class="note">Marque a equipe do setor para dividir o prêmio.</div>'}</div>`
+          :`<p class="small muted" style="margin-top:8px">Quando o setor for entregue, lance a data para avaliar os critérios e calcular o prêmio.</p>`}
+        </div></div>
+        <div class="meta-acoes">
+          ${mt.entrega?`<button class="${mt.encerrada?'':'pri'}" data-act="encMeta" data-id="${mt.id}">${mt.encerrada?'Reabrir meta':'Encerrar e lançar pagamento'}</button>`:''}
+          <button data-act="copiarMeta" data-id="${mt.id}">Copiar resumo</button>
+          ${TEM_RECIBO&&mt.entrega&&r.eq.length?`<button data-act="reciboMeta" data-id="${mt.id}">Recibos em PDF</button>`:''}
+          ${L?'':`<button class="ghost del-txt" data-act="delMeta" data-id="${mt.id}">Excluir meta</button>`}
+        </div>
+      </div>`;
+    }
+    h+='</section>';
+  });
+  return h+'</div>';
+}
+const dataBRs=d=>d?d.split('-').reverse().slice(0,2).join('/'):'—';
+
+let obraBusca='', addFuAberto=false, addUserAberto=false;
+function vObras(){
+  const todas=Object.values(S.obras).sort((a,b)=>a.nome.localeCompare(b.nome));
+  const lista=todas.filter(o=>!obraBusca||SG.norm(o.nome).includes(SG.norm(obraBusca)));
+  let h=`<div class="sec-head"><div><h2>Obras</h2><p class="sec-sub">${todas.length} obra(s) · cada uma com tabela de preços, equipe e medições próprias</p></div>
+    <div class="sec-acoes">${can('obras')?'<button class="pri" data-act="novaObra">+ Nova obra</button>':''}</div></div>`;
+  if(todas.length>3)h+=`<div class="toolbar"><label class="busca"><span class="sr">Buscar obra</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input type="search" id="oBusca" data-flt="obra" value="${esc(obraBusca)}" placeholder="Buscar obra pelo nome" autocomplete="off"></label><span class="cont">${lista.length} de ${todas.length}</span></div>`;
+  if(!lista.length)return h+`<div class="empty"><p>Nenhuma obra com esse nome.</p><button data-act="limparObraBusca">Limpar busca</button></div>`;
+  h+='<div class="obras">';
+  lista.forEach(o=>{const r=resumoObra(o), ratio=r.moMed>0?r.custo/r.moMed:null, comp=r.usado+r.premios, pc=r.verba>0?comp/r.verba:0;
+    const cor=ratio==null?'var(--muted)':ratio<=0.9?'var(--green)':ratio<=1?'var(--amber)':'var(--red)';
+    const st=ratio==null?'Sem medição':ratio<=0.9?'Dentro do orçado':ratio<=1?'No limite':'Acima do orçado';
+    const atual=o.id===S.atual;
+    h+=`<article class="obra-card${atual?' atual':''}">
+      <div class="oc-h"><h3>${esc(o.nome)}</h3>${atual?'<span class="chip nav">Aberta</span>':''}</div>
+      <p class="small muted">${o.servicos.length} serviço(s) · ${o.funcionarios.length} funcionário(s) · ${o.regime==='clt'?'CLT':'Empreiteiro'} · ${({producao:'só produção',misto:'produção + meta',meta:'só meta'})[o.modelo]}</p>
+      <div class="oc-kpi"><div><span class="k-l">Custo real ÷ orçado</span><span class="oc-pct" style="color:${cor}">${ratio==null?'—':F0.format(ratio*100)+'%'}</span><span class="k-s">${st}</span></div>
+        <div><span class="k-l">Verba comprometida</span><span class="oc-pct">${F0.format(pc*100)}%</span><span class="k-s">de ${brl(r.verba)}</span></div></div>
+      <span class="k-bar" aria-hidden="true"><i style="width:${Math.min(100,pc*100)}%;background:${pc>1?'var(--red)':'var(--navy)'}"></i></span>
+      <div class="oc-rows">
+        ${o.modelo!=='meta'?`<div class="l"><span>Produção medida</span><b>${brl(r.usado)}</b></div>`:''}
+        ${o.modelo!=='producao'?`<div class="l"><span>Prêmios pagos</span><b>${brl(r.premios)}</b></div>`:''}
+        <div class="l"><span>Última medição</span><b>${r.ult?esc(r.ult.periodo):'nenhuma'}</b></div></div>
+      <div class="oc-acoes"><button class="pri" data-act="abrirObra" data-id="${o.id}">Abrir obra</button>${o.modelo!=='meta'?`<button data-act="abrirMed" data-id="${o.id}">Lançar medição</button>`:''}</div></article>`});
+  return h+'</div>';
+}
 function vEquipe(o){
-  let h=`<div class="grid2"><div class="card"><h3>Funções e custo-hora</h3>
-    <p class="small muted">Use o custo-hora com encargos que está nas composições do Sienge. O valor sem encargos é o que vira salário no cálculo.</p>
-    <div class="scroll"><table><thead><tr><th>Função</th><th class="num">Hora c/ encargos</th><th class="num">Hora s/ encargos</th><th class="num">Salário na quinzena</th><th></th></tr></thead><tbody>`;
-  o.funcoes.forEach(f=>{const hs=horaSem(o,f);
-    h+=`<tr><td><input data-fn="${f.id}" data-k="nome" value="${esc(f.nome)}" aria-label="Nome da função"></td><td><input class="n" type="text" inputmode="decimal" data-fn="${f.id}" data-k="hora" value="${m4(num(f.hora))}" aria-label="Hora com encargos"></td><td class="num">${m2(hs)}</td><td class="num">${m2(hs*o.horasDia*o.diasPadrao)}</td><td><button class="ghost" data-act="delFn" data-id="${f.id}" aria-label="Excluir função">✕</button></td></tr>`});
-  h+=`</tbody></table></div><p style="margin-top:10px"><button data-act="addFn">Adicionar função</button></p></div>`;
-  h+=`<div class="card"><h3>Funcionários da obra</h3><p class="small muted">A retenção acumulada soma só as medições fechadas. Libere quando a frente de serviço for entregue sem retrabalho.</p>
-    <div class="scroll"><table><thead><tr><th>Nome</th><th>CPF <span class="hint">(sai no recibo)</span></th><th>Função</th><th class="num">Retido acumulado</th><th></th></tr></thead><tbody>`;
+  const CPF=TEM_RECIBO;
   const ret={};o.medicoes.filter(m=>m.fechada).forEach(m=>calcMed(o,m).lista.forEach(p=>{ret[p.fid]=(ret[p.fid]||0)+(o.regime==='clt'?p.ret:p.prod*o.ret/100)}));
-  o.funcionarios.forEach(p=>{h+=`<tr><td><input data-fu="${p.id}" data-k="nome" value="${esc(p.nome)}" aria-label="Nome"></td><td><input style="width:130px" data-fu="${p.id}" data-k="cpf" value="${esc(p.cpf||'')}" inputmode="numeric" placeholder="000.000.000-00" aria-label="CPF"></td><td><select data-fu="${p.id}" data-k="funcao">${optsFn(o,p.funcao)}</select></td><td class="num">${m2(ret[p.id]||0)}</td><td><button class="ghost" data-act="delFu" data-id="${p.id}" aria-label="Excluir funcionário">✕</button></td></tr>`});
-  if(!o.funcionarios.length)h+=`<tr><td colspan="5" class="muted">Ninguém cadastrado ainda.</td></tr>`;
-  return h+`</tbody></table></div><p style="margin-top:10px"><button class="pri" data-act="addFu">Adicionar funcionário</button></p></div></div>`;
+  const usoFn={};o.funcionarios.forEach(p=>usoFn[p.funcao]=(usoFn[p.funcao]||0)+1);
+  let h=`<div class="sec-head"><div><h2>Equipe e funções</h2><p class="sec-sub">${o.funcionarios.length} funcionário(s) · ${o.funcoes.length} função(ões)</p></div>
+    <div class="sec-acoes">${addFuAberto?'':'<button class="pri" data-act="addFu">+ Funcionário</button>'}${ajuda('Como funciona',`<p>Os <b>funcionários</b> recebem a produção nas medições e o prêmio nas metas.</p><p>O <b>custo-hora com encargos</b> de cada função vem das composições do Sienge. O app tira os encargos para chegar ao salário${o.regime==='clt'?` (${F1.format(o.diasPadrao)} dias × ${F1.format(o.horasDia)} h na quinzena)`:''}.</p><p>A <b>retenção acumulada</b> soma só as medições fechadas. Libere quando a frente de serviço for entregue sem retrabalho.</p>`)}</div></div>`;
+  if(addFuAberto)h+=`<div class="quick fu-form" role="group" aria-label="Novo funcionário">
+      <label>Nome<input id="fuNome" placeholder="Nome completo"></label>
+      <label>Função<select id="fuFuncao">${optsFn(o,(o.funcoes.find(f=>/pedreiro/i.test(f.nome))||o.funcoes[0]||{}).id)}</select></label>
+      ${CPF?'<label>CPF <span class="hint">(sai no recibo)</span><input id="fuCpf" inputmode="numeric" placeholder="000.000.000-00"></label>':'<span></span>'}
+      <div class="q-acoes"><button class="pri" data-act="criarFu">Adicionar</button><button class="ghost" data-act="addFu">Fechar</button></div></div>`;
+  h+=`<section class="bloco"><div class="sub-head"><h3>Funcionários da obra</h3></div>`;
+  if(!o.funcionarios.length)h+=`<div class="empty"><h3>Ninguém cadastrado ainda</h3><p class="muted">Cadastre a equipe para distribuir a produção e os prêmios.</p>${addFuAberto?'':'<button class="pri" data-act="addFu">+ Adicionar funcionário</button>'}</div>`;
+  else{h+=`<div class="scroll"><table class="tbl"><thead><tr><th class="stick">Nome</th>${CPF?'<th>CPF</th>':''}<th>Função</th><th class="num th-key">Retido acumulado</th><th><span class="sr">Ações</span></th></tr></thead><tbody>`;
+    o.funcionarios.forEach(p=>{h+=`<tr><td class="stick"><input class="cell nome" data-fu="${p.id}" data-k="nome" value="${esc(p.nome)}" aria-label="Nome"></td>${CPF?`<td><input class="cell" style="width:140px" data-fu="${p.id}" data-k="cpf" value="${esc(p.cpf||'')}" inputmode="numeric" placeholder="000.000.000-00" aria-label="CPF"></td>`:''}<td><select class="cell" data-fu="${p.id}" data-k="funcao" aria-label="Função">${optsFn(o,p.funcao)}</select></td><td class="num key">${m2(ret[p.id]||0)}</td><td class="acao"><button class="ghost del" data-act="delFu" data-id="${p.id}" aria-label="Remover ${esc(p.nome)}" title="Remover">✕</button></td></tr>`});
+    const tr=Object.values(ret).reduce((a,v)=>a+v,0);
+    h+=`</tbody><tfoot><tr><td colspan="${CPF?3:2}"><span class="tf-l">Retido para liberar na entrega</span></td><td class="num tf-v">${brl(tr)}</td><td></td></tr></tfoot></table></div>`}
+  h+=`</section><section class="bloco"><div class="sub-head"><h3>Funções e custo-hora</h3><button data-act="addFn">+ Função</button></div>
+    <div class="scroll"><table class="tbl"><thead><tr><th class="stick">Função</th><th class="num">Hora c/ encargos<span class="th-sub">do Sienge</span></th><th class="num">Hora s/ encargos</th><th class="num th-key">Salário na quinzena</th><th class="num">Na equipe</th><th><span class="sr">Ações</span></th></tr></thead><tbody>`;
+  o.funcoes.forEach(f=>{const hs=horaSem(o,f);
+    h+=`<tr><td class="stick"><input class="cell nome fn-nome" data-fn="${f.id}" data-k="nome" value="${esc(f.nome)}" aria-label="Nome da função"></td><td class="num"><input class="cell n" inputmode="decimal" data-fn="${f.id}" data-k="hora" value="${m4(num(f.hora))}" aria-label="Hora com encargos"></td><td class="num soft">${m2(hs)}</td><td class="num key">${m2(hs*o.horasDia*o.diasPadrao)}</td><td class="num soft">${usoFn[f.id]||'—'}</td><td class="acao"><button class="ghost del" data-act="delFn" data-id="${f.id}" aria-label="Excluir ${esc(f.nome)}" title="Excluir função">✕</button></td></tr>`});
+  return h+`</tbody></table></div></section>`;
 }
-
 function vImportar(o){
-  return vSienge(o)+`<div class="grid2"><div class="card"><h3>Colar manualmente do Excel</h3>
-    <p class="small muted">Copie as colunas do Excel nesta ordem e cole abaixo. Material e % oficial são opcionais.</p>
-    <ol class="howto small"><li>Código · Serviço · Unidade · Quantidade · MO unitária (com encargos) · Material unitário · % oficial</li>
-    <li>Serviços repetidos em vários pavimentos são somados em uma linha só quando o código (ou o nome e a unidade) é igual.</li>
-    <li>Linhas de título ou cabeçalho sem número na quantidade são ignoradas.</li></ol>
-    <textarea id="txtImp" rows="10" placeholder="7273	Porcelanato 90x90	m2	650,72	31,8318	138,0107	57,6"></textarea>
-    <div class="tools" style="margin-top:10px"><button class="pri" data-act="importar" data-v="add">Acrescentar à tabela</button><button data-act="importar" data-v="sub">Substituir a tabela</button></div>
-    <p class="small muted" style="margin-top:10px">A função (pedreiro, pintor, armador…) e a divisão entre oficial e ajudante são preenchidas pelo nome do serviço. Confira em Tabela de preços › Mostrar detalhes.</p></div>
-  <div class="card"><h3>Backup da obra</h3>
-    <p class="small muted">Copie o texto para guardar uma cópia da obra (tabela, equipe e medições) ou cole um backup para recriar a obra.</p>
-    <textarea id="txtBkp" rows="10" placeholder="Cole aqui um backup para restaurar"></textarea>
-    <div class="tools" style="margin-top:10px"><button data-act="gerarBkp">Gerar backup desta obra</button><button class="pri" data-act="restaurar">Restaurar como nova obra</button></div></div></div>`;
+  return vSienge(o)+`<div class="outras"><h3 class="outras-t">Outras formas</h3>
+  <details class="card dobra"><summary><div><b>Colar do Excel</b><span class="small muted">Para planilhas montadas à mão ou de outro sistema</span></div></summary>
+    <div class="dobra-c"><ol class="howto small"><li>Colunas nesta ordem: Código · Serviço · Unidade · Quantidade · MO unitária (com encargos) · Material unitário · % oficial. As duas últimas são opcionais.</li>
+    <li>Serviços repetidos em vários pavimentos são somados quando o código (ou o nome e a unidade) é igual.</li>
+    <li>Linhas de título sem número na quantidade são ignoradas.</li></ol>
+    <textarea id="txtImp" rows="8" placeholder="7273&#9;Porcelanato 90x90&#9;m2&#9;650,72&#9;31,8318&#9;138,0107&#9;57,6"></textarea>
+    <div class="tools" style="margin-top:10px"><button class="pri" data-act="importar" data-v="add">Acrescentar à tabela</button><button data-act="importar" data-v="sub">Substituir a tabela</button></div></div></details>
+  <details class="card dobra"><summary><div><b>Backup da obra</b><span class="small muted">Copiar tudo (tabela, equipe, medições e metas) ou recriar a partir de uma cópia</span></div></summary>
+    <div class="dobra-c"><textarea id="txtBkp" rows="8" placeholder="Cole aqui um backup para restaurar"></textarea>
+    <div class="tools" style="margin-top:10px"><button data-act="gerarBkp">Gerar backup desta obra</button><button class="pri" data-act="restaurar">Restaurar como nova obra</button></div></div></details></div>`;
 }
 
-/* ---------- permissões na tela ---------- */
-const ACT_PERM={novaObra:'obras',dupObra:'obras',delObra:'obras',restaurar:'obras',addRapido:'base',delServ:'base',addFn:'base',delFn:'base',addFu:'base',delFu:'base',importar:'base',
-  novaMed:'medir',addLinha:'medir',delLinha:'medir',delMed:'medir',fecharMed:'fechar',novaMeta:'metas',addMetaLinha:'metas',delMetaLinha:'metas',delMeta:'metas',encMeta:'fechar',
-  addUser:'usuarios',delUser:'usuarios',impAplicar:'base'};
-const CAMPO_PERM=[['p','base'],['s','base'],['fn','base'],['fu','base'],['pe','base'],['m','medir'],['ml','medir'],['md','medir'],['mt','metas'],['mtl','metas'],['mte','metas'],['mtd','metas'],['mtc','metas'],['us','usuarios'],['uo','usuarios'],['imp','base']];
-function aplicaPermissoes(){
-  const app=document.getElementById('app'); if(!app||!PERFIL)return;
-  CAMPO_PERM.forEach(([k,p])=>{if(!can(p))app.querySelectorAll(`[data-${k}]`).forEach(e=>e.disabled=true)});
-  if(!can('base'))app.querySelectorAll('#qNome,#qUn,#qQtd,#qMo,#txtImp,#impFiles').forEach(e=>e.disabled=true);
-  Object.entries(ACT_PERM).forEach(([a,p])=>{if(!can(p))app.querySelectorAll(`[data-act="${a}"]`).forEach(e=>e.style.display='none')});
-  if(!can('base'))app.querySelectorAll('.quick').forEach(e=>e.style.display='none');
-}
-
-/* ---------- usuários ---------- */
 function vUsuarios(){
   const obras=Object.values(S.obras).sort((a,b)=>a.nome.localeCompare(b.nome));
-  let h=`<div class="section-head"><div><h2>Usuários e perfis</h2><p class="muted">Quem já tem login nos outros sistemas da SAVA (mesmo projeto Firebase) entra com a mesma senha: basta cadastrar o e-mail e o perfil aqui. Para quem ainda não tem login, preencha a senha inicial.</p></div></div>
-  <div class="card" style="margin-bottom:16px"><div class="uform">
+  const ativos=USERS.filter(u=>u.ativo!==false).length;
+  let h=`<div class="sec-head"><div><h2>Usuários</h2><p class="sec-sub">${USERS.length} usuário(s) · ${ativos} ativo(s)</p></div>
+    <div class="sec-acoes">${addUserAberto?'':'<button class="pri" data-act="addUserForm">+ Novo usuário</button>'}${ajuda('Perfis de acesso',`<p><b>Administrador</b>: tudo, inclusive usuários.</p><p><b>Engenheiro</b>: tudo, menos usuários.</p><p><b>Encarregado / Mestre</b>: lança medições e metas, mas não altera preços nem fecha medição.</p><p><b>Visualização</b>: só consulta.</p><p>Quem já entra no Gerencial SAVA usa a mesma senha: basta cadastrar o e-mail aqui.</p>`)}</div></div>`;
+  if(addUserAberto)h+=`<div class="quick u-form" role="group" aria-label="Novo usuário">
     <label>E-mail<input id="uEmail" type="email" placeholder="nome@savaconstrutora.com.br"></label>
     <label>Nome<input id="uNome"></label>
     <label>Perfil<select id="uPerfil">${Object.entries(PERFIS).map(([k,v])=>`<option value="${k}" ${k==='encarregado'?'selected':''}>${v}</option>`).join('')}</select></label>
-    <label>Senha inicial <span class="hint">(opcional)</span><input id="uSenha" type="text" autocomplete="off" placeholder="só se não tiver login"></label>
-    <button class="pri" data-act="addUser">Cadastrar</button></div>
-    <p class="small muted">Administrador: tudo, inclusive usuários. Engenheiro: tudo menos usuários. Encarregado: lança medições e metas, mas não altera preços nem fecha medição. Visualização: só consulta.</p></div>
-  <div class="scroll"><table><thead><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Obras liberadas</th><th>Ativo</th><th></th></tr></thead><tbody>`;
+    <label>Senha inicial <span class="hint">(só se não tiver login)</span><input id="uSenha" type="text" autocomplete="off"></label>
+    <div class="q-acoes"><button class="pri" data-act="addUser">Cadastrar</button><button class="ghost" data-act="addUserForm">Fechar</button></div></div>`;
+  if(!USERS.length)return h+(addUserAberto?'':`<div class="empty big"><h3>Nenhum usuário cadastrado</h3><p class="muted">Cadastre engenheiros e encarregados para eles lançarem as medições pelo celular.</p><div class="tools" style="justify-content:center"><button class="pri" data-act="addUserForm">+ Novo usuário</button></div></div>`);
+  h+=`<div class="scroll"><table class="tbl"><thead><tr><th class="stick">Nome</th><th>E-mail</th><th>Perfil</th><th>Obras liberadas</th><th>Ativo</th><th><span class="sr">Ações</span></th></tr></thead><tbody>`;
   USERS.forEach(u=>{const sel=u.obras||[];
-    h+=`<tr><td><input data-us="${esc(u.email)}" data-k="nome" value="${esc(u.nome||'')}" aria-label="Nome"></td><td class="small">${esc(u.email)}${adminFixo(u.email)?' <span class="chip ok">admin fixo</span>':''}</td>
-    <td><select data-us="${esc(u.email)}" data-k="perfil">${Object.entries(PERFIS).map(([k,v])=>`<option value="${k}" ${u.perfil===k?'selected':''}>${v}</option>`).join('')}</select></td>
-    <td><details class="obsel"><summary>${sel.length?sel.length+' obra(s)':'Todas'}</summary>${obras.map(ob=>`<label><input type="checkbox" data-uo="${esc(u.email)}|${ob.id}" ${sel.includes(ob.id)?'checked':''}> ${esc(ob.nome)}</label>`).join('')}<p class="hint">Nenhuma marcada = todas as obras</p></details></td>
-    <td><input type="checkbox" data-us="${esc(u.email)}" data-k="ativo" ${u.ativo!==false?'checked':''} aria-label="Ativo"></td>
-    <td><button class="ghost" data-act="delUser" data-id="${esc(u.email)}" aria-label="Remover acesso">✕</button></td></tr>`});
-  if(!USERS.length)h+=`<tr><td colspan="6" class="muted">Nenhum usuário cadastrado.</td></tr>`;
+    h+=`<tr${u.ativo===false?' class="inativo"':''}><td class="stick"><input class="cell nome" data-us="${esc(u.email)}" data-k="nome" value="${esc(u.nome||'')}" aria-label="Nome"></td><td class="small">${esc(u.email)}${adminFixo(u.email)?' <span class="chip ok">admin fixo</span>':''}</td>
+    <td><select class="cell" data-us="${esc(u.email)}" data-k="perfil" aria-label="Perfil">${Object.entries(PERFIS).map(([k,v])=>`<option value="${k}" ${u.perfil===k?'selected':''}>${v}</option>`).join('')}</select></td>
+    <td><details class="obsel"><summary>${sel.length?sel.length+' obra(s)':'Todas as obras'}</summary><div class="obsel-pop">${obras.map(ob=>`<label><input type="checkbox" data-uo="${esc(u.email)}|${ob.id}" ${sel.includes(ob.id)?'checked':''}> ${esc(ob.nome)}</label>`).join('')}<p class="hint">Nenhuma marcada = todas as obras</p></div></details></td>
+    <td><label class="switch"><input type="checkbox" data-us="${esc(u.email)}" data-k="ativo" ${u.ativo!==false?'checked':''} aria-label="Ativo"><span></span></label></td>
+    <td class="acao"><button class="ghost del" data-act="delUser" data-id="${esc(u.email)}" aria-label="Remover acesso de ${esc(u.email)}" title="Remover acesso">✕</button></td></tr>`});
   return h+`</tbody></table></div>`;
 }
+
 async function addUser(){
   const email=document.getElementById('uEmail').value.trim().toLowerCase(), nome=document.getElementById('uNome').value.trim(),
     perfil=document.getElementById('uPerfil').value, senha=document.getElementById('uSenha').value;
@@ -889,7 +1309,7 @@ async function addUser(){
       catch(e){if(e.code==='auth/email-already-in-use')toast('Esse e-mail já tem login: a pessoa entra com a senha que já usa');else{toast(msgAuth(e));return}}
     }
     await fs.collection(USUARIOS).doc(email).set({nome:nome||email,perfil,ativo:true,obras:[],criadoPor:emailDe(USER),criadoEm:Date.now()},{merge:true});
-    toast('Usuário cadastrado');
+    toast('Usuário cadastrado');addUserAberto=false;if(document.activeElement)document.activeElement.blur();render();
   }catch(e){toast('Não foi possível cadastrar ('+(e.code||e.message)+')')}
 }
 
@@ -897,6 +1317,38 @@ async function addUser(){
 const UN=['','um','dois','três','quatro','cinco','seis','sete','oito','nove','dez','onze','doze','treze','quatorze','quinze','dezesseis','dezessete','dezoito','dezenove'];
 const DZ=['','','vinte','trinta','quarenta','cinquenta','sessenta','setenta','oitenta','noventa'];
 const CT=['','cento','duzentos','trezentos','quatrocentos','quinhentos','seiscentos','setecentos','oitocentos','novecentos'];
+function resumoObra(o){
+  let verba=0,usado=0,moTot=0; o.servicos.forEach(s=>{const c=calc(o,s);verba+=c.verba;moTot+=c.moTot;usado+=medidoAcum(o,s.id,null)*c.preco});
+  let custo=0,moMed=0; o.medicoes.forEach(m=>{const r=calcMed(o,m);custo+=r.custo;moMed+=r.moOrc});
+  const ult=o.medicoes[o.medicoes.length-1];
+  return {verba,usado,moTot,custo,moMed,ult,premios:premiosPagos(o)};
+}
+
+function resumoMeta(o,mt){
+  const r=calcMeta(o,mt);
+  let t=`${o.nome} — Meta: ${mt.nome}\nPrazo: ${mt.prazo?mt.prazo.split('-').reverse().join('/'):'—'} · Entrega: ${mt.entrega?mt.entrega.split('-').reverse().join('/'):'—'}\n`;
+  r.linhas.forEach(x=>{if(x.s)t+=`${x.s.nome}: ${m2(x.q)} ${x.s.un}\n`});
+  t+=`\nPrêmio: ${brl(r.premio)} · atingido ${F0.format(r.pct)}% = ${brl(r.ganho)}\n`;
+  r.eq.forEach(x=>{t+=`${x.nome} (${x.funcao}, ${F1.format(x.dias)} dias): ${brl(x.valor)}\n`});
+  return t;
+}
+
+
+/* ---------- permissões na tela ---------- */
+const ACT_PERM={novaObra:'obras',dupObra:'obras',delObra:'obras',restaurar:'obras',addRapido:'base',delServ:'base',addFn:'base',delFn:'base',addFu:'base',delFu:'base',importar:'base',
+  novaMed:'medir',addLinha:'medir',delLinha:'medir',delMed:'medir',fecharMed:'fechar',novaMeta:'metas',addMetaLinha:'metas',delMetaLinha:'metas',delMeta:'metas',encMeta:'fechar',
+  addUser:'usuarios',delUser:'usuarios',impAplicar:'base',novoServ:'base',criarMeta:'metas',criarFu:'base',addUserForm:'usuarios'};
+const CAMPO_PERM=[['p','base'],['s','base'],['fn','base'],['fu','base'],['pe','base'],['m','medir'],['ml','medir'],['md','medir'],['mt','metas'],['mtl','metas'],['mte','metas'],['mtd','metas'],['mtc','metas'],['us','usuarios'],['uo','usuarios'],['imp','base']];
+function aplicaPermissoes(){
+  const app=document.getElementById('app'); if(!app||!PERFIL)return;
+  CAMPO_PERM.forEach(([k,p])=>{if(!can(p))app.querySelectorAll(`[data-${k}]`).forEach(e=>e.disabled=true)});
+  if(!can('base'))app.querySelectorAll('#qNome,#qUn,#qQtd,#qMo,#txtImp,#impFiles').forEach(e=>e.disabled=true);
+  Object.entries(ACT_PERM).forEach(([a,p])=>{if(!can(p))app.querySelectorAll(`[data-act="${a}"]`).forEach(e=>e.style.display='none')});
+  if(!can('base'))app.querySelectorAll('.quick').forEach(e=>e.style.display='none');
+}
+
+/* ---------- usuários ---------- */
+
 function ate999(n){if(n===100)return 'cem';const c=Math.floor(n/100),r=n%100,p=[];if(c)p.push(CT[c]);if(r<20){if(r)p.push(UN[r])}else{p.push(DZ[Math.floor(r/10)]+(r%10?' e '+UN[r%10]:''))}return p.join(' e ')}
 function inteiroExt(n){if(!n)return 'zero';const mi=Math.floor(n/1e6),mil=Math.floor(n%1e6/1000),r=n%1000,p=[];
   if(mi)p.push(mi===1?'um milhão':ate999(mi)+' milhões');if(mil)p.push(mil===1?'mil':ate999(mil)+' mil');if(r)p.push(ate999(r));
@@ -1166,7 +1618,7 @@ function vSienge(o){
     ${IMP.avisos.map(a=>`<div class="note${/vírgula/.test(a)?' bad':''}">${esc(a)}</div>`).join('')}
     <div class="tools" style="margin:12px 0 8px;align-items:center"><button class="link" data-act="impTodos">Marcar todos</button> · <button class="link" data-act="impNenhum">Desmarcar todos</button>
       <span class="small muted">${sel} de ${IMP.itens.length} serviço(s) marcados. Itens sem mão de obra e verbas vêm desmarcados.</span></div>
-    <div class="scroll"><table><thead><tr><th></th><th class="stick">Serviço</th><th>Un</th><th class="num">Qtd total</th><th class="num">MO R$/un<span class="sub">com encargos</span></th><th class="num">Material R$/un</th><th>Quem executa</th><th>Avisos</th></tr></thead><tbody>
+    <div class="scroll"><table class="tbl"><thead><tr><th></th><th class="stick">Serviço</th><th>Un</th><th class="num">Qtd total</th><th class="num">MO R$/un<span class="sub">com encargos</span></th><th class="num">Material R$/un</th><th>Quem executa</th><th>Avisos</th></tr></thead><tbody>
     ${IMP.itens.map((x,i)=>`<tr${x.flags.includes('conferir quantidade')?' class="over"':''}><td><input type="checkbox" data-imp="${i}" ${x.sel?'checked':''} aria-label="Importar ${esc(x.nome)}"></td>
       <td class="svc stick">${esc(x.nome)}<span class="sub">${x.cod?'cód. '+esc(x.cod)+' · ':''}${x.linhas>1?x.linhas+' linhas somadas':'1 linha'}</span></td><td>${esc(x.un)}</td>
       <td class="num">${m2(x.qtd)}</td><td class="num calc">${m4(x.mo)}</td><td class="num">${m4(x.mat)}</td>
@@ -1246,7 +1698,8 @@ function resumoMed(o,m){
   return t;
 }
 
-document.addEventListener('click',e=>{
+document.addEventListener('click',e=>{const mm=document.querySelector('details.menu[open]');if(mm&&!mm.contains(e.target))mm.open=false;
+
   const b=e.target.closest('[data-act]'); if(!b||b.tagName==='SELECT')return;
   const a=b.dataset.act, o=O();
   if(ACT_PERM[a]&&!can(ACT_PERM[a])){toast('Seu perfil não tem permissão para isso');return}
@@ -1260,13 +1713,24 @@ document.addEventListener('click',e=>{
   if(a==='reciboMed'){const m=o&&o.medicoes.find(x=>x.id===medSel);if(m)reciboMed(o,m,b.dataset.fid||null);return}
   if(a==='reciboMeta'){const mt=o&&o.metas.find(x=>x.id===b.dataset.id);if(mt)reciboMeta(o,mt);return}
   if(a==='tab'){tab=b.dataset.v;render();return}
+  if(a==='novoServ'){addAberto=!addAberto;render();if(addAberto){const q=document.getElementById('qNome');if(q)q.focus()}return}
+  if(a==='sitFiltro'){FL.sit=FL.sit===b.dataset.v?'':b.dataset.v;render();return}
+  if(a==='clsFiltro'){FL.cls=FL.cls===b.dataset.v?'':b.dataset.v;render();return}
+  if(a==='grupo'){const G=grupos(O()),g=G.find(x=>x.k===b.dataset.v);if(g){const u=ultimoDoGrupo[g.k];tab=u&&g.tabs.some(([k])=>k===u)?u:g.tabs[0][0]}window.scrollTo(0,0);render();return}
+  if(a==='cfg'){cfgAberto=true;render.abriuCfg=true;render();return}
+  if(a==='cfgFechar'){cfgAberto=false;render();const c=document.querySelector('[data-act="cfg"]');if(c)c.focus();return}
   if(a==='impCancelar'){IMP=null;render();return}
   if(a==='impTodos'||a==='impNenhum'){if(IMP)IMP.itens.forEach(x=>x.sel=a==='impTodos');render();return}
   if(a==='impAplicar'){aplicarImport();return}
   if(a==='tema'){const ord=['auto','light','dark'],n=ord[(ord.indexOf(temaAtual())+1)%3];try{localStorage.setItem(TKEY,n)}catch(e){}aplicaTema();render();toast('Tema: '+TEMAS[n][0]);return}
   if(a==='limparFiltro'){FL.q='';FL.cls='';FL.fn='';FL.sit='';render();return}
   const mtx=b.dataset.id&&O()&&(O().metas||[]).find(x=>x.id===b.dataset.id);
-  if(a==='novaMeta'){const o=O();const n=o.metas.length+1;const d=hoje();const p=new Date(Date.now()+14*864e5).toISOString().slice(0,10);o.metas.push({id:uid(),criado:Date.now(),nome:`Setor ${n}`,inicio:d,prazo:p,entrega:'',premio:null,linhas:[{sid:o.servicos[0]?o.servicos[0].id:'',qtd:0}],equipe:{},crit:{},encerrada:false});persist(o.id);render();return}
+  if(a==='novaMeta'){novaMetaAberta=true;metaFiltro='';render();const n=document.getElementById('nmNome');if(n)n.focus();return}
+  if(a==='fecharNovaMeta'){novaMetaAberta=false;render();return}
+  if(a==='criarMeta'){const o=O();const nome=(document.getElementById('nmNome').value||'').trim()||`Setor ${o.metas.length+1}`;const ini=document.getElementById('nmIni').value||hoje();const pz=document.getElementById('nmPrazo').value||new Date(Date.now()+14*864e5).toISOString().slice(0,10);const id=uid();o.metas.push({id,criado:Date.now(),nome,inicio:ini,prazo:pz,entrega:'',premio:null,linhas:[{sid:o.servicos[0]?o.servicos[0].id:'',qtd:0}],equipe:{},crit:{},encerrada:false});metasAbertas.add(id);novaMetaAberta=false;persist(o.id);render();toast('Meta criada');return}
+  if(a==='metaToggle'){const id=b.dataset.id;metasAbertas.has(id)?metasAbertas.delete(id):metasAbertas.add(id);render();return}
+  if(a==='metaFiltro'){metaFiltro=metaFiltro===b.dataset.v?'':b.dataset.v;render();return}
+  if(a==='medPick'){medSel=b.dataset.v;render();return}
   if(a==='addMetaLinha'&&mtx){const ult=mtx.linhas[mtx.linhas.length-1];mtx.linhas.push({sid:ult?ult.sid:O().servicos[0].id,qtd:0});persist(O().id);render();return}
   if(a==='delMetaLinha'&&mtx){mtx.linhas.splice(+b.dataset.i,1);persist(O().id);render();return}
   if(a==='delMeta'&&mtx){if(!confirm('Excluir esta meta?'))return;O().metas=O().metas.filter(x=>x!==mtx);persist(O().id);render();return}
@@ -1277,8 +1741,8 @@ document.addEventListener('click',e=>{
   if(a==='detalhes'){detalhes=!detalhes;render();return}
   if(a==='novaObra'){const n=prompt('Nome da obra','Nova obra');if(n===null)return;const x=novaObra(n.trim()||'Nova obra');S.obras[x.id]=x;S.atual=x.id;tab='precos';persist(x.id);render();return}
   if(!o)return;
-  if(a==='dupObra'){const x=JSON.parse(JSON.stringify(o));x.id=uid();x.nome=o.nome+' (cópia)';x.medicoes=[];S.obras[x.id]=x;S.atual=x.id;persist(x.id);render();toast('Obra duplicada sem as medições');return}
-  if(a==='delObra'){if(!confirm(`Excluir a obra "${o.nome}" com todas as medições? Isso não pode ser desfeito.`))return;const id=o.id;delete S.obras[id];S.atual=Object.keys(S.obras)[0]||null;persist(id);render();return}
+  if(a==='dupObra'){cfgAberto=false;const x=JSON.parse(JSON.stringify(o));x.id=uid();x.nome=o.nome+' (cópia)';x.medicoes=[];S.obras[x.id]=x;S.atual=x.id;persist(x.id);render();toast('Obra duplicada sem as medições');return}
+  if(a==='delObra'){cfgAberto=false;if(!confirm(`Excluir a obra "${o.nome}" com todas as medições? Isso não pode ser desfeito.`))return;const id=o.id;delete S.obras[id];S.atual=Object.keys(S.obras)[0]||null;persist(id);render();return}
   if(a==='addRapido'){const nome=document.getElementById('qNome').value.trim();if(!nome){toast('Escreva o nome do serviço');document.getElementById('qNome').focus();return}
     o.servicos.push(Object.assign({id:uid(),cod:'',nome,un:document.getElementById('qUn').value.trim()||'un',qtd:num(document.getElementById('qQtd').value),mo:num(document.getElementById('qMo').value),mat:0,pct:null,auto:true},adivinhaFn(o,nome)));
     persist(o.id);render();const q=document.getElementById('qNome');if(q)q.focus();toast('Serviço adicionado');return}
@@ -1286,14 +1750,18 @@ document.addEventListener('click',e=>{
   if(a==='copiarTabela'){let t='Código\tServiço\tUn\tQtd orçada\tMO orçada\tTeto\tPreço tabela\tOficial\tAjudante\tVerba teto\n';o.servicos.forEach(s=>{const c=calc(o,s);t+=[s.cod,s.nome,s.un,m2(num(s.qtd)),m4(num(s.mo)),m2(c.teto),m2(c.preco),m2(c.pOf),m2(c.pAj),m2(c.verba)].join('\t')+'\n'});copiar(t,'Tabela copiada. Cole no Excel.');return}
   if(a==='novaMed'){const n=o.medicoes.length+1;const m={id:uid(),criado:Date.now(),periodo:`Medição ${n}`,data:new Date().toISOString().slice(0,10),linhas:[{sid:o.servicos[0]?o.servicos[0].id:'',qtd:0,of:'',aj:''}],diasPadrao:o.diasPadrao,dias:{},fechada:false};o.medicoes.push(m);medSel=m.id;tab='medicao';persist(o.id);render();return}
   const m=o.medicoes.find(x=>x.id===medSel);
-  if(a==='addLinha'&&m){const ult=m.linhas[m.linhas.length-1];m.linhas.push({sid:ult?ult.sid:o.servicos[0].id,qtd:0,of:ult?ult.of:'',aj:ult?ult.aj:''});persist(o.id);render();return}
+  if(a==='addLinha'&&m){const ult=m.linhas[m.linhas.length-1];m.linhas.push({sid:ult?ult.sid:o.servicos[0].id,qtd:0,of:ult?ult.of:'',aj:ult?ult.aj:''});persist(o.id);render();const ss=document.querySelectorAll('select[data-k="sid"][data-ml]');if(ss.length)ss[ss.length-1].focus();return}
   if(a==='delLinha'&&m){m.linhas.splice(+b.dataset.i,1);persist(o.id);render();return}
   if(a==='fecharMed'&&m){m.fechada=!m.fechada;persist(o.id);render();toast(m.fechada?'Medição fechada':'Medição reaberta');return}
   if(a==='delMed'&&m){if(!confirm('Excluir esta medição?'))return;o.medicoes=o.medicoes.filter(x=>x.id!==m.id);medSel=null;persist(o.id);render();return}
   if(a==='copiarMed'&&m){copiar(resumoMed(o,m),'Resumo copiado');return}
-  if(a==='addFn'){o.funcoes.push({id:uid(),nome:'Nova função',hora:0});persist(o.id);render();return}
+  if(a==='addFn'){o.funcoes.push({id:uid(),nome:'Nova função',hora:0});persist(o.id);render();const fs2=document.querySelectorAll('input.fn-nome');if(fs2.length){fs2[fs2.length-1].focus();fs2[fs2.length-1].select()}return}
   if(a==='delFn'){const id=b.dataset.id;if(o.servicos.some(s=>s.of===id||s.aj===id)||o.funcionarios.some(p=>p.funcao===id)){toast('Essa função está em uso por serviços ou funcionários');return}o.funcoes=o.funcoes.filter(f=>f.id!==id);persist(o.id);render();return}
-  if(a==='addFu'){const n=prompt('Nome do funcionário');if(!n||!n.trim())return;const p=o.funcoes.find(f=>/pedreiro/i.test(f.nome))||o.funcoes[0];o.funcionarios.push({id:uid(),nome:n.trim(),funcao:p?p.id:''});persist(o.id);render();return}
+  if(a==='addFu'){addFuAberto=!addFuAberto;render();if(addFuAberto){const n=document.getElementById('fuNome');if(n)n.focus()}return}
+  if(a==='criarFu'){const o=O();const nome=(document.getElementById('fuNome').value||'').trim();if(!nome){toast('Escreva o nome do funcionário');document.getElementById('fuNome').focus();return}
+    const c=document.getElementById('fuCpf');o.funcionarios.push({id:uid(),nome,funcao:document.getElementById('fuFuncao').value,...(c&&c.value.trim()?{cpf:c.value.trim()}:{})});persist(o.id);render();const n=document.getElementById('fuNome');if(n)n.focus();toast(nome+' adicionado');return}
+  if(a==='limparObraBusca'){obraBusca='';render();return}
+  if(a==='addUserForm'){addUserAberto=!addUserAberto;render();if(addUserAberto){const n=document.getElementById('uEmail');if(n)n.focus()}return}
   if(a==='delFu'){if(!confirm('Remover este funcionário da obra?'))return;o.funcionarios=o.funcionarios.filter(p=>p.id!==b.dataset.id);persist(o.id);render();return}
   if(a==='importar'){importar(document.getElementById('txtImp').value,b.dataset.v);return}
   if(a==='gerarBkp'){const t=JSON.stringify(o);document.getElementById('txtBkp').value=t;copiar(t,'Backup gerado e copiado');return}
@@ -1308,13 +1776,13 @@ document.addEventListener('change',e=>{
   if(d.us){const v=d.k==='ativo'?t.checked:t.value;fs.collection(USUARIOS).doc(d.us).set({[d.k]:v},{merge:true}).catch(err=>toast('Erro: '+err.code));return}
   if(d.uo){const [em,oid]=d.uo.split('|');const u=USERS.find(x=>x.email===em);const sel=new Set((u&&u.obras)||[]);t.checked?sel.add(oid):sel.delete(oid);
     fs.collection(USUARIOS).doc(em).set({obras:[...sel]},{merge:true}).catch(err=>toast('Erro: '+err.code));return}
-  if(d.flt&&d.flt!=='q'){FL[d.flt]=t.value;render();return}
+  if(d.flt&&d.flt!=='q'&&d.flt!=='obra'){FL[d.flt]=t.value;render();return}
   if(d.act==='obra'){FL.fn='';S.atual=t.value;medSel=null;try{localStorage.setItem('calcProducaoAtual',S.atual)}catch(x){}render();return}
   if(d.act==='medSel'){medSel=t.value;render();return}
   if(d.act==='abcBase'){abcBase=t.value;render();return}
   if(!o)return;
   const numK=['qtd','mo','mat','pct','hora'];
-  if(d.p){o[d.p]=['nome','regime','modelo'].includes(d.p)?t.value:num(t.value);if(d.p==='modelo'&&tab==='medicao'&&t.value==='meta')tab='metas';if(d.p==='modelo'&&tab==='metas'&&t.value==='producao')tab='precos';persist(o.id);render();return}
+  if(d.p){o[d.p]=['nome','regime','modelo'].includes(d.p)?t.value:num(t.value);if(d.p==='modelo'&&tab==='medicao'&&t.value==='meta')tab='metas';if(d.p==='modelo'&&tab==='metas'&&t.value==='producao')tab='precos';persist(o.id);setTimeout(render,0);return}
   if(d.pe){o.pesos[d.pe]=num(t.value);persist(o.id);render();return}
   if(d.mt){const mt=o.metas.find(x=>x.id===d.mt);mt[d.k]=d.k==='premio'?(t.value.trim()?num(t.value):null):t.value;if(d.k==='entrega'&&mt.crit)delete mt.crit.prazo;persist(o.id);render();return}
   if(d.mtl){const [mid,i]=d.mtl.split('|');const l=o.metas.find(x=>x.id===mid).linhas[+i];l[d.k]=d.k==='qtd'?num(t.value):t.value;persist(o.id);render();return}
@@ -1331,13 +1799,14 @@ document.addEventListener('change',e=>{
 
 let tBusca;
 document.addEventListener('input',e=>{
-  const t=e.target; if(t.dataset.flt!=='q')return;
-  FL.q=t.value; clearTimeout(tBusca);
-  tBusca=setTimeout(()=>{const pos=t.selectionStart;render();const n=document.getElementById('fBusca');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(x){}}},180);
+  const t=e.target; const kf=t.dataset.flt; if(kf!=='q'&&kf!=='obra')return;
+  if(kf==='q')FL.q=t.value; else obraBusca=t.value; clearTimeout(tBusca);
+  tBusca=setTimeout(()=>{const pos=t.selectionStart;render();const n=document.getElementById(t.id);if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(x){}}},180);
 });
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.id==='lEmail'||e.target.id==='lSenha')){e.preventDefault();const b=document.querySelector('[data-act="entrar"]');if(b)b.click();return}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(cfgAberto){cfgAberto=false;render();return}const m=document.querySelector('details.menu[open]');if(m)m.open=false}
+  if(e.key==='Enter'&&(e.target.id==='lEmail'||e.target.id==='lSenha')){e.preventDefault();const b=document.querySelector('[data-act="entrar"]');if(b)b.click();return}
   if(e.key==='Enter'&&e.target.closest&&e.target.closest('.uform')){e.preventDefault();const b=document.querySelector('[data-act="addUser"]');if(b)b.click();return}
-  if(e.key==='Enter'&&e.target.closest&&e.target.closest('.quick')){e.preventDefault();const b=document.querySelector('[data-act="addRapido"]');if(b)b.click()}});
+  if(e.key==='Enter'&&e.target.closest&&e.target.closest('.quick')){e.preventDefault();const b=document.querySelector('.quick [data-act="addRapido"], .quick [data-act="criarMeta"], .quick [data-act="criarFu"], .quick [data-act="addUser"]');if(b)b.click()}});
 render(); iniciar();
 })();
 </script>
